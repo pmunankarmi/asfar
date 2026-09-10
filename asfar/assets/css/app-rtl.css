@@ -1,0 +1,184 @@
+/* =====================================================================
+   ASFAR — Arabic / RTL layer
+   Loaded AFTER app.css only on the Arabic page (html[dir="rtl"]).
+   Handles: Arabic typography, letter-spacing reset (critical — spacing
+   breaks Arabic joining), and the directional rules that don't auto-mirror.
+   ===================================================================== */
+
+/* — Arabic typography — */
+:root{
+  /* IBM Plex Sans Arabic across every section — headings and body alike.
+     Swap 'IBM Plex Sans Arabic' -> 'Zarid Display' here to put the display
+     face back on headings only; its file is still shipped. */
+  --display:'Readex Pro','IBM Plex Sans Arabic','Greta Arabic','GE SS Two',Arial,sans-serif;
+  --sans:'Readex Pro','IBM Plex Sans Arabic','GE SS Two','Greta Arabic',Arial,sans-serif;
+}
+body{line-height:1.9;font-weight:500}  /* Greta Arabic Medium (Arabic script) */
+
+/* never letter-space or uppercase Arabic script */
+[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,[dir="rtl"] h4,[dir="rtl"] h5,
+[dir="rtl"] p,[dir="rtl"] a,[dir="rtl"] li,[dir="rtl"] span,[dir="rtl"] b,
+[dir="rtl"] button,[dir="rtl"] .eyebrow,[dir="rtl"] .btn{
+  letter-spacing:normal !important;text-transform:none !important}
+
+/* keep Western numerals / latin runs reading left-to-right */
+[dir="rtl"] .stat__fig,[dir="rtl"] .fly__meta,[dir="rtl"] [dir="ltr"]{unicode-bidi:isolate}
+
+/* headings need a touch more air + weight in Arabic */
+[dir="rtl"] .statement,[dir="rtl"] .cta__title{
+  line-height:1.32;font-weight:700}
+/* the hero headline is the exception: it follows ksia.sa's light (300) display
+   weight, so it keeps the Arabic line-height but NOT the weight bump — which
+   was silently overriding the 300 set in app.css. */
+[dir="rtl"] .hero__title{line-height:1.32;font-weight:300}
+[dir="rtl"] .fly__name{font-weight:700}
+[dir="rtl"] .pillar h3,[dir="rtl"] .scard h3,[dir="rtl"] .member h3,
+[dir="rtl"] .footer__col h4{font-weight:500}
+[dir="rtl"] .eyebrow{font-weight:500}
+
+/* =====================================================================
+   Directional flips (only what doesn't mirror automatically)
+   ===================================================================== */
+
+/* eyebrow rule grows from the right */
+[dir="rtl"] .eyebrow__rule{transform-origin:right}
+
+/* hover underlines: sweep from the right */
+[dir="rtl"] .nav__links a::after,
+[dir="rtl"] .btn--text::after,
+[dir="rtl"] .atlas__view::after,
+[dir="rtl"] .footer__col a::after{transform-origin:left}
+[dir="rtl"] .nav__links a:hover::after,
+[dir="rtl"] .btn--text:hover::after,
+[dir="rtl"] .atlas__view:hover::after,
+[dir="rtl"] .footer__col a:hover::after{transform-origin:right}
+
+/* forward arrows point/move leftward in RTL */
+[dir="rtl"] .atlas__view:hover i{transform:translateX(-4px)}
+[dir="rtl"] .dback:hover i{transform:translateX(4px)}
+
+/* reading-progress + atlas bar fill from the right */
+[dir="rtl"] .progress{left:auto;right:0}
+[dir="rtl"] .atlas__progress span{left:auto;right:0}
+
+/* about + vision — terracotta rule on the right edge of the statement */
+[dir="rtl"] .about__text .statement,[dir="rtl"] .approach__head .statement{padding-left:0;padding-right:1.4rem}
+[dir="rtl"] .about__text .statement::before,[dir="rtl"] .approach__head .statement::before{left:auto;right:0}
+
+/* about diamond watermark → mirror to the right */
+[dir="rtl"] .about::before{left:auto;right:-8%}
+
+/* philosophy sadu shade → drift off the bottom-left corner */
+[dir="rtl"] .approach::after{right:auto;left:-6%;
+  background-position:left bottom;
+  -webkit-mask-image:radial-gradient(120% 120% at 0% 100%,#000 30%,transparent 78%);
+          mask-image:radial-gradient(120% 120% at 0% 100%,#000 30%,transparent 78%)}
+
+/* hero scroll cue → left side */
+[dir="rtl"] .hero__scroll{right:auto;left:var(--pad)}
+
+/* stat suffix spacing */
+[dir="rtl"] .stat__suffix{margin-left:0;margin-right:.06em}
+
+/* atlas index list → right-aligned, hover nudges leftward */
+[dir="rtl"] .atlas__names button{text-align:right}
+[dir="rtl"] .atlas__names button:hover{padding-left:0;padding-right:.5rem}
+[dir="rtl"] .atlas__count{left:auto;right:1.4rem}
+
+/* geomap list — region tag pushes to the far side, hover nudge flips */
+[dir="rtl"] .geomap__list .gr{margin-left:0;margin-right:auto}
+[dir="rtl"] .geomap__list a:hover,[dir="rtl"] .geomap__list li.is-hot a{padding-left:0;padding-right:.5rem}
+
+/* mobile menu hover nudge */
+[dir="rtl"] .menu__links a:hover{padding-left:0;padding-right:.6rem}
+
+/* projects — caption + fact values */
+[dir="rtl"] .project__media figcaption{left:auto;right:1rem}
+[dir="rtl"] .project__facts b{text-align:left}
+
+/* footer gold accent on the rule → right side */
+[dir="rtl"] .footer__rule::after{left:auto;right:0}
+
+/* detail-page bits (for future Arabic destination pages) */
+[dir="rtl"] .dfact__v{text-align:left}
+[dir="rtl"] .dfact{padding-left:0;padding-right:1.5rem;border-left:0;border-right:1px solid var(--terra)}
+[dir="rtl"] .dnext a.is-next{text-align:left;margin-left:0;margin-right:auto}
+
+/* nav lang toggle underline stays centered — fine as-is */
+
+/* =====================================================================
+   AWARD POLISH — RTL additions
+   ===================================================================== */
+/* reset gaps: elements missed by the base letter-spacing reset */
+[dir="rtl"] figcaption,[dir="rtl"] blockquote{letter-spacing:normal !important;text-transform:none !important}
+
+/* Latin runs keep their tracking on the AR page */
+[dir="rtl"] [lang="en"]{letter-spacing:.06em !important}
+[dir="rtl"] .menu__links a span,[dir="rtl"] .eyebrow__no,[dir="rtl"] .fly__count{letter-spacing:.08em !important}
+
+/* Arabic needs taller leading on card/sub headings */
+[dir="rtl"] .pillar h3,[dir="rtl"] .scard h3,[dir="rtl"] .member h3,[dir="rtl"] .dopp h2{line-height:1.5}
+[dir="rtl"] .atlas__n,[dir="rtl"] .fly__name{line-height:1.3}
+[dir="rtl"] .dpull{line-height:1.6;padding-left:0;padding-right:1.5rem;border-left:0;border-right:1px solid var(--terra)}
+
+/* descender/ascender guard for Arabic glyphs in reveal masks */
+[dir="rtl"] .hero__title .line{padding-bottom:.18em;margin-bottom:-.18em}
+[dir="rtl"] .rw .w{padding-bottom:.16em;margin-bottom:-.16em}
+
+/* hover nudges must EASE in RTL too (base transitions animate padding-left only) */
+[dir="rtl"] .atlas__names button{transition:opacity .45s var(--ease),padding-right .45s var(--ease)}
+[dir="rtl"] .geomap__list a{transition:padding-right .4s var(--ease)}
+
+/* directional micro-motion */
+[dir="rtl"] .btn--solid::after{transform-origin:left}
+[dir="rtl"] .btn--solid:hover::after{transform-origin:right}
+[dir="rtl"] .loader__bar i{transform-origin:right}
+
+/* GE SS Light body reads best a touch larger */
+/* MUST move in step with app.css's body clamp — this file loads after it and wins on
+   the Arabic page, so leaving the 21px ceiling here would make the whole fluid-type
+   change invisible in Arabic. 21px was reached at 2688px. */
+[dir="rtl"] body{font-size:clamp(16px,calc(12.37px + .321vw),23px)}
+
+/* hero slider — morph pill mirrors to the right; dot fill sweeps from the right */
+/* side drawer sits on the LEFT in RTL → slide in from the left */
+/* mirrored twin of the .menu shadow fix in app.css: in RTL the drawer parks
+   off the LEFT edge, so this shadow pointed right, onto the page. */
+[dir="rtl"] .menu{transform:translateX(-100%);box-shadow:none}
+[dir="rtl"] .menu.is-open{transform:none;box-shadow:26px 0 70px rgba(0,0,0,.4)}
+[dir="rtl"] .hero__morph{left:auto;right:var(--pad)}
+[dir="rtl"] .hero__dot::after{transform-origin:right}
+/* hero eyebrow rule: gold sits next to the text (right edge) in RTL */
+[dir="rtl"] .hero__kicker-rule{background:linear-gradient(to left,var(--gold-soft) 0%,rgba(197,160,74,.28) 100%)}
+
+/* investment map: paired with the direction:ltr lock in app.css, so BOTH
+   languages show map-left / text-right. These restore Arabic TEXT FLOW inside
+   that ltr grid. .invmap__ledger is LOAD-BEARING: .stat__fig is display:flex
+   and flex order follows `direction`, so without it Arabic renders "339" with
+   "ألف" on the wrong side (unicode-bidi:isolate does NOT reorder flex items).
+   Delete this block if the ltr lock is ever removed. */
+[dir="rtl"] .invmap__card,
+[dir="rtl"] .invmap__ledger{direction:rtl;text-align:right}
+[dir="rtl"] .invmap__stats .stat__label{letter-spacing:normal}
+[dir="rtl"] .news__title,[dir="rtl"] .news__text,[dir="rtl"] .news__soon-text{letter-spacing:normal}
+[dir="rtl"] .invmap__region-pill,[dir="rtl"] .invmap__more{align-self:flex-end}
+[dir="rtl"] .invmap__tabs{direction:rtl}
+[dir="rtl"] .invmap__tab{letter-spacing:normal}
+
+/* triptych: keep Arabic captions joined (no latin tracking) */
+[dir="rtl"] .tript__title,[dir="rtl"] .tript__name,[dir="rtl"] .tript__desc,[dir="rtl"] .tript__eg{letter-spacing:normal}
+/* never break an Arabic word: overflow-wrap is an LTR-only safety valve */
+[dir="rtl"] .tript__title{overflow-wrap:normal}
+
+/* footer contact form — Arabic must not be tracked or uppercased */
+[dir="rtl"] .footer__form-title,[dir="rtl"] .ffield span{letter-spacing:normal;text-transform:none}
+[dir="rtl"] .ffield input,[dir="rtl"] .ffield textarea{text-align:right}
+[dir="rtl"] .ffield input[dir="ltr"]{text-align:left}
+/* partners marquee — travel right-to-left visually means the opposite sign in RTL */
+[dir="rtl"] .partners__track{animation-name:partnerSlideRtl}
+@keyframes partnerSlideRtl{from{transform:translateX(0)}to{transform:translateX(100%)}}
+
+/* Arabic has no italic — the browser fakes it by shearing the glyphs. deck.css
+   already sets this straight on the home page, but team-ar.html loads only
+   app.css + this sheet, so all 19 biography placeholders were sheared. */
+[dir="rtl"] .mexp__text--empty{font-style:normal}

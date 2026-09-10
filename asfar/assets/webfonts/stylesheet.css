@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabic-Bold.woff2') format('woff2'),
+        url('GretaArabic-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GE SS Two';
+    src: url('GESSTwoMedium-Medium.woff2') format('woff2'),
+        url('GESSTwoMedium-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GE SS Two';
+    src: url('GESSTwoLight-Light.woff2') format('woff2'),
+        url('GESSTwoLight-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabic-Medium.woff2') format('woff2'),
+        url('GretaArabic-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+

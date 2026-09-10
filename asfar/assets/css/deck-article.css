@@ -1,0 +1,121 @@
+/* ASFAR deck skin — news article page (deck slide 15) + news index.
+   Loads after app.css on the news pages; maps the deck's article layout
+   onto the existing .article markup. */
+body{background:#F2ECE3}
+.article{background:#F2ECE3;color:#2E4345;
+  padding-block:calc(clamp(62px,6.953vw,150px) + clamp(24px,2.85vw,58px)) clamp(40px,4.5vw,92px)}
+/* The article ran 92vw INSIDE .wrap, so its own 3.67vw gutters came off that
+   again and the story sat 8vw narrower than every other section on the site.
+   It now takes .wrap's gutter and nothing more, so the article pages, the news
+   index and the home sections all share one content width. */
+.article__grid{grid-template-columns:minmax(0,1fr) 23.4%;gap:2.3%;align-items:start;
+  max-width:none;width:auto;margin-inline:0}
+
+/* ── the story card ── */
+.article__body{position:relative;overflow:hidden;background:#FCF7EE;
+  border-radius:clamp(14px,1.2vw,26px);
+  /* slide 15: card 881 wide at x48, text and picture inset 23.8, title's
+     first baseline 66.5 below the card top */
+  padding:clamp(20px,2.820vw,58px) clamp(18px,1.857vw,38px) clamp(26px,2.6vw,54px)}
+/* slide 15's frond: 327.67 x 393.47 at x683.4, its head running 32.1 above the
+   card's own top edge, in the card's half-shade #F2ECE3 */
+.article__body::before{content:"";position:absolute;z-index:0;pointer-events:none;
+  inset-inline-start:72.13%;top:-2.508vw;width:37.19%;aspect-ratio:327.67/393.47;
+  background-color:#F2ECE3;
+  -webkit-mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%;
+  mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%}
+[dir="rtl"] .article__body::before{transform:scaleX(-1)}
+.article__body>*{position:relative;z-index:1}
+.article__pill{display:none}
+.article__head{padding-block-end:1.387vw}
+.article__title{font-family:"Readex Pro","DM Sans",sans-serif;font-weight:500;
+  color:#A9603F;font-size:clamp(22px,2.5023vw,52px);line-height:1.1889;letter-spacing:0;
+  margin:0 0 .492vw}
+/* (0,1,0) lost to .article__body p (0,2,1) — match the type selector too */
+.article__body p.article__date{font-family:"DM Sans",sans-serif;font-weight:400;
+  color:#334345;font-size:clamp(13px,1.4867vw,31px);line-height:1.3;margin:0}
+.article__figure{border-radius:clamp(8px,.6vw,13px);overflow:hidden;background:#DDD5C6;
+  margin-block:0 clamp(18px,1.9vw,40px)}
+/* the deck's band is 1275x451; shown whole, a 1:1 press portrait swallowed the
+   page, so the band is back -- 30% taller, which keeps faces in frame */
+.article__figure img{border-radius:inherit;width:100%;height:auto;
+  aspect-ratio:1275/586.3;object-fit:cover;object-position:center 32%}
+.article__lede,.article__body p{font-family:"DM Sans",sans-serif;color:#334345}
+/* the reference lede is plain running copy — no rule, no tint, no bold */
+.article__body p.article__lede{font-weight:400;border:0;padding:0;background:none;
+  font-size:clamp(14px,1.16vw,24px);line-height:1.55;margin:0 0 1.1em;color:#334345}
+.article__body p.article__lede::before,
+.article__body p.article__lede::after{content:none}
+/* slide 15 body: 16.03 on 21.04, #275A61 */
+.article__body p{font-size:clamp(13px,1.2523vw,26px);line-height:1.3126;color:#275A61}
+
+/* ── the "more news" rail: headline left, thumbnail right, hairline between ── */
+.article__aside{background:transparent}
+.article__asidehead{display:none}
+.article__more{display:block}
+.article__morecard{display:grid;grid-template-columns:minmax(0,1fr) 33.5%;
+  gap:0 6%;align-items:start;background:none;border:0;border-radius:0;
+  padding:0 0 clamp(14px,1.5vw,30px);margin:0 0 clamp(14px,1.5vw,30px);
+  border-bottom:1px solid rgba(46,67,69,.17)}
+.article__more>a:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
+.article__morecard img{grid-column:2;grid-row:1;width:100%;height:auto;
+  aspect-ratio:145/119;object-fit:cover;border-radius:6px}
+.article__morecard span{grid-column:1;grid-row:1;
+  font-family:"DM Sans",sans-serif;font-weight:400;color:#7C8A8B;
+  font-size:clamp(12px,.86vw,18px);line-height:1.42;letter-spacing:0}
+.article__morecard:hover{background:none}
+.article__morecard:hover span{color:#A9603F}
+
+/* ── back to media center: a gold-outlined pill at the foot of the rail ── */
+.article__aside .article__back{display:flex;align-items:center;justify-content:center;
+  inline-size:min(100%,17em);margin:clamp(20px,2.2vw,46px) 0 0 auto;
+  font-family:"DM Sans",sans-serif;font-weight:400;color:#B08D57;
+  border:1px solid #CDB58F;border-radius:999px;
+  padding:.78em 1.4em;font-size:clamp(12px,.92vw,19px);
+  text-decoration:none;background:transparent;
+  transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+[dir="rtl"] .article__aside .article__back{margin-inline:auto 0}
+.article__aside .article__back:hover{background:#B08D57;border-color:#B08D57;color:#FCF7EE}
+
+@media (max-width:900px){
+  .article__grid{grid-template-columns:1fr;gap:2.4rem}
+  .article__morecard{grid-template-columns:minmax(0,1fr) 26%}
+  .article__aside .article__back{margin-inline:auto}
+}
+/* ── news index (slide 14): beige page, terracotta Readex heading, cream
+   cards — date, headline, photo. Four to a row, and the headline gets a
+   fixed three-line block so the dates, the copy and the photos all sit on
+   the same lines right across the row. ── */
+.newspage{background:#F2ECE3}
+/* app.css caps .wrap at 1840 with a 40px margin, which pushed the news index
+   in 39px further than every deck section. Match .dk-wrap exactly instead. */
+.newspage .wrap{max-width:none;width:auto;margin-inline:0;
+  padding-inline:clamp(18px,3.67vw,110px)}
+.newspage .teampage__head .statement{font-family:"Readex Pro","DM Sans",sans-serif;
+  font-weight:500;text-transform:uppercase;color:#A9603F;letter-spacing:.01em;
+  font-size:clamp(26px,2.9vw,60px)}
+.newspage .teampage__lede{font-family:"Readex Pro",sans-serif;font-weight:300;color:#334345}
+.newspage__grid{grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(16px,2.2vw,52px);align-items:start}
+.newspage .news__card{background:#FCF7EE;border:0;border-radius:10px;
+  padding:clamp(10px,1.1vw,22px);display:flex;flex-direction:column;
+  box-shadow:none}
+.newspage .news__card:hover{transform:translateY(-4px);box-shadow:0 26px 54px -38px rgba(20,71,80,.55)}
+.newspage .news__body{order:1;flex:0 0 auto;padding:0 0 .55em;display:block}
+.newspage .news__pill{background:none;border:0;padding:0;display:block;
+  font-family:"DM Sans",sans-serif;font-weight:500;color:#A9603F;
+  font-size:clamp(11.5px,1.05vw,22px);letter-spacing:0;text-transform:none;
+  line-height:1.2}
+.newspage .news__title,.newspage__grid .news__title{
+  font-family:"DM Sans",sans-serif;font-weight:600;
+  color:#2E4345;font-size:clamp(12.5px,1.1vw,23px);line-height:1.45;
+  margin:.7em 0 0;letter-spacing:0;
+  height:calc(3 * 1.45em);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.newspage .news__thumb{order:2;flex:0 0 auto;border-radius:8px;overflow:hidden;
+  margin:0;aspect-ratio:311/270.1;height:auto;width:100%}
+.newspage .news__thumb img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.newspage .news__card::after{display:none}
+@media (max-width:1099.98px){.newspage__grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:860px){.newspage__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.newspage__grid{grid-template-columns:1fr}}

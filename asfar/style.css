@@ -1,0 +1,17 @@
+/*
+Theme Name: ASFAR
+Theme URI: https://github.com/pmunankarmi/asfar
+Author: ASFAR
+Description: Bilingual tourism investment theme with ACF Pro and Polylang.
+Version: 1.0.1
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 8.1
+Text Domain: asfar
+Update URI: https://github.com/pmunankarmi/asfar
+*/
+[hidden]{display:none!important}.asfar-honeypot{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}.admin-bar .nav{top:32px}.asfar-content{padding:150px 5vw 80px;min-height:65vh}.asfar-content p{margin:1em 0}.asfar-team-group{display:contents}.asfar-portfolio-pane[hidden]{display:none!important}.dk-map__stage svg{width:100%;height:100%}.footer__form-note:empty{display:none}
+@media(max-width:782px){.admin-bar .nav{top:46px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+html,body{overflow-x:clip}.asfar-honeypot{left:auto;inset-inline-start:0;top:0;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}.asfar-social{display:flex;gap:1rem;background:#154751;color:#fff}.asfar-social:empty{display:none}
+.asfar-pagination{grid-column:1/-1;display:flex;gap:1rem;padding:2rem 0}

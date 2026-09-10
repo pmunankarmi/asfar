@@ -1,0 +1,15 @@
+<footer class="dk-footer" id="contact">
+<div class="dk-footer__wave" aria-hidden="true"><svg preserveaspectratio="none" viewbox="0 0 1280 22.86"><path d="M0 10.45L291.43 1.65C330.69 0.32 377.61 0 428.88 0.34C582.69 1.40 775.65 8.40 918.55 11.65L1280 22.86L1280 22.86L0 22.86Z" fill="#154751"></path></svg></div>
+<div class="dk-wrap">
+<div class="dk-footer__in">
+<img class="dk-footer__logo" src="<?php echo esc_url( asfar_media( "footer_logo", asfar_options_id() ) ); ?>" alt="<?php echo esc_attr( asfar_value('c_39', 'global_ar') ); ?>">
+<a class="dk-footer__item" href="<?php echo esc_url( 'mailto:' . asfar_option( 'contact_email' ) ); ?>"><svg fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><rect height="16" rx="2" width="20" x="2" y="4"></rect><path d="m22 7-10 6L2 7"></path></svg><span dir="ltr"><?php echo esc_html( asfar_option( 'contact_email' ) ); ?></span></a>
+<span class="dk-footer__cta footer__enquire" data-enquire=""><button type="button" class="dk-pill enquire__btn" id="enquireBtn" aria-expanded="false" aria-controls="contactForm"><?php echo esc_html( asfar_value('c_42', 'global_ar') ); ?></button><form class="footer__form" aria-labelledby="enquireBtn" id="contactForm" novalidate="" data-msg-invalid="<?php echo esc_attr( asfar_option( 'form_invalid' ) ); ?>" data-msg-sent="<?php echo esc_attr( asfar_option( 'form_success' ) ); ?>" method="post" action="<?php echo esc_url( admin_url( "admin-post.php" ) ); ?>"><?php asfar_form_hidden(); ?><div class="footer__form-grid"><label class="ffield"><span><?php echo esc_html( asfar_value('c_45', 'global_ar') ); ?></span><input type="text" name="name" placeholder="<?php echo esc_attr( asfar_value('c_46', 'global_ar') ); ?>" autocomplete="name" required=""></label><label class="ffield"><span><?php echo esc_html( asfar_value('c_47', 'global_ar') ); ?></span><input type="email" name="email" placeholder="<?php echo esc_attr( asfar_value('c_48', 'global_ar') ); ?>" autocomplete="email" dir="ltr" required=""></label><label class="ffield ffield--wide"><span><?php echo esc_html( asfar_value('c_49', 'global_ar') ); ?></span><textarea name="message" placeholder="<?php echo esc_attr( asfar_value('c_50', 'global_ar') ); ?>" rows="2" required=""></textarea></label><button type="submit" class="btn btn--solid footer__form-btn"><?php echo esc_html( asfar_value('c_51', 'global_ar') ); ?></button></div><p class="footer__form-note" role="status" aria-live="polite"></p></form></span>
+</div>
+<div class="dk-footer__legal">
+<img src="<?php echo esc_url( asfar_media('c_52', 'global_ar') ); ?>" alt="<?php echo esc_attr( asfar_value('c_53', 'global_ar') ); ?>" loading="lazy" decoding="async">
+<span><?php echo esc_html( asfar_value('c_54', 'global_ar') ); ?></span>
+<a class="dk-footer__top" href="<?php echo esc_url( asfar_link('c_55', 'global_ar') ); ?>" id="dkTop"><?php echo esc_html( asfar_value('c_56', 'global_ar') ); ?><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+</div>
+</div>
+<?php asfar_social(); ?></footer>
