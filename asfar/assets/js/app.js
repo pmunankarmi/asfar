@@ -1302,7 +1302,7 @@
       vid.setAttribute('controls', '');
       vid.setAttribute('playsinline', '');
       vid.src = src;
-      frame.appendChild(btn);
+      box.appendChild(btn);
       frame.appendChild(vid);
       box.appendChild(frame);
       document.body.appendChild(box);
