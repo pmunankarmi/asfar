@@ -74,7 +74,7 @@
      - the five dash indicators (statement + four destinations). */
   (function () {
     var hero = document.getElementById('heroSlider');
-    if (!hero) return;
+    if (!hero || !hero.querySelector('#heroMorphCanvas')) return;
     var dashes = Array.prototype.slice.call(hero.querySelectorAll('.dk-dashes span, .dk-dashes button'));
     function paint(i) {
       dashes.forEach(function (d, n) { d.classList.toggle('is-active', n === i); });

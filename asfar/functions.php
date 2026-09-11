@@ -1,8 +1,8 @@
 <?php
 /** ASFAR theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ASFAR_VERSION', '1.0.1' );
-foreach ( array( 'content', 'fields', 'media', 'setup', 'forms', 'updates' ) as $asfar_module ) {
+define( 'ASFAR_VERSION', '1.1.0' );
+foreach ( array( 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'forms', 'updates' ) as $asfar_module ) {
  require_once get_template_directory() . '/inc/' . $asfar_module . '.php';
 }
 add_action( 'after_setup_theme', function () {
@@ -12,9 +12,6 @@ add_action( 'after_setup_theme', function () {
  add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
  register_nav_menus( array( 'primary' => 'Primary navigation', 'footer' => 'Footer navigation', 'drawer' => 'Expanded navigation' ) );
 } );
-add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
-add_filter( 'use_widgets_block_editor', '__return_false' );
-add_action( 'init', function () { remove_post_type_support( 'page', 'editor' ); remove_post_type_support( 'post', 'editor' ); } );
 add_action( 'wp_enqueue_scripts', function () {
  $uri = get_template_directory_uri();
  wp_enqueue_style( 'asfar-app', $uri . '/assets/css/app.css', array(), ASFAR_VERSION );

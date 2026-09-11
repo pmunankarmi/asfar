@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.0.1
+Version: 1.1.0
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -15,3 +15,18 @@ Update URI: https://github.com/pmunankarmi/asfar
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 html,body{overflow-x:clip}.asfar-honeypot{left:auto;inset-inline-start:0;top:0;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}.asfar-social{display:flex;gap:1rem;background:#154751;color:#fff}.asfar-social:empty{display:none}
 .asfar-pagination{grid-column:1/-1;display:flex;gap:1rem;padding:2rem 0}
+
+/* Native WordPress menus retain the original navigation layout. */
+.asfar-menu-list { list-style: none; padding: 0; margin: 0; display: contents; }
+.asfar-menu-list > li { display: contents; }
+.asfar-project-statistics { display: flex; flex-wrap: wrap; gap: 2rem; margin-block: 2rem; }
+.asfar-project-statistics dd { font-size: 1.6rem; margin: 0; }
+/* The desktop text mask must not cover the stacked mobile sector carousel. */
+@media (max-width: 960px) {
+ .dk-sectors__grid { grid-template-columns: minmax(0, 1fr); }
+ .dk-sectors__rail { min-width: 0; }
+ .dk-sectors__grid > .dk-rise:first-child::before { display: none; }
+ .dk-sectors__intro { max-width: 100%; }
+ .dk-sectors__rail { margin-top: 1.5rem; }
+ .dk-sector { flex-basis: 68vw; }
+}

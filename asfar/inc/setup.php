@@ -60,7 +60,7 @@ function asfar_import_value( $value ) {
 function asfar_seed_field( $name, $value, $context, $key ) {
  $exists = is_numeric( $context ) ? metadata_exists( 'post', $context, $name ) : false !== get_option( $context . '_' . $name, false );
  if ( $exists ) { return; }
- update_field( $key, asfar_import_value( $value ), $context );
+ if ( is_numeric( $context ) ) { update_post_meta( $context, $name, asfar_import_value( $value ) ); } else { update_option( $context . '_' . $name, asfar_import_value( $value ), false ); }
 }
 function asfar_seed() {
  asfar_verify_media_package();
@@ -117,10 +117,11 @@ function asfar_seed() {
  }
  if ( false === get_option( 'asfar_logo_initialized', false ) ) {
   asfar_sync_logo( get_theme_mod( 'custom_logo' ) ?: asfar_import_asset( 'assets/img/asfar-logo-ondark.svg' ) );
-  update_field( 'field_asfar_dark_logo', asfar_import_asset( 'assets/img/asfar-logo-dark.svg' ), 'asfar_shared' );
+  update_field( 'field_asfar_settings_dark_logo', asfar_import_asset( 'assets/img/asfar-logo-dark.svg' ), 'asfar_shared' );
   update_option( 'asfar_logo_initialized', 1, false );
  }
  update_option( 'asfar_seed_complete', 1, false );
+ asfar_migrate();
 }
 add_action( 'admin_post_asfar_seed', function () {
  if ( ! current_user_can( 'manage_options' ) ) { wp_die( 'Forbidden', '', array( 'response' => 403 ) ); }

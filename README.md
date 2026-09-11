@@ -1,11 +1,19 @@
-# ASFAR WordPress conversion
+# ASFAR WordPress theme
 
-Installable theme: `dist/asfar.zip`. Image package: `dist/asfar-media.zip`. Theme source: `asfar/`. Image originals are kept separately in `media/asfar-media/` and are installed into WordPress uploads, never the theme directory.
+ASFAR 1.1.0 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
-See [setup and release instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
+- Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
+- Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
+- Partners has a separate top-level options page. FAQ questions belong to an ordinary translated page selected on the homepage.
+- All languages share `header.php` and `footer.php`. Shared labels are registered in Polylang Strings Translations.
+- Images live in WordPress uploads / Media Library, outside the theme.
 
-Build with `python3 tools/package.py v1.0.1` (PHP and Node.js must be on PATH). The release tag must match both theme version declarations.
+Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.zip`.
 
-`tools/convert.py`, `tools/adapt-js.py` and `tools/refine.py` are the one-time source migration scripts, retained for provenance. The final PHP templates and field definitions are the maintained source of truth. Do not rerun the migration scripts on an edited theme: they regenerate field IDs and templates.
+Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Tests require an isolated WordPress installation containing imported content. The local browser test paths/credentials are test fixtures only and must be adapted for another machine. Never run fixture tests against a production database.
+Build with `python3 tools/package.py v1.1.0` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+
+`inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
+
+Tests require an isolated WordPress installation. Never run fixture tests on a production database. Browser paths are configurable through `PLAYWRIGHT_MODULE`, `CHROME_PATH` and `ASFAR_TEST_URL`.

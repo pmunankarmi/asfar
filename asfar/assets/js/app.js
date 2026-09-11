@@ -913,12 +913,7 @@
     var hctx = hcanvas ? hcanvas.getContext('2d') : null;
     var HTOTAL = hcanvas ? (parseInt(hcanvas.getAttribute('data-frames'), 10) || 0) : 0;
     var hframes = [], hready = false, hloaded = 0, hcur = -1, hlm = -1, hstarted = false, morphOn = false;
-    var hmarks = [
-      { name: 'The Mountains', cta: 'Discover Al-Baha', href: '#projects' },
-      { name: 'The Highlands', cta: 'Discover Taif', href: '#projects' },
-      { name: 'The Oasis', cta: 'Discover Al-Ahsa', href: '#projects' },
-      { name: 'The Coast', cta: 'Discover Yanbu', href: '#projects' }
-    ];
+    var hmarks = [];
     if (hero.getAttribute('data-morphmarks')) { try { var _hm = JSON.parse(hero.getAttribute('data-morphmarks')); if (_hm && _hm.length) hmarks = _hm; } catch (e) {} }
     var hNameEl = document.getElementById('heroMorphName');
     var hSubEl = document.getElementById('heroMorphSub');
