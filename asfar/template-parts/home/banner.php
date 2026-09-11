@@ -56,7 +56,6 @@ if ( ! $slides ) {
 					<p class="hero__morph-lead"><?php echo asfar_lines( $animation['heading'] ); ?></p>
 					<p class="hero__morph-over"><?php echo esc_html( $animation['subtitle'] ); ?></p>
 					<h2 class="hero__title" id="heroMorphName"><?php echo esc_html( $marks[0]['name'] ); ?></h2>
-					<a class="btn btn--line-light" id="heroMorphCta" href="<?php echo esc_url( $marks[0]['href'] ); ?>"><?php echo esc_html( $marks[0]['cta'] ); ?></a>
 				</div>
 			<?php endif; ?>
 		</div>
