@@ -876,22 +876,20 @@
     function set(idx) {
       idx = (idx % n + n) % n;
       if (idx === i) return;
-      [scenes, slides, dots].forEach(function (set) {
+      [scenes, slides].forEach(function (set) {
         /* a lone scene has to stay lit — rotating it would blank the hero */
         if (set.length < 2) return;
         if (set[i]) set[i].classList.remove('is-active');
         if (set[idx]) set[idx].classList.add('is-active');
       });
-      dots.forEach(function (d, k) { d.setAttribute('aria-selected', k === idx ? 'true' : 'false'); });
+      if (!window.__heroGoDest) dots.forEach(function (d, k) { d.classList.toggle('is-active', k === idx); d.setAttribute('aria-pressed', k === idx ? 'true' : 'false'); });
       i = idx;
     }
+    window.__heroSlideGo = set;   /* fallback nav for mobile / reduced motion */
     function next() { set(i + 1); }
     var inView = true;
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function start() { stop(); if (!rotate || hero.classList.contains('is-film')) return; if (!reduced && inView) timer = setInterval(next, DUR); }
-    dots.forEach(function (d, k) {
-      d.addEventListener('click', function () { set(k); start(); });
-    });
     // pause on hover / when the tab is hidden
     hero.addEventListener('mouseenter', stop);
     hero.addEventListener('mouseleave', start);
@@ -989,12 +987,21 @@
       var INTRO_MS = 5000;          // one statement beat before the film takes over
       var playing = false, p = 0, lastTs = null, filmInView = true;
       var born = Date.now();
+      var filmTimer = null, stopped = false;   // user taking manual control halts the loop
+      var heroDashes = Array.prototype.slice.call(hero.querySelectorAll('.hero__dot'));
+      function syncDash(k) {
+        heroDashes.forEach(function (d, j) {
+          d.classList.toggle('is-active', j === k);
+          d.setAttribute('aria-pressed', j === k ? 'true' : 'false');
+        });
+      }
       function caption(lm) {
         if (lm === hlm) return;
         hlm = lm;
         if (hNameEl) hNameEl.textContent = hmarks[lm].name;
         if (hSubEl) hSubEl.textContent = hmarks[lm].region || '';
         if (hCtaEl) { hCtaEl.textContent = hmarks[lm].cta; hCtaEl.setAttribute('href', hmarks[lm].href); }
+        syncDash(lm);
       }
       function tick(ts) {
         if (!playing) return;
@@ -1014,7 +1021,7 @@
         requestAnimationFrame(tick);
       }
       function enter() {
-        if (playing) return;
+        if (stopped || playing) return;
         playing = true;
         stop();
         hero.classList.add('is-film');
@@ -1030,11 +1037,51 @@
         var v = document.getElementById('heroVid');
         if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
         if (window.__heroFilm) window.__heroFilm.cycles = (window.__heroFilm.cycles || 0) + 1;
-        setTimeout(enter, INTRO_MS);               // and the journey comes round again
+        filmTimer = setTimeout(enter, INTRO_MS);   // and the journey comes round again
       }
       function begin() {
-        setTimeout(enter, Math.max(0, INTRO_MS - (Date.now() - born)));
+        filmTimer = setTimeout(enter, Math.max(0, INTRO_MS - (Date.now() - born)));
       }
+      /* clicking a hero dash hands control to the slides: stop the film loop,
+         drop out of film mode and let the statement slides show. */
+      window.__heroFilmCancel = function () {
+        stopped = true; playing = false;
+        clearTimeout(filmTimer);
+        hero.classList.remove('is-film');
+        if (window.__heroFilm) window.__heroFilm.playing = false;
+        var v = document.getElementById('heroVid');
+        if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
+      };
+      /* clicking a dash morphs the destination FILM IMAGE to that destination
+         (Mountains / Highlands / Oasis / Coast) and shows its caption — the
+         hero's visual journey, driven by hand instead of the auto loop. */
+      var animRAF = null;
+      function morphTo(target, cb) {
+        cancelAnimationFrame(animRAF);
+        var from = hcur < 0 ? 0 : hcur, dur = 780, t0 = null;
+        function fr(ts) {
+          if (t0 == null) t0 = ts;
+          var u = Math.min(1, (ts - t0) / dur);
+          var e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;   // easeInOutQuad
+          var f = Math.round(from + (target - from) * e);
+          if (f !== hcur) { hcur = f; hDraw(f); }
+          if (u < 1) animRAF = requestAnimationFrame(fr); else if (cb) cb();
+        }
+        animRAF = requestAnimationFrame(fr);
+      }
+      window.__heroGoDest = function (k) {
+        stopped = true; playing = false; clearTimeout(filmTimer);
+        hero.classList.add('is-film');
+        var v = document.getElementById('heroVid'); if (v) { try { v.pause(); } catch (e) {} }
+        var target = Math.round((hmarks.length < 2 ? 0 : k / (hmarks.length - 1)) * (HTOTAL - 1));
+        hlm = -1; caption(k);                 // caption() also lights dash k
+        hResize();
+        if (hready) morphTo(target);
+        else hPreload(function () { morphTo(target); });
+      };
+      heroDashes.forEach(function (d, k) {
+        d.addEventListener('click', function () { window.__heroGoDest(k); });
+      });
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (en) {
           filmInView = en[0].isIntersecting;
@@ -1046,6 +1093,17 @@
       else window.addEventListener('load', arm);
       setTimeout(arm, 3000);        // belt: never wait forever on a stalled load event
     })();
+    /* mobile / reduced motion: the film never runs, so the dashes step the
+       statement slides instead of the destination film. */
+    if (!window.__heroGoDest) {
+      var fbDashes = Array.prototype.slice.call(hero.querySelectorAll('.hero__dot'));
+      fbDashes.forEach(function (d, k) {
+        d.addEventListener('click', function () {
+          if (window.__heroSlideGo) window.__heroSlideGo(k % Math.max(1, slides.length));
+          fbDashes.forEach(function (dd, j) { dd.classList.toggle('is-active', j === k); dd.setAttribute('aria-pressed', j === k ? 'true' : 'false'); });
+        });
+      });
+    }
   })();
 
   /* ---------- cinematic word-reveal headings ---------- */

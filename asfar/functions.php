@@ -1,8 +1,8 @@
 <?php
 /** ASFAR theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ASFAR_VERSION', '1.1.3' );
-foreach ( array( 'admin', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'forms', 'updates' ) as $asfar_module ) {
+define( 'ASFAR_VERSION', '1.1.4' );
+foreach ( array( 'admin', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'source-update', 'forms', 'updates' ) as $asfar_module ) {
  require_once get_template_directory() . '/inc/' . $asfar_module . '.php';
 }
 add_action( 'after_setup_theme', function () {
@@ -36,4 +36,9 @@ add_action( 'admin_notices', function () {
  if ( ! function_exists( 'acf_add_options_page' ) ) { echo '<div class="notice notice-error"><p>ASFAR requires ACF Pro for content editing. Install and activate your licensed copy; no premium plugin is bundled.</p></div>'; }
  if ( ! function_exists( 'pll_current_language' ) ) { echo '<div class="notice notice-warning"><p>Activate Polylang and add English (en) and Arabic (ar) to enable bilingual navigation.</p></div>'; }
  if ( ! get_option( 'asfar_seed_complete' ) ) { echo '<div class="notice notice-info"><p>Use Appearance → ASFAR Setup to import the supplied content.</p></div>'; }
+} );
+
+add_filter( 'body_class', function ( $classes ) {
+ if ( ! is_page_template( 'template-home.php' ) ) { $classes[] = 'page--inner'; }
+ return $classes;
 } );

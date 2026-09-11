@@ -57,6 +57,7 @@ function asfar_home_field_groups() {
 				asfar_text( 'video_label', 'Watch Film Button Text' ),
 				asfar_link_field( 'button', 'Page / Website Button' ),
 			), 'Add banner slide' ),
+			asfar_field( 'banner_button_help', 'Persistent Banner Buttons', 'message', array( 'message' => 'The film and page buttons from the first banner slide stay visible across all slides, matching the latest design.' ) ),
 			asfar_group_field( 'banner_animation', 'Landscape Animation', array(
 				asfar_field( 'enabled', 'Enable Landscape Film', 'true_false', array( 'ui' => 1, 'default_value' => 0, 'instructions' => 'Optional original landscape animation. Leave off to cycle through all banner slides.' ) ),
 				asfar_text( 'heading', 'Animation Introduction', true ),

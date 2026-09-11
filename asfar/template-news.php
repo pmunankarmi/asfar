@@ -3,13 +3,15 @@
 get_header();
 ?>
 <main id="top">
-	<section class="news section">
+	<section class="news newspage section">
 		<div class="wrap">
 			<?php while ( have_posts() ) : the_post(); ?>
+				<div class="teampage__head">
 				<h1 class="statement reveal"><?php the_title(); ?></h1>
-				<p class="news__lede"><?php echo asfar_lines( asfar_value( 'introduction' ) ); ?></p>
+				<p class="news__lede teampage__lede reveal"><?php echo asfar_lines( asfar_value( 'introduction' ) ); ?></p>
+				</div>
 				<?php $news = asfar_news_query(); ?>
-				<div class="news__grid">
+				<div class="newspage__grid">
 					<?php while ( $news->have_posts() ) : $news->the_post(); ?>
 						<?php get_template_part( 'template-parts/news/card' ); ?>
 					<?php endwhile; ?>

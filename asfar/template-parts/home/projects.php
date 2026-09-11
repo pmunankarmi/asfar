@@ -11,7 +11,7 @@ $projects = asfar_project_rows( $section['projects'] ?? array() );
 	</div>
 	<div class="dk-map__in">
 		<h2 class="dk-map__title dk-rise"><?php echo asfar_lines( $section['heading'] ?? '' ); ?></h2>
-		<div class="dk-map__stage dk-rise" aria-hidden="true">
+		<div class="dk-map__stage dk-rise">
 			<?php asfar_render_map_artwork(); ?>
 			<div class="dk-map__pin"></div>
 			<div class="dk-map__pinlab"></div>

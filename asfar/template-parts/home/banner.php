@@ -40,16 +40,16 @@ if ( ! $slides ) {
 								<br><b><?php echo asfar_lines( $slide['highlight'] ); ?></b>
 							<?php endif; ?>
 						</<?php echo 0 === $index ? 'h1' : 'h2'; ?>>
-						<div class="hero__cta">
-							<?php if ( $slide['video'] && $slide['video_label'] ) : ?>
-								<button type="button" class="btn btn--gold" data-video="<?php echo esc_url( asfar_attachment_url( $slide['video'] ) ); ?>">
-									<?php echo esc_html( $slide['video_label'] ); ?>
-								</button>
-							<?php endif; ?>
-							<?php asfar_button( $slide['button'], 'btn btn--line-light' ); ?>
-						</div>
+
 					</div>
 				<?php endforeach; ?>
+			</div>
+			<div class="hero__cta hero__cta--fixed">
+				<?php $buttons = $slides[0]; ?>
+				<?php if ( ! empty( $buttons['video'] ) && ! empty( $buttons['video_label'] ) ) : ?>
+					<button type="button" class="btn btn--gold" data-video="<?php echo esc_url( asfar_attachment_url( $buttons['video'] ) ); ?>"><?php echo esc_html( $buttons['video_label'] ); ?></button>
+				<?php endif; ?>
+				<?php asfar_button( $buttons['button'] ?? array(), 'btn btn--line-light' ); ?>
 			</div>
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
 				<div class="hero__morphcap">
@@ -61,9 +61,9 @@ if ( ! $slides ) {
 			<?php endif; ?>
 		</div>
 		<div class="dk-dashes" id="dkHeroDashes" aria-label="<?php echo esc_attr( asfar_option( 'banner_label' ) ); ?>">
-			<?php foreach ( $slides as $index => $slide ) : ?>
-					<?php $slide = wp_parse_args( $slide, array( 'image' => 0, 'eyebrow' => '', 'heading' => '', 'highlight' => '', 'video' => 0, 'video_label' => '', 'button' => array() ) ); ?>
-				<button class="hero__dot <?php echo 0 === $index ? 'is-active' : ''; ?>" type="button" data-i="<?php echo esc_attr( $index ); ?>" aria-label="<?php echo esc_attr( $slide['heading'] ); ?>" aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>"></button>
+			<?php $navigation = ! empty( $animation['enabled'] ) && $marks ? $marks : $slides; ?>
+			<?php foreach ( $navigation as $index => $item ) : ?>
+				<button class="hero__dot <?php echo 0 === $index ? 'is-active' : ''; ?>" type="button" data-i="<?php echo esc_attr( $index ); ?>" aria-label="<?php echo esc_attr( $item['name'] ?? $item['heading'] ?? '' ); ?>" aria-pressed="<?php echo 0 === $index ? 'true' : 'false'; ?>"></button>
 			<?php endforeach; ?>
 		</div>
 		<?php get_template_part( 'template-parts/wave' ); ?>

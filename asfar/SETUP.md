@@ -63,3 +63,9 @@ See TEST-REPORT.md for completed local and staging checks.
 ## Administration
 
 ACF field-definition screens are hidden; PHP-defined fields remain visible on content editors, Theme Settings and Partners. Comments and pingbacks are disabled throughout the site while ASFAR is active. The Comments menu and toolbar shortcut are removed; existing comments are retained in the database.
+
+## September 11 source revision (1.1.4)
+
+The first administrator visit after installation applies the supplied homepage copy where the old source wording remains, enables the destination animation, makes Arabic the default homepage, and updates imported menu URLs. English remains available through Polylang. News pages are ordinary pages using ASFAR News; Posts page is unassigned. A backup of affected homepage metadata, language settings and menu links is kept in `asfar_source_revision_backup`. The migration runs once and does not reset subsequent edits.
+
+The first banner row supplies the persistent film and company-profile buttons. Landscape Captions supplies the destination controls when the animation is enabled. On mobile or reduced-motion devices, the controls use the statement-slide fallback. Portfolio regions with corresponding selected projects support pointer and keyboard selection; desktop scrolling progresses through the portfolio, with Escape/Tab available to leave it.

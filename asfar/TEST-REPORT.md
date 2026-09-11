@@ -1,4 +1,4 @@
-# ASFAR 1.1.3 verification
+# ASFAR 1.1.4 verification
 
 Local environment: WordPress 7.1, PHP 8.5.7, SQLite Database Integration, Polylang 3.8.9, and free ACF with a test-only options-registration fixture. The fixture is not included in the theme.
 
@@ -36,3 +36,11 @@ Publishing the GitHub release does not install the update on asfar.com.
 ## 1.1.3 administration checks
 
 Verified that ACF configuration is hidden while field groups remain registered, legacy posts with open discussion reject comments/pingbacks, new discussion defaults are closed, editor comment support is removed, and WordPress REST comment creation is rejected. PHP/JavaScript syntax and installable package checks pass.
+
+## 1.1.4 latest source revision
+
+Compared the September 11 `ASFAR final3 (1).zip` with the prior source. Content changes are the two homepage About headings; team and news visible text is unchanged. Ported persistent hero buttons, larger navigation targets, destination selection, PIF artwork, vision layout, interactive portfolio regions and desktop portfolio scroll progression. Restored the news listing classes and inner-page header styling, with clearance above news headings/cards.
+
+Local browser verification covers English and Arabic news at 1440px and 390px, persistent banner buttons, destination controls, keyboard map selection, PIF artwork from uploads, Arabic default homepage, animated destination selection, portfolio pinning and Escape release, and no JavaScript errors. Source-revision tests verify the Arabic default, News page assignment, preserved subsequent edits and remapped menu URLs. Existing integration and package checks pass.
+
+The 1.1.4 release is prepared for the administrator to install. No 1.1.4 staging deployment is claimed. ACF Pro save behavior was previously verified on staging with 1.1.2; this revision uses the same field structure with an added explanatory message.

@@ -75,26 +75,16 @@
   (function () {
     var hero = document.getElementById('heroSlider');
     if (!hero || !hero.querySelector('#heroMorphCanvas')) return;
-    var dashes = Array.prototype.slice.call(hero.querySelectorAll('.dk-dashes span, .dk-dashes button'));
-    function paint(i) {
-      dashes.forEach(function (d, n) { d.classList.toggle('is-active', n === i); });
-    }
+    /* The hero dashes are the SLIDE navigation, owned entirely by app.js
+       (3 statement slides, clickable). This layer used to repaint them as
+       film-progress every 300ms, which fought the click navigation and left
+       the wrong dash lit. It now only manages the nav band behind the film. */
     var nav = document.querySelector('header.nav');
-    paint(0);
     setInterval(function () {
-      var f = window.__heroFilm;
       var filmOn = hero.classList.contains('is-film');
-      /* slide 3: a solid #154751 band sits behind the nav while the film runs.
-         The film LOOPS (leave() re-enters after INTRO_MS), so keying the band
-         on it alone leaves the bar solid at the very top of the page once the
-         first cycle has run — scroll down, come back, and the menu never goes
-         away again. The top of the page is slide 2, whose nav is transparent
-         with the hairline, so the band is held off there. */
       var atPageTop = (window.scrollY || 0) < 6;
       if (nav) nav.classList.toggle('is-band',
         !atPageTop && filmOn && window.scrollY < hero.offsetHeight * .5);
-      if (!filmOn || !f || !f.playing) { paint(0); return; }
-      paint(1 + Math.min(3, Math.round((f.p || 0) * 3)));
     }, 300);
   })();
 

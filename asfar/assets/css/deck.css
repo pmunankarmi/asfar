@@ -169,6 +169,10 @@
              visibility 0s}
 .hero .hero__cta{margin-top:clamp(30px,9.3vh,61px);display:flex;
   gap:clamp(14px,1.7vw,22px);justify-content:center}
+/* the two hero buttons persist across all three rotating slides: lifted out
+   of the fading slide and pinned below the headline band */
+.hero .hero__cta--fixed{position:absolute;left:0;right:0;top:63%;margin-top:0;z-index:5}
+.hero.is-morph .hero__cta--fixed{display:none}
 /* film captions at the recording's position (overline ~.30 of the
    viewport, title ~.42) — my inset:0 override on .hero__in had let the
    morphcap drift to the top */
@@ -192,7 +196,11 @@
   bottom:clamp(56px,13.4vh,88px);display:flex;gap:4.3px;z-index:6}
 .dk-dashes span,.dk-dashes button{display:block;width:clamp(24px,2.7vw,34.6px);height:3.3px;
   border:0;padding:0;border-radius:2px;background:rgba(252,247,238,.17);
-  transition:background-color .45s var(--dk-ease)}
+  position:relative;transition:background-color .45s var(--dk-ease)}
+/* the visible bar is only 3.3px tall — far too thin to click. A transparent
+   pad extends the hit area to ~31px tall without changing the look. */
+.dk-dashes button{cursor:pointer}
+.dk-dashes button::before{content:"";position:absolute;left:0;right:0;top:-14px;bottom:-14px}
 .dk-dashes .is-active{background:rgba(252,247,238,.84)}
 /* cream wave over the hero's bottom edge; the deck shape hangs mostly below
    the canvas so only its top ~70px shows */
@@ -316,6 +324,13 @@ html.is-attop .nav:not(.is-scrolled){
   font-size:clamp(16px,1.8805vw,58px);line-height:1.2;letter-spacing:0;
   color:var(--dk-gold);
   margin-top:1.234vw}
+/* the real PIF lockup (apif-logo.png is white-only, so render its shape in the
+   brand gold via a mask); replaces the plain gold text */
+.dk-about__pif{color:transparent;font-size:0;line-height:0;justify-self:end;
+  width:clamp(120px,13vw,184px);aspect-ratio:645/118;
+  background-color:var(--dk-gold);
+  -webkit-mask:var(--asfar-image-apif-logo) no-repeat right center/contain;
+  mask:var(--asfar-image-apif-logo) no-repeat right center/contain}
 /* the deck gives both vision columns the same width (470.5 each) — hold the
    even split so the tan card keeps the About card's proportions on any screen */
 /* ── OUR VISION — its own beige band between the cream About section
@@ -334,13 +349,13 @@ html.is-attop .nav:not(.is-scrolled){
   /* the deck's card is 470.5 x 315.2 — hold that ratio exactly */
   aspect-ratio:470.5/315.2;
   display:flex;flex-direction:column;
-  justify-content:flex-end;position:relative;overflow:hidden}
+  justify-content:flex-start;position:relative;overflow:hidden}
 /* traced from the deck: Graphic 46 = image11.svg, full frame, 236.2x220.5
    at (587.7,108.0) against a 470.5x315.2 card — so 50.20% wide, hanging
    21.66% past the card's trailing edge and 12.12% above its top. Drawn as a
    background image so the artwork keeps its own #F2ECE3. */
 .dk-vision__motif{position:absolute;z-index:0;pointer-events:none;
-  inset-inline-end:-21.66%;top:-12.12%;
+  inset-inline-end:-21.66%;bottom:-12.12%;
   width:50.20%;aspect-ratio:236.2/220.5;
   background:var(--asfar-image-asfar-motif-a) no-repeat center/100% 100%}
 [dir="rtl"] .dk-vision__motif{transform:scaleX(-1)}
@@ -500,6 +515,16 @@ html.is-attop .nav:not(.is-scrolled){
 .dk-map__stage .invmap__region[data-region="yanbu"].is-lit{fill:#CAE6EA}
 .dk-map__stage .invmap__region[data-region="asir"].is-lit {fill:#B1AAB6}
 .dk-map__stage .invmap__region[data-region="taif"].is-lit {fill:#EEE6DA}
+/* Clickable regions carry a faint wash of their own highlight colour by
+   default, so the map reads as interactive; the selected one goes to full
+   colour via .is-lit. Taif has no data, so it gets no wash and no pointer. */
+.dk-map__stage .invmap__region.dk-clickable{cursor:pointer;
+  transition:fill var(--dk-morph) var(--dk-ease),opacity .25s ease}
+.dk-map__stage .invmap__region[data-region="baha"]:not(.is-lit){fill:rgba(199,152,130,.30)}
+.dk-map__stage .invmap__region[data-region="yanbu"]:not(.is-lit){fill:rgba(202,230,234,.34)}
+.dk-map__stage .invmap__region[data-region="asir"]:not(.is-lit){fill:rgba(177,170,182,.32)}
+.dk-map__stage .invmap__region.dk-clickable:hover:not(.is-lit),
+.dk-map__stage .invmap__region.dk-clickable:focus-visible:not(.is-lit){opacity:.72;outline:none}
 .dk-map[data-hot="baha"]  .dk-map__val{color:#D0A895}
 .dk-map[data-hot="yanbu"] .dk-map__val{color:#CAE6EA}
 .dk-map[data-hot="asir"]  .dk-map__val{color:#C5BFC9}
@@ -1307,3 +1332,7 @@ html.dk-sliding,html.dk-sliding body{overflow:hidden}
 html.dk-sliding .nav{opacity:0;pointer-events:none;
   transition:opacity 200ms linear}
 @media (prefers-reduced-motion:reduce){.dk-slide{display:none}}
+
+/* while the portfolio map is pinned for its scroll-stepper */
+html.dk-maplock{overflow:hidden}
+html.dk-maplock body{overflow:hidden}

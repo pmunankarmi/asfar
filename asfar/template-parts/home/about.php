@@ -13,7 +13,7 @@
 					<p><?php echo asfar_lines( $paragraph['text'] ); ?></p>
 				<?php endforeach; ?>
 			</div>
-			<span class="dk-about__pif"><?php echo esc_html( $section['ownership'] ?? '' ); ?></span>
+			<span class="dk-about__pif" role="img" aria-label="<?php echo esc_attr( $section['ownership'] ?? '' ); ?>"><?php echo esc_html( $section['ownership'] ?? '' ); ?></span>
 		</div>
 	</div>
 </section>
