@@ -1,4 +1,4 @@
-# ASFAR 1.1.2 verification
+# ASFAR 1.1.3 verification
 
 Local environment: WordPress 7.1, PHP 8.5.7, SQLite Database Integration, Polylang 3.8.9, and free ACF with a test-only options-registration fixture. The fixture is not included in the theme.
 
@@ -32,3 +32,7 @@ Local tests use free ACF; actual ACF Pro homepage saves were verified on staging
 Staging content updates were verified through WordPress admin. Production cache and actual email delivery were not tested. Browser interaction checks primarily use reduced motion; full landscape-animation timing requires visual acceptance on supported browsers. No formal PHPCS audit was run. A full WordPress upgrade on the destination server has not been performed.
 
 Publishing the GitHub release does not install the update on asfar.com.
+
+## 1.1.3 administration checks
+
+Verified that ACF configuration is hidden while field groups remain registered, legacy posts with open discussion reject comments/pingbacks, new discussion defaults are closed, editor comment support is removed, and WordPress REST comment creation is rejected. PHP/JavaScript syntax and installable package checks pass.

@@ -59,3 +59,7 @@ The classic editor is enabled for pages, posts and custom post types, with ACF g
 Appearance → ASFAR Content Check lists duplicate imports before repair. The repair button fills empty imported Team/Project/FAQ fields, reconnects homepage selections and translation pairs, moves duplicate records to Trash, and moves duplicate menu links to an unassigned backup menu. Existing nonempty content is retained. This explicit repair may refill intentionally empty imported fields; ordinary upgrades do not. Concurrent imports are locked to prevent duplicate creation.
 
 See TEST-REPORT.md for completed local and staging checks.
+
+## Administration
+
+ACF field-definition screens are hidden; PHP-defined fields remain visible on content editors, Theme Settings and Partners. Comments and pingbacks are disabled throughout the site while ASFAR is active. The Comments menu and toolbar shortcut are removed; existing comments are retained in the database.
