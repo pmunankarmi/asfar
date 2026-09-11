@@ -110,7 +110,7 @@ function asfar_submissions_admin() {
   echo '</tr>';
  }
  echo '</tbody></table>';
- echo wp_kses_post( paginate_links( array( 'base' => add_query_arg( 'paged', '%#%' ), 'format' => '', 'current' => $page, 'total' => max( 1, (int) ceil( $total / 20 ) ) ) ) );
+ echo wp_kses_post( (string) paginate_links( array( 'base' => add_query_arg( 'paged', '%#%' ), 'format' => '', 'current' => $page, 'total' => max( 1, (int) ceil( $total / 20 ) ) ) ) );
  echo '</div>';
 }
 function asfar_csv_cell( $value ) {

@@ -15,7 +15,7 @@ get_header();
 					<?php endwhile; ?>
 				</div>
 				<?php
-				echo wp_kses_post( paginate_links( array( 'total' => $news->max_num_pages, 'current' => max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ) ) ) );
+				echo wp_kses_post( (string) paginate_links( array( 'total' => $news->max_num_pages, 'current' => max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ) ) ) );
 				wp_reset_postdata();
 				?>
 			<?php endwhile; ?>

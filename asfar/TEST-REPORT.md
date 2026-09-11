@@ -1,4 +1,4 @@
-# ASFAR 1.1.0 verification
+# ASFAR 1.1.1 verification
 
 Local environment: WordPress 7.1, PHP 8.5.7, SQLite Database Integration, Polylang 3.8.9, and free ACF with a test-only options-registration fixture. The fixture is not included in the theme.
 
