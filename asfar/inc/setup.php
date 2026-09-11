@@ -63,6 +63,9 @@ function asfar_seed_field( $name, $value, $context, $key ) {
  if ( is_numeric( $context ) ) { update_post_meta( $context, $name, asfar_import_value( $value ) ); } else { update_option( $context . '_' . $name, asfar_import_value( $value ), false ); }
 }
 function asfar_seed() {
+ return asfar_with_content_lock( 'asfar_seed_content' );
+}
+function asfar_seed_content() {
  asfar_verify_media_package();
  if ( ! function_exists( 'acf_add_options_page' ) || ! function_exists( 'pll_save_post_translations' ) ) { throw new RuntimeException( 'Activate ACF Pro and Polylang first.' ); }
  $langs = pll_languages_list( array( 'fields' => 'slug' ) );

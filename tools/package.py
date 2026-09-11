@@ -6,7 +6,7 @@ version=re.search(r'^Version:\s*(\S+)',(theme/'style.css').read_text(),re.M)[1]
 if len(sys.argv)>1 and sys.argv[1].removeprefix('v')!=version:raise SystemExit('Release tag must match style.css Version')
 bootstrap=re.search(r"define\( 'ASFAR_VERSION', '([^']+)'",(theme/'functions.php').read_text())[1]
 if bootstrap!=version:raise SystemExit('functions.php and style.css versions must match')
-for name in ['style.css','functions.php','index.php','header.php','footer.php','template-home.php','page.php','single.php','archive.php','404.php']:
+for name in ['style.css','functions.php','index.php','header.php','footer.php','template-home.php','page.php','single.php','archive.php','404.php','screenshot.png']:
  if not (theme/name).is_file():raise SystemExit('Missing '+name)
 for name in ['front-page.php','home.php']:
  if (theme/name).exists():raise SystemExit('Forbidden homepage template: '+name)
@@ -26,7 +26,7 @@ with zipfile.ZipFile(root/'dist/asfar.zip') as z:
 print(f'Created dist/asfar.zip — version {version}, {(root/"dist/asfar.zip").stat().st_size:,} bytes')
 
 images = {'.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif', '.ico'}
-assert not any(p.suffix.lower() in images for p in theme.rglob('*') if p.is_file()), 'Theme must not contain image files'
+assert not any(p.suffix.lower() in images for p in theme.rglob('*') if p.is_file() and p != theme / 'screenshot.png'), 'Only the WordPress theme preview screenshot may be bundled'
 media = root / 'media/asfar-media'
 manifest = json.loads((theme/'inc/media-manifest.json').read_text())
 with zipfile.ZipFile(root/'dist/asfar-media.zip','w',zipfile.ZIP_DEFLATED) as z:

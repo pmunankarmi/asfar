@@ -142,7 +142,26 @@ function asfar_migrate_menus( $options ) {
 	set_theme_mod( 'nav_menu_locations', $locations );
 }
 
+/** Atomic option insertion prevents overlapping admin requests importing twice. */
+function asfar_with_content_lock( $callback ) {
+	static $owned = false;
+	if ( $owned ) { return $callback(); }
+	$started = (int) get_option( 'asfar_content_lock', 0 );
+	if ( $started && $started < time() - 1800 ) { delete_option( 'asfar_content_lock' ); }
+	if ( ! add_option( 'asfar_content_lock', time(), '', false ) ) {
+		throw new RuntimeException( 'Another ASFAR content operation is running. Please wait for it to finish.' );
+	}
+	$owned = true;
+	try { return $callback(); }
+	finally { $owned = false; delete_option( 'asfar_content_lock' ); }
+}
+
 function asfar_migrate() {
+	if ( 2 <= (int) get_option( 'asfar_content_schema_version' ) ) { return; }
+	return asfar_with_content_lock( 'asfar_run_migration' );
+}
+
+function asfar_run_migration() {
 	if ( 2 <= (int) get_option( 'asfar_content_schema_version' ) ) {
 		return;
 	}

@@ -7,7 +7,7 @@ Requires WordPress, PHP 8.1+, your licensed ACF Pro, and Polylang with English (
 1. Install `asfar.zip` under Appearance → Themes and activate it.
 2. For a new installation, upload `asfar-media.zip` under Appearance → ASFAR Setup. Alternatively, extract it into `wp-content/uploads` and use **Register images already in uploads**. All 399 supplied images are registered in the Media Library; none are stored inside the theme.
 3. Use **Populate existing website content** on ASFAR Setup after activating ACF Pro and setting up both languages. Imported English and Arabic content is linked through Polylang.
-4. Assign the **ASFAR Homepage** template to both homepages. Select the English homepage under Settings → Reading. Use Polylang to link the Arabic translation.
+4. Assign the **ASFAR Homepage** template to both homepages. Select the English homepage under Settings → Reading. Use Polylang to link the Arabic translation. Leave Posts page unassigned so the News page uses its ASFAR News template.
 5. Review Appearance → Menus. Primary and Expanded Navigation are separate native menu locations for each language. The original design displays the expanded menu behind the menu button; the primary location remains available for a child theme.
 
 When upgrading from 1.0.1, the next administrator visit automatically migrates the existing data. No second media upload is needed. It creates Team, Projects and FAQ entries, replaces numbered ACF fields with named sections, and transfers global labels into Polylang. It preserves existing page IDs, custom menu assignments, attachment IDs and edited or deliberately cleared values. Legacy metadata is retained. Migration can also be run with `wp asfar migrate`; it is safe to repeat. Initial import is available with `wp asfar seed`.
@@ -54,4 +54,8 @@ To release: increase `Version` in `style.css` and `ASFAR_VERSION` in `functions.
 
 For a private repository, provide a read-only `ASFAR_GITHUB_TOKEN` server-side in wp-config.php using an environment variable. Never store credentials in the theme. Private release download behavior requires separate staging verification.
 
-See TEST-REPORT.md for the completed checks and the ACF Pro testing limitation.
+The classic editor is enabled for pages, posts and custom post types, with ACF groups below it. The theme preview is included as screenshot.png; content images remain in uploads.
+
+Appearance → ASFAR Content Check lists duplicate imports before repair. The repair button fills empty imported Team/Project/FAQ fields, reconnects homepage selections and translation pairs, moves duplicate records to Trash, and moves duplicate menu links to an unassigned backup menu. Existing nonempty content is retained. This explicit repair may refill intentionally empty imported fields; ordinary upgrades do not. Concurrent imports are locked to prevent duplicate creation.
+
+See TEST-REPORT.md for completed local and staging checks.
