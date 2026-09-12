@@ -7,7 +7,7 @@ wp_set_current_user( 1 );
 function verify( $condition, $label ) { if ( ! $condition ) { throw new RuntimeException( 'FAIL: ' . $label ); } echo 'PASS: ' . $label . "\n"; }
 $map = get_option( 'asfar_page_map' );
 verify( count( $map ) === 44, '44 imported pages/posts' );
-verify( get_post_meta( $map['index'], '_wp_page_template', true ) === 'template-home.php', 'Selectable homepage template' );
+verify( get_post_meta( $map['index'], '_wp_page_template', true ) === 'templates/template-home.php', 'Selectable homepage template' );
 verify( pll_get_post( $map['index'], 'ar' ) === $map['index-ar'], 'Polylang homepage translation pair' );
 verify( (int) wp_count_posts( 'asfar_team' )->publish === 38, '38 translated team members migrated' );
 verify( (int) wp_count_posts( 'asfar_project' )->publish === 8, '8 translated projects migrated' );
@@ -16,7 +16,7 @@ $content = get_option( 'asfar_content_map' );
 verify( pll_get_post( $content['project_0_en'], 'ar' ) === $content['project_0_ar'], 'Project translation pairs linked' );
 verify( pll_get_post( $content['team_0_en'], 'ar' ) === $content['team_0_ar'], 'Team translation pairs linked' );
 verify( count( asfar_home_field_groups() ) === 10, 'Ten homepage field groups matching template sections' );
-verify( get_post_meta( $content['faq_en'], '_wp_page_template', true ) === 'template-faq.php', 'FAQ managed on a native page' );
+verify( get_post_meta( $content['faq_en'], '_wp_page_template', true ) === 'templates/template-faq.php', 'FAQ managed on a native page' );
 verify( asfar_option( 'contact_button', 'ar' ) === 'تواصل معنا', 'Shared footer label translated through Polylang' );
 $old = get_field( 'about_section', $map['index'] );
 try {

@@ -1,17 +1,19 @@
-<?php $section = asfar_section( 'impact' ); ?>
-<section class="dk-impact" id="impact">
-	<div class="dk-wrap">
-		<h2 class="dk-label dk-rise"><?php echo esc_html( $section['heading'] ?? '' ); ?></h2>
-		<div class="dk-impact__tiles dk-rise">
-			<?php foreach ( $section['statistics'] ?? array() as $index => $statistic ) : ?>
-				<div class="dk-impact__tile <?php echo 0 === $index ? 'dk-impact__tile--hi' : ''; ?>">
-					<?php if ( 0 === $index ) : ?>
-						<span class="dk-impact__frond" aria-hidden="true"></span>
+<?php while ( have_rows( 'impact_section' ) ) : the_row(); ?>
+<section class="mt-dk-impact" id="mt-impact">
+	<div class="mt-dk-wrap">
+		<h2 class="mt-dk-label mt-dk-rise"><?php echo esc_html( get_sub_field( 'heading' ) ); ?></h2>
+		<div class="mt-dk-impact__tiles mt-dk-rise">
+			<?php while ( have_rows( 'statistics' ) ) : the_row(); ?>
+				<div class="mt-dk-impact__tile <?php echo 1 === get_row_index() ? 'mt-dk-impact__tile--hi' : ''; ?>">
+					<?php if ( 1 === get_row_index() ) : ?>
+						<span class="mt-dk-impact__frond" aria-hidden="true"></span>
 					<?php endif; ?>
-					<p class="dk-impact__num"><?php echo esc_html( $statistic['value'] ); ?></p>
-					<p class="dk-impact__lbl"><?php echo asfar_lines( $statistic['label'] ); ?></p>
+					<p class="mt-dk-impact__num"><?php echo esc_html( get_sub_field( 'value' ) ); ?></p>
+					<p class="mt-dk-impact__lbl"><?php echo asfar_lines( get_sub_field( 'label' ) ); ?></p>
 				</div>
-			<?php endforeach; ?>
+			<?php endwhile; ?>
 		</div>
 	</div>
 </section>
+
+<?php endwhile; ?>

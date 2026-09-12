@@ -88,8 +88,9 @@ function asfar_resolve_url( $url ) {
 		return '';
 	}
 	if ( str_starts_with( $url, '#' ) ) {
-		return asfar_home_url() . $url;
+		return asfar_home_url() . asfar_anchor_url( $url );
 	}
+	$url = asfar_anchor_url( $url );
 	$parts = explode( '#', $url, 2 );
 	$slug = preg_replace( '/\.html$/', '', $parts[0] );
 	$map = get_option( 'asfar_page_map', array() );
@@ -100,7 +101,7 @@ function asfar_resolve_url( $url ) {
 	return esc_url_raw( $url );
 }
 
-function asfar_button( $button, $class = 'dk-pill' ) {
+function asfar_button( $button, $class = 'mt-dk-pill' ) {
 	if ( ! is_array( $button ) || empty( $button['url'] ) || empty( $button['title'] ) ) {
 		return;
 	}
@@ -119,7 +120,7 @@ function asfar_menu( $location ) {
 	wp_nav_menu( array(
 		'theme_location' => $location,
 		'container' => false,
-		'menu_class' => 'asfar-menu-list',
+		'menu_class' => 'mt-asfar-menu-list',
 		'fallback_cb' => false,
 		'depth' => 1,
 	) );
@@ -182,4 +183,18 @@ function asfar_news_query( $home = false ) {
 		'paged' => $home ? 1 : max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ),
 		'lang' => asfar_language(), 'ignore_sticky_posts' => true,
 	) );
+}
+
+/** Current year follows the timezone configured in WordPress Settings. */
+add_shortcode( 'year', function () {
+	return wp_date( 'Y' );
+} );
+
+function asfar_copyright() {
+	$text = asfar_option( 'copyright' );
+	// Keep previously saved copyright lines current until the editor adds [year].
+	if ( ! has_shortcode( $text, 'year' ) ) {
+		$text = preg_replace( '/(?<![0-9])20[0-9]{2}(?![0-9])/', '[year]', $text, 1 );
+	}
+	return do_shortcode( $text );
 }

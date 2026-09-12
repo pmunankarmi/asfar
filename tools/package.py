@@ -6,7 +6,7 @@ version=re.search(r'^Version:\s*(\S+)',(theme/'style.css').read_text(),re.M)[1]
 if len(sys.argv)>1 and sys.argv[1].removeprefix('v')!=version:raise SystemExit('Release tag must match style.css Version')
 bootstrap=re.search(r"define\( 'ASFAR_VERSION', '([^']+)'",(theme/'functions.php').read_text())[1]
 if bootstrap!=version:raise SystemExit('functions.php and style.css versions must match')
-for name in ['style.css','functions.php','index.php','header.php','footer.php','template-home.php','page.php','single.php','archive.php','404.php','screenshot.png']:
+for name in ['style.css','functions.php','index.php','header.php','footer.php','templates/template-home.php','page.php','single.php','archive.php','404.php','screenshot.png']:
  if not (theme/name).is_file():raise SystemExit('Missing '+name)
 for name in ['front-page.php','home.php']:
  if (theme/name).exists():raise SystemExit('Forbidden homepage template: '+name)

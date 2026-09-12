@@ -69,3 +69,9 @@ ACF field-definition screens are hidden; PHP-defined fields remain visible on co
 The first administrator visit after installation applies the supplied homepage copy where the old source wording remains, enables the destination animation, makes Arabic the default homepage, and updates imported menu URLs. English remains available through Polylang. News pages are ordinary pages using ASFAR News; Posts page is unassigned. A backup of affected homepage metadata, language settings and menu links is kept in `asfar_source_revision_backup`. The migration runs once and does not reset subsequent edits.
 
 The first banner row supplies the persistent film and company-profile buttons. Landscape Captions supplies the destination controls when the animation is enabled. On mobile or reduced-motion devices, the controls use the statement-slide fallback. Portfolio regions with corresponding selected projects support pointer and keyboard selection; desktop scrolling progresses through the portfolio, with Escape/Tab available to leave it.
+
+## Version 1.1.7 structure
+
+Page templates are in `templates/`, homepage sections in `template-parts/home/`, and shared layout markup in `template-parts/layout/`. Required WordPress hierarchy files remain at the theme root. Visit WordPress admin after updating to migrate existing page-template assignments automatically. Repeater output uses native ACF loops. Theme-owned classes and IDs now start with `mt-`; update any external custom CSS selectors accordingly. Saved menu section links are mapped to the new IDs when rendered.
+
+Copyright Text supports the standard WordPress `[year]` shortcode, for example `© [year] ASFAR`. Keep the shortcode in each Polylang translation. It uses the WordPress site timezone. Existing copyright text with a fixed 20xx year also displays the current year.

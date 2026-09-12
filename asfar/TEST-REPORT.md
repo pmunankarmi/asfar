@@ -44,3 +44,9 @@ Compared the September 11 `ASFAR final3 (1).zip` with the prior source. Content 
 Local browser verification covers English and Arabic news at 1440px and 390px, persistent banner buttons, destination controls, keyboard map selection, PIF artwork from uploads, Arabic default homepage, animated destination selection, portfolio pinning and Escape release, and no JavaScript errors. Source-revision tests verify the Arabic default, News page assignment, preserved subsequent edits and remapped menu URLs. Existing integration and package checks pass.
 
 The 1.1.4 release is prepared for the administrator to install. No 1.1.4 staging deployment is claimed. ACF Pro save behavior was previously verified on staging with 1.1.2; this revision uses the same field structure with an added explanatory message.
+
+## 1.1.7 templates and selector namespace
+
+Verified the template assignment migration, native ACF repeater output, English/Arabic homepage section counts, banner controls, menu, FAQ, portfolio keyboard selection and scroll release, team biography dialogs, contact submission with local mail disabled, all imported page responses, Arabic default and mobile width. Browser checks report no JavaScript errors or broken loaded images. Integration checks and the no-ACF/no-Polylang fallback smoke test pass. PHP/JavaScript syntax, CSS parsing and installable archive checks pass.
+
+This revision uses local ACF Free with a test-only raw repeater row adapter, not ACF Pro UI. No staging installation or Pro editor verification is claimed for 1.1.7. WordPress/plugin-generated identifiers retain their native names; theme-owned selectors use mt-.

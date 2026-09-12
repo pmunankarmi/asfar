@@ -231,7 +231,7 @@ function asfar_run_migration() {
 			}
 		}
 		$faq = asfar_migration_post( 'faq', $language, 'page', 'ar' === $language ? 'الأسئلة الشائعة' : 'Frequently Asked Questions' );
-		if ( ! get_post_meta( $faq, '_wp_page_template', true ) ) { update_post_meta( $faq, '_wp_page_template', 'template-faq.php' ); }
+		if ( ! get_post_meta( $faq, '_wp_page_template', true ) ) { update_post_meta( $faq, '_wp_page_template', 'templates/template-faq.php' ); }
 		asfar_migrate_field( 'faq', 'faq_items', $opt['faq'], $faq );
 		$sections = asfar_legacy_value( $descriptors['home'][ $language ], $home_id, $defaults );
 		$sections['banner_animation']['stops'] = array_map( function ( $mark ) { return array( 'name' => $mark['name'], 'button' => array( 'url' => $mark['href'], 'title' => $mark['cta'], 'target' => '' ) ); }, $opt['hero_marks'] );
@@ -260,7 +260,7 @@ function asfar_run_migration() {
 		if ( ! get_post_meta( $id, '_asfar_page_migrated', true ) ) {
 			if ( get_the_title( $id ) === $data['pages'][ $slug ]['title'] && $values['title'] ) { wp_update_post( array( 'ID' => $id, 'post_title' => $values['title'] ) ); }
 			if ( ! empty( $values['image'] ) && ! has_post_thumbnail( $id ) ) { set_post_thumbnail( $id, $values['image'] ); }
-			if ( 'page' === get_post_type( $id ) ) { update_post_meta( $id, '_wp_page_template', str_starts_with( $slug, 'team' ) ? 'template-team.php' : 'template-news.php' ); }
+			if ( 'page' === get_post_type( $id ) ) { update_post_meta( $id, '_wp_page_template', str_starts_with( $slug, 'team' ) ? 'templates/template-team.php' : 'templates/template-news.php' ); }
 			update_post_meta( $id, '_asfar_page_migrated', 1 );
 		}
 		foreach ( $values as $name => $value ) {

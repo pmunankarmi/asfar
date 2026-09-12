@@ -3,57 +3,57 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.1.6
+Version: 1.1.7
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
 Text Domain: asfar
 Update URI: https://github.com/pmunankarmi/asfar
 */
-[hidden]{display:none!important}.asfar-honeypot{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}.admin-bar .nav{top:32px}.asfar-content{padding:150px 5vw 80px;min-height:65vh}.asfar-content p{margin:1em 0}.asfar-team-group{display:contents}.asfar-portfolio-pane[hidden]{display:none!important}.dk-map__stage svg{width:100%;height:100%}.footer__form-note:empty{display:none}
-@media(max-width:782px){.admin-bar .nav{top:46px}}
+[hidden]{display:none!important}.mt-asfar-honeypot{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}.admin-bar .mt-nav{top:32px}.mt-asfar-content{padding:150px 5vw 80px;min-height:65vh}.mt-asfar-content p{margin:1em 0}.mt-asfar-team-group{display:contents}.mt-asfar-portfolio-pane[hidden]{display:none!important}.mt-dk-map__stage svg{width:100%;height:100%}.mt-footer__form-note:empty{display:none}
+@media(max-width:782px){.admin-bar .mt-nav{top:46px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-html,body{overflow-x:clip}.asfar-honeypot{left:auto;inset-inline-start:0;top:0;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}.asfar-social{display:flex;gap:1rem;background:#154751;color:#fff}.asfar-social:empty{display:none}
-.asfar-pagination{grid-column:1/-1;display:flex;gap:1rem;padding:2rem 0}
+html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:0;clip-path:inset(50%);width:1px;height:1px;overflow:hidden}.mt-asfar-social{display:flex;gap:1rem;background:#154751;color:#fff}.mt-asfar-social:empty{display:none}
+.mt-asfar-pagination{grid-column:1/-1;display:flex;gap:1rem;padding:2rem 0}
 
 /* Native WordPress menus retain the original navigation layout. */
-.asfar-menu-list { list-style: none; padding: 0; margin: 0; display: contents; }
-.asfar-menu-list > li { display: contents; }
-.asfar-project-statistics { display: flex; flex-wrap: wrap; gap: 2rem; margin-block: 2rem; }
-.asfar-project-statistics dd { font-size: 1.6rem; margin: 0; }
+.mt-asfar-menu-list { list-style: none; padding: 0; margin: 0; display: contents; }
+.mt-asfar-menu-list > li { display: contents; }
+.mt-asfar-project-statistics { display: flex; flex-wrap: wrap; gap: 2rem; margin-block: 2rem; }
+.mt-asfar-project-statistics dd { font-size: 1.6rem; margin: 0; }
 /* The desktop text mask must not cover the stacked mobile sector carousel. */
 @media (max-width: 960px) {
- .dk-sectors__grid { grid-template-columns: minmax(0, 1fr); }
- .dk-sectors__rail { min-width: 0; }
- .dk-sectors__grid > .dk-rise:first-child::before { display: none; }
- .dk-sectors__intro { max-width: 100%; }
- .dk-sectors__rail { margin-top: 1.5rem; }
- .dk-sector { flex-basis: 68vw; }
+ .mt-dk-sectors__grid { grid-template-columns: minmax(0, 1fr); }
+ .mt-dk-sectors__rail { min-width: 0; }
+ .mt-dk-sectors__grid > .mt-dk-rise:first-child::before { display: none; }
+ .mt-dk-sectors__intro { max-width: 100%; }
+ .mt-dk-sectors__rail { margin-top: 1.5rem; }
+ .mt-dk-sector { flex-basis: 68vw; }
 }
 
 /* Leave room for the fixed logo/navigation above both translated news listings. */
-.page-template-template-news .news.section {
+.page-template-template-news .mt-news.mt-section {
 	padding-block-start: calc(clamp(112px, 8vw, 140px) + var(--sec));
 }
 
 /* Keep the animated gold hover fill inside the button's rounded outline. */
-.btn--gold { overflow: hidden; }
-.btn--gold::after { border-radius: inherit; }
+.mt-btn--gold { overflow: hidden; }
+.mt-btn--gold::after { border-radius: inherit; }
 
 /* The video dialog must cover the sticky navigation and WordPress toolbar. */
-.vlb { z-index: 100000; }
-.vlb > .vlb__close {
+.mt-vlb { z-index: 100000; }
+.mt-vlb > .mt-vlb__close {
 	top: max(1rem, env(safe-area-inset-top));
 	inset-inline-end: max(1rem, env(safe-area-inset-right));
 	z-index: 1;
 }
-.vlb__frame { width: min(1120px, 100%, calc((100dvh - 7rem) * 16 / 9)); }
+.mt-vlb__frame { width: min(1120px, 100%, calc((100dvh - 7rem) * 16 / 9)); }
 
 /* Keep the scrolled header compact around its logo and controls. */
-.nav.is-scrolled .nav__in {
+.mt-nav.mt-is-scrolled .mt-nav__in {
 	min-height: 0;
 	padding-block: 10px;
 }
 @media (max-width: 820px) {
-	.nav.is-scrolled .nav__in { padding-block: 8px; }
+	.mt-nav.mt-is-scrolled .mt-nav__in { padding-block: 8px; }
 }

@@ -1,17 +1,21 @@
 <?php
 /** Template Name: ASFAR News */
+if ( ! function_exists( 'get_field' ) ) {
+	get_template_part( 'template-parts/content-fallback' );
+	return;
+}
 get_header();
 ?>
-<main id="top">
-	<section class="news newspage section">
-		<div class="wrap">
+<main id="mt-top">
+	<section class="mt-news mt-newspage mt-section">
+		<div class="mt-wrap">
 			<?php while ( have_posts() ) : the_post(); ?>
-				<div class="teampage__head">
-				<h1 class="statement reveal"><?php the_title(); ?></h1>
-				<p class="news__lede teampage__lede reveal"><?php echo asfar_lines( asfar_value( 'introduction' ) ); ?></p>
+				<div class="mt-teampage__head">
+				<h1 class="mt-statement mt-reveal"><?php the_title(); ?></h1>
+				<p class="mt-news__lede mt-teampage__lede mt-reveal"><?php echo asfar_lines( get_field( 'introduction' ) ); ?></p>
 				</div>
 				<?php $news = asfar_news_query(); ?>
-				<div class="newspage__grid">
+				<div class="mt-newspage__grid">
 					<?php while ( $news->have_posts() ) : $news->the_post(); ?>
 						<?php get_template_part( 'template-parts/news/card' ); ?>
 					<?php endwhile; ?>

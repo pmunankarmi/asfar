@@ -1,13 +1,13 @@
 <?php
-$section = asfar_section( 'news' );
+$section = get_field( 'news_section' ) ?: array();
 $news = asfar_news_query( true );
 ?>
-<section class="dk-news" id="dkNews">
-	<span id="news"></span>
-	<div class="dk-wrap">
-		<h2 class="dk-label dk-label--terra dk-rise"><?php echo esc_html( $section['heading'] ?? '' ); ?></h2>
-		<div class="dk-news__rail dk-rise">
-			<div class="dk-news__strip">
+<section class="mt-dk-news" id="mt-dkNews">
+	<span id="mt-news"></span>
+	<div class="mt-dk-wrap">
+		<h2 class="mt-dk-label mt-dk-label--terra mt-dk-rise"><?php echo esc_html( $section['heading'] ?? '' ); ?></h2>
+		<div class="mt-dk-news__rail mt-dk-rise">
+			<div class="mt-dk-news__strip">
 				<?php while ( $news->have_posts() ) : ?>
 					<?php $news->the_post(); ?>
 					<?php get_template_part( 'template-parts/news/card', null, array( 'home' => true ) ); ?>
@@ -15,7 +15,7 @@ $news = asfar_news_query( true );
 				<?php wp_reset_postdata(); ?>
 			</div>
 		</div>
-		<div class="dk-news__foot">
+		<div class="mt-dk-news__foot">
 			<?php get_template_part( 'template-parts/arrows' ); ?>
 			<?php asfar_button( $section['button'] ?? array() ); ?>
 		</div>

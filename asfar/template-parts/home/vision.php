@@ -1,32 +1,31 @@
-<?php
-$section = asfar_section( 'vision' );
-$cards = $section['cards'] ?? array();
-?>
-<section class="dk-vision-band">
-	<div class="dk-wrap">
-		<div class="dk-vision__row" id="philosophy">
-			<div class="dk-rise">
-				<h2 class="dk-label"><?php echo asfar_lines( $section['heading'] ?? '' ); ?></h2>
+<?php while ( have_rows( 'vision_section' ) ) : the_row(); ?>
+<section class="mt-dk-vision-band">
+	<div class="mt-dk-wrap">
+		<div class="mt-dk-vision__row" id="mt-philosophy">
+			<div class="mt-dk-rise">
+				<h2 class="mt-dk-label"><?php echo asfar_lines( get_sub_field( 'heading' ) ); ?></h2>
 			</div>
-			<div class="dk-vision dk-rise">
-				<?php if ( $cards ) : ?>
-					<div class="dk-vision__tan">
-						<span class="dk-vision__motif" aria-hidden="true"></span>
-						<h3><?php echo esc_html( $cards[0]['heading'] ); ?></h3>
-						<p><?php echo asfar_lines( $cards[0]['description'] ); ?></p>
+			<div class="mt-dk-vision mt-dk-rise">
+				<?php while ( have_rows( 'cards' ) ) : the_row(); if ( 1 === get_row_index() ) : ?>
+					<div class="mt-dk-vision__tan">
+						<span class="mt-dk-vision__motif" aria-hidden="true"></span>
+						<h3><?php echo esc_html( get_sub_field( 'heading' ) ); ?></h3>
+						<p><?php echo asfar_lines( get_sub_field( 'description' ) ); ?></p>
 					</div>
-				<?php endif; ?>
-				<div class="dk-vision__col">
-					<?php foreach ( array_slice( $cards, 1 ) as $card ) : ?>
-						<div class="dk-card dk-vision__card">
-							<span class="dk-vision__dia" aria-hidden="true"></span>
-							<h3><?php echo esc_html( $card['heading'] ); ?></h3>
-							<p><?php echo asfar_lines( $card['description'] ); ?></p>
+				<?php endif; endwhile; ?>
+				<div class="mt-dk-vision__col">
+					<?php while ( have_rows( 'cards' ) ) : the_row(); if ( 1 === get_row_index() ) { continue; } ?>
+						<div class="mt-dk-card mt-dk-vision__card">
+							<span class="mt-dk-vision__dia" aria-hidden="true"></span>
+							<h3><?php echo esc_html( get_sub_field( 'heading' ) ); ?></h3>
+							<p><?php echo asfar_lines( get_sub_field( 'description' ) ); ?></p>
 						</div>
-					<?php endforeach; ?>
+					<?php endwhile; ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 <?php get_template_part( 'template-parts/wave', null, array( 'color' => '#154751', 'background' => '#F2ECE3' ) ); ?>
+
+<?php endwhile; ?>

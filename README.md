@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.1.6 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.1.7 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.1.6` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.1.7` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -21,4 +21,6 @@ Tests require an isolated WordPress installation. Never run fixture tests on a p
 
 ACF configuration screens are hidden because fields are defined in PHP. Content fields, Theme Settings and Partners remain editable. Comments and pingbacks are disabled site-wide while this theme is active; existing comment data is retained.
 
-Version 1.1.6 matches the September 11 source update, including homepage copy, persistent banner buttons, destination controls, PIF artwork, portfolio interaction and corrected news spacing. The one-time upgrade sets Arabic as the default and preserves translated menu destinations.
+Version 1.1.7 matches the September 11 source update, including homepage copy, persistent banner buttons, destination controls, PIF artwork, portfolio interaction and corrected news spacing. The one-time upgrade sets Arabic as the default and preserves translated menu destinations.
+
+Selectable page templates live in `asfar/templates/`; WordPress hierarchy entry points stay at the theme root and load markup from `template-parts/layout/`. A one-time admin migration updates existing template assignments. Frontend repeaters use native ACF `have_rows()`, `the_row()` and `get_sub_field()` loops. Theme-owned CSS classes and HTML IDs use `mt-`, including JavaScript-created elements and inline SVG; WordPress/plugin-generated identifiers remain standard.

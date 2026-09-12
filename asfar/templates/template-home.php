@@ -4,11 +4,15 @@
  *
  * Each frontend section has its own template part and ACF field group.
  */
+if ( ! function_exists( 'get_field' ) ) {
+	get_template_part( 'template-parts/content-fallback' );
+	return;
+}
 get_header();
 while ( have_posts() ) :
 	the_post();
 	?>
-	<main id="top">
+	<main id="mt-top">
 		<?php get_template_part( 'template-parts/home/banner' ); ?>
 		<?php get_template_part( 'template-parts/home/about' ); ?>
 		<?php get_template_part( 'template-parts/home/vision' ); ?>

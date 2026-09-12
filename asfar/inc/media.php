@@ -25,7 +25,15 @@ function asfar_render_map_artwork() {
  $path = 'img/asfar-map-deck.svg';
  $file = asfar_uploads_media_dir() . '/' . $path;
  // Inline only the exact supplied artwork, never an arbitrary uploaded SVG.
- if ( is_file( $file ) && hash_equals( asfar_media_manifest()[ $path ], hash_file( 'sha256', $file ) ) ) { readfile( $file ); }
+ if ( is_file( $file ) && hash_equals( asfar_media_manifest()[ $path ], hash_file( 'sha256', $file ) ) ) {
+  $svg = file_get_contents( $file );
+  $svg = preg_replace_callback( '/\b(class|id)="([^"]+)"/', function ( $match ) {
+   $names = preg_split( '/\s+/', trim( $match[2] ) );
+   return $match[1] . '="' . implode( ' ', array_map( function ( $name ) { return 'mt-' . $name; }, $names ) ) . '"';
+  }, $svg );
+  $svg = preg_replace( '/url\(#([^)]+)\)/', 'url(#mt-$1)', $svg );
+  echo $svg; // Only checksum-verified bundled artwork is rendered.
+ }
 }
 function asfar_verify_media_package() {
  foreach ( asfar_media_manifest() as $path => $hash ) {

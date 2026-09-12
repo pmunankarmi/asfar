@@ -79,7 +79,7 @@ function asfar_seed_content() {
    $map[ $slug ] = $id;
    update_post_meta( $id, '_asfar_layout', $slug );
    update_post_meta( $id, '_asfar_language', $page['lang'] );
-   if ( in_array( $slug, array( 'index', 'index-ar' ), true ) ) { update_post_meta( $id, '_wp_page_template', 'template-home.php' ); }
+   if ( in_array( $slug, array( 'index', 'index-ar' ), true ) ) { update_post_meta( $id, '_wp_page_template', 'templates/template-home.php' ); }
    pll_set_post_language( $id, $page['lang'] );
    update_option( 'asfar_page_map', $map, false );
   }

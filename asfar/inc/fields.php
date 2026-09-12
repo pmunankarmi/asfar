@@ -144,7 +144,9 @@ function asfar_theme_fields() {
 		asfar_repeater( 'social_links', 'Social Links', array( asfar_text( 'label', 'Name' ), asfar_field( 'url', 'Website URL', 'url' ) ), 'Add social link' ),
 	);
 	foreach ( asfar_ui_labels() as $name => $label ) {
-		$fields[] = asfar_text( $name, $label, in_array( $name, array( 'copyright', 'form_success', 'form_error', 'form_invalid' ), true ) );
+		$field = asfar_text( $name, $label, in_array( $name, array( 'copyright', 'form_success', 'form_error', 'form_invalid' ), true ) );
+		if ( 'copyright' === $name ) { $field['instructions'] = 'Use [year] for the current year, for example: © [year] ASFAR. Keep [year] in each Polylang translation. Existing fixed years update automatically.'; }
+		$fields[] = $field;
 	}
 	return $fields;
 }
@@ -164,7 +166,7 @@ add_action( 'acf/init', function () {
 	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
 		return;
 	}
-	$home_location = array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'template-home.php' ) ) );
+	$home_location = array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'templates/template-home.php' ) ) );
 	foreach ( asfar_home_field_groups() as $id => $group ) {
 		asfar_register_field_group( 'home_' . $id, $group[0], $group[1], $home_location, (int) substr( $group[0], 0, 2 ) );
 	}
@@ -189,14 +191,14 @@ add_action( 'acf/init', function () {
 	asfar_register_field_group( 'faq', 'Frequently Asked Questions', array(
 		asfar_text( 'introduction', 'Page Introduction', true ),
 		asfar_repeater( 'faq_items', 'Questions and Answers', array( asfar_text( 'question', 'Question' ), asfar_text( 'answer', 'Answer', true ) ), 'Add question' ),
-	), array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'template-faq.php' ) ) ) );
+	), array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'templates/template-faq.php' ) ) ) );
 	asfar_register_field_group( 'page', 'Page Content', array(
 		asfar_text( 'introduction', 'Page Introduction', true ),
 		asfar_repeater( 'paragraphs', 'Page Paragraphs', array( asfar_text( 'text', 'Paragraph', true ) ), 'Add paragraph' ),
 	), array( array(
 		array( 'param' => 'post_type', 'operator' => '==', 'value' => 'page' ),
-		array( 'param' => 'page_template', 'operator' => '!=', 'value' => 'template-home.php' ),
-		array( 'param' => 'page_template', 'operator' => '!=', 'value' => 'template-faq.php' ),
+		array( 'param' => 'page_template', 'operator' => '!=', 'value' => 'templates/template-home.php' ),
+		array( 'param' => 'page_template', 'operator' => '!=', 'value' => 'templates/template-faq.php' ),
 	) ) );
 	asfar_register_field_group( 'article', 'News Article Content', array(
 		asfar_text( 'display_date', 'Display Date' ),
