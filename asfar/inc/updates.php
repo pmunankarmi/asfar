@@ -65,3 +65,17 @@ add_action( 'admin_post_asfar_check_updates', function () {
  wp_update_themes();
  wp_safe_redirect( admin_url( 'update-core.php' ) ); exit;
 } );
+
+/** Refresh native update notices during admin visits, at most once per five minutes. */
+function asfar_refresh_admin_theme_update() {
+ if ( ! current_user_can( 'update_themes' ) || wp_doing_ajax() || get_transient( 'asfar_admin_update_check' ) ) { return; }
+ set_transient( 'asfar_admin_update_check', 1, 5 * MINUTE_IN_SECONDS );
+ delete_transient( 'asfar_github_release' );
+ $updates = get_site_transient( 'update_themes' );
+ if ( ! is_object( $updates ) ) { $updates = new stdClass(); }
+ $slug = get_template();
+ $updates->checked[ $slug ] = wp_get_theme( $slug )->get( 'Version' );
+ // The existing native update filter adds ASFAR without discarding other themes.
+ set_site_transient( 'update_themes', $updates );
+}
+add_action( 'admin_init', 'asfar_refresh_admin_theme_update' );

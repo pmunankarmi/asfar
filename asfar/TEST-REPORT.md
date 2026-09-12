@@ -50,3 +50,7 @@ The 1.1.4 release is prepared for the administrator to install. No 1.1.4 staging
 Verified the template assignment migration, native ACF repeater output, English/Arabic homepage section counts, banner controls, menu, FAQ, portfolio keyboard selection and scroll release, team biography dialogs, contact submission with local mail disabled, all imported page responses, Arabic default and mobile width. Browser checks report no JavaScript errors or broken loaded images. Integration checks and the no-ACF/no-Polylang fallback smoke test pass. PHP/JavaScript syntax, CSS parsing and installable archive checks pass.
 
 This revision uses local ACF Free with a test-only raw repeater row adapter, not ACF Pro UI. No staging installation or Pro editor verification is claimed for 1.1.7. WordPress/plugin-generated identifiers retain their native names; theme-owned selectors use mt-.
+
+## 1.1.8 automatic admin update discovery
+
+Isolated tests verify that admin visits refresh stale GitHub release data and populate the native update notice, preserve other theme updates, throttle checks to five minutes and skip unauthorized users. Syntax and release package checks pass.
