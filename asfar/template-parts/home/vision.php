@@ -1,7 +1,7 @@
 <?php while ( have_rows( 'vision_section' ) ) : the_row(); ?>
 <section class="mt-dk-vision-band">
 	<div class="mt-dk-wrap">
-		<div class="mt-dk-vision__row" id="mt-philosophy">
+		<div class="mt-dk-vision__row" id="philosophy">
 			<div class="mt-dk-rise">
 				<h2 class="mt-dk-label"><?php echo asfar_lines( get_sub_field( 'heading' ) ); ?></h2>
 			</div>

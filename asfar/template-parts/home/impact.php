@@ -1,5 +1,5 @@
 <?php while ( have_rows( 'impact_section' ) ) : the_row(); ?>
-<section class="mt-dk-impact" id="mt-impact">
+<section class="mt-dk-impact" id="impact">
 	<div class="mt-dk-wrap">
 		<h2 class="mt-dk-label mt-dk-rise"><?php echo esc_html( get_sub_field( 'heading' ) ); ?></h2>
 		<div class="mt-dk-impact__tiles mt-dk-rise">

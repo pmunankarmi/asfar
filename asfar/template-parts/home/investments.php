@@ -1,6 +1,6 @@
 <?php while ( have_rows( 'investments_section' ) ) : the_row(); ?>
-<span id="mt-sectors"></span>
-<section class="mt-dk-sectors" id="mt-dkSectors">
+<span id="sectors"></span>
+<section class="mt-dk-sectors" id="dkSectors">
 	<div class="mt-dk-wrap mt-dk-sectors__grid">
 		<div class="mt-dk-rise">
 			<h2 class="mt-dk-label"><?php echo asfar_lines( get_sub_field( 'heading' ) ); ?></h2>

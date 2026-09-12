@@ -2,8 +2,8 @@
 $section = get_field( 'portfolio_section' ) ?: array();
 $projects = asfar_project_rows( $section['projects'] ?? array() );
 ?>
-<span id="mt-projects"></span>
-<section class="mt-dk-map" id="mt-dkMap">
+<span id="projects"></span>
+<section class="mt-dk-map" id="dkMap">
 	<div class="mt-dk-map__bgs" aria-hidden="true">
 		<?php foreach ( $projects as $index => $project ) : ?>
 			<div class="mt-dk-map__bg <?php echo 0 === $index ? 'mt-is-active' : ''; ?>" style="background-image: url('<?php echo esc_url( asfar_attachment_url( $project['bg'] ) ); ?>')"></div>

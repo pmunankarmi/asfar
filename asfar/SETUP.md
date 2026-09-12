@@ -72,7 +72,7 @@ The first banner row supplies the persistent film and company-profile buttons. L
 
 ## Version 1.1.7 structure
 
-Page templates are in `templates/`, homepage sections in `template-parts/home/`, and shared layout markup in `template-parts/layout/`. Required WordPress hierarchy files remain at the theme root. Visit WordPress admin after updating to migrate existing page-template assignments automatically. Repeater output uses native ACF loops. Theme-owned classes and IDs now start with `mt-`; update any external custom CSS selectors accordingly. Saved menu section links are mapped to the new IDs when rendered.
+Page templates are in `templates/`, homepage sections in `template-parts/home/`, and shared layout markup in `template-parts/layout/`. Required WordPress hierarchy files remain at the theme root. Visit WordPress admin after updating to migrate existing page-template assignments automatically. Repeater output uses native ACF loops. Theme-owned classes start with `mt-`; HTML IDs and URL anchors retain their original names. Saved links containing an mt- anchor are normalized when rendered.
 
 Copyright Text supports the standard WordPress `[year]` shortcode, for example `© [year] ASFAR`. Keep the shortcode in each Polylang translation. It uses the WordPress site timezone. Existing copyright text with a fixed 20xx year also displays the current year.
 

@@ -497,7 +497,7 @@ body:not(.mt-page--inner) .mt-nav:not(.mt-is-scrolled) .mt-nav__lang{text-shadow
   background:linear-gradient(180deg,rgba(10,34,22,.62) 0%,rgba(8,26,17,.72) 60%,rgba(7,22,15,.82) 100%)}
 .mt-numbers__inner{position:relative;z-index:2}
 /* portable on-dark treatment — was bound to the .mt-numbers ancestor, which no
-   longer exists; the stats now live beside the map inside #mt-projects */
+   longer exists; the stats now live beside the map inside #projects */
 .mt-stats--light{border-top-color:rgba(255,255,255,.22)}
 .mt-stats--light .mt-stat__fig,.mt-stats--light .mt-stat__suffix{color:#fff}
 .mt-stats--light .mt-stat__unit{color:var(--gold-soft)}
@@ -1585,7 +1585,7 @@ body:not(.mt-page--inner) .mt-nav:not(.mt-is-scrolled) .mt-nav__lang{text-shadow
 .mt-invmap__stats{flex:1 1 auto;grid-template-columns:1fr;grid-auto-rows:1fr;gap:0;
   border-top:0;padding-top:0}
 /* the region's own photograph, above the ledger and switching with the tabs.
-   render() already writes #mt-invImg from the same data that drives the figures,
+   render() already writes #invImg from the same data that drives the figures,
    so the picture can never drift from the region it belongs to. */
 .mt-invmap__shot{margin:0 0 clamp(.45rem,.9vh,.75rem);flex:0 0 auto;
   border-radius:var(--r-surface);overflow:hidden;background:rgba(255,255,255,.05);
@@ -1701,7 +1701,7 @@ body:not(.mt-page--inner) .mt-nav:not(.mt-is-scrolled) .mt-nav__lang{text-shadow
 
 /* =====================================================================
    NEWS — the press releases, lifted out of the map's side panel into
-   their own 3-up row. Cream ground so it breaks the petrol of #mt-projects.
+   their own 3-up row. Cream ground so it breaks the petrol of #projects.
    ===================================================================== */
 /* 1 · alternation — News steps warm so Sectors / News / Leadership are not
    three identical cream fields in a row */
@@ -1928,7 +1928,7 @@ body:not(.mt-page--inner) .mt-nav:not(.mt-is-scrolled) .mt-nav__lang{text-shadow
 }
 
 /* ---- SECTION DIVIDER — brand diamond motif on a hairline ----
-   #mt-faq and #mt-partners share var(--canvas-2), so without this they read as one
+   #faq and #partners share var(--canvas-2), so without this they read as one
    continuous block. The rules fade toward the outer edges so the mark carries
    the eye rather than the line. Decorative only -> aria-hidden in the markup. */
 .mt-secdiv{display:flex;align-items:center;gap:clamp(.9rem,2vw,1.6rem);

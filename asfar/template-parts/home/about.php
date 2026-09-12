@@ -1,5 +1,5 @@
 <?php while ( have_rows( 'about_section' ) ) : the_row(); ?>
-<section class="mt-dk-about" id="mt-about">
+<section class="mt-dk-about" id="about">
 	<div class="mt-dk-wrap">
 		<div class="mt-dk-about__row">
 			<div class="mt-dk-rise">

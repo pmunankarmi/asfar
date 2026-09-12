@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<form class="mt-footer__form" id="mt-contactForm" method="post" novalidate aria-labelledby="mt-enquireBtn" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+<form class="mt-footer__form" id="contactForm" method="post" novalidate aria-labelledby="enquireBtn" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 	<?php asfar_form_hidden(); ?>
 	<div class="mt-footer__form-grid">
 		<label class="mt-ffield">

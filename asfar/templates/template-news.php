@@ -6,7 +6,7 @@ if ( ! function_exists( 'get_field' ) ) {
 }
 get_header();
 ?>
-<main id="mt-top">
+<main id="top">
 	<section class="mt-news mt-newspage mt-section">
 		<div class="mt-wrap">
 			<?php while ( have_posts() ) : the_post(); ?>

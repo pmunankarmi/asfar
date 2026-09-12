@@ -11,7 +11,7 @@ while ( have_rows( 'banner_animation' ) ) {
 }
 if ( ! have_rows( 'banner_slides' ) ) { return; }
 ?>
-<section class="mt-hero" id="mt-heroSlider" data-morphmarks="<?php echo esc_attr( wp_json_encode( $marks ) ); ?>">
+<section class="mt-hero" id="heroSlider" data-morphmarks="<?php echo esc_attr( wp_json_encode( $marks ) ); ?>">
 	<div class="mt-hero__pin">
 		<div class="mt-dk-film">
 			<div class="mt-hero__scenes" aria-hidden="true">
@@ -22,7 +22,7 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 				<?php endwhile; ?>
 			</div>
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
-				<canvas class="mt-hero__morph-canvas" id="mt-heroMorphCanvas" data-frames="273" aria-hidden="true"></canvas>
+				<canvas class="mt-hero__morph-canvas" id="heroMorphCanvas" data-frames="273" aria-hidden="true"></canvas>
 			<?php endif; ?>
 			<div class="mt-hero__scrim" aria-hidden="true"></div>
 		</div>
@@ -58,11 +58,11 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 				<div class="mt-hero__morphcap">
 					<p class="mt-hero__morph-lead"><?php echo asfar_lines( $animation['heading'] ); ?></p>
 					<p class="mt-hero__morph-over"><?php echo esc_html( $animation['subtitle'] ); ?></p>
-					<h2 class="mt-hero__title" id="mt-heroMorphName"><?php echo esc_html( $marks[0]['name'] ); ?></h2>
+					<h2 class="mt-hero__title" id="heroMorphName"><?php echo esc_html( $marks[0]['name'] ); ?></h2>
 				</div>
 			<?php endif; ?>
 		</div>
-		<div class="mt-dk-dashes" id="mt-dkHeroDashes" aria-label="<?php echo esc_attr( asfar_option( 'banner_label' ) ); ?>">
+		<div class="mt-dk-dashes" id="dkHeroDashes" aria-label="<?php echo esc_attr( asfar_option( 'banner_label' ) ); ?>">
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
 				<?php while ( have_rows( 'banner_animation' ) ) : the_row(); ?>
 					<?php while ( have_rows( 'stops' ) ) : the_row(); ?>

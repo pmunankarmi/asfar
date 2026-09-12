@@ -2,7 +2,7 @@
 /** Native content remains available when ACF is inactive. */
 get_header();
 ?>
-<main id="mt-top" class="mt-wrap">
+<main id="top" class="mt-wrap">
 	<?php while ( have_posts() ) : the_post(); ?>
 		<article>
 			<h1><?php the_title(); ?></h1>

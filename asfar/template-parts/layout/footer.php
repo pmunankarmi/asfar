@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-	<footer class="mt-dk-footer" id="mt-contact">
+	<footer class="mt-dk-footer" id="contact">
 		<div class="mt-dk-footer__wave" aria-hidden="true">
 			<svg viewBox="0 0 1280 22.86" preserveAspectRatio="none">
 				<path d="M0 10.45L291.43 1.65C330.69 0.32 377.61 0 428.88 0.34C582.69 1.40 775.65 8.40 918.55 11.65L1280 22.86L0 22.86Z" fill="#154751" />
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<span dir="ltr"><?php echo esc_html( asfar_option( 'contact_email' ) ); ?></span>
 				</a>
 				<div class="mt-dk-footer__cta mt-footer__enquire" data-enquire>
-					<button type="button" class="mt-dk-pill mt-enquire__btn" id="mt-enquireBtn" aria-expanded="false" aria-controls="mt-contactForm">
+					<button type="button" class="mt-dk-pill mt-enquire__btn" id="enquireBtn" aria-expanded="false" aria-controls="contactForm">
 						<?php echo esc_html( asfar_option( 'contact_button' ) ); ?>
 					</button>
 					<?php get_template_part( 'template-parts/contact-form' ); ?>
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="mt-dk-footer__legal">
 				<?php echo wp_get_attachment_image( asfar_option( 'ownership_logo' ), 'full', false, array( 'alt' => asfar_option( 'ownership_label' ), 'loading' => 'lazy' ) ); ?>
 				<span><?php echo esc_html( asfar_copyright() ); ?></span>
-				<a class="mt-dk-footer__top" href="#mt-top" id="mt-dkTop">
+				<a class="mt-dk-footer__top" href="#top" id="dkTop">
 					<?php echo esc_html( asfar_option( 'back_top' ) ); ?>
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 						<path d="M12 19V5M5 12l7-7 7 7" />

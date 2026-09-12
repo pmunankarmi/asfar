@@ -1,13 +1,13 @@
 /* Interactions only. All visible content is rendered by PHP. */
 (function () {
  'use strict';
- // Resolve bookmarked section links from before the mt- namespace change.
+ // Preserve bookmarks created while section IDs used an mt- prefix.
  function resolveLegacyAnchor() {
   var hash = window.location.hash.slice(1);
-  if (!hash || hash.indexOf('mt-') === 0) return;
-  var target = document.getElementById('mt-' + hash);
+  if (hash.indexOf('mt-') !== 0) return;
+  var target = document.getElementById(hash.slice(3));
   if (target) {
-   history.replaceState(null, '', '#mt-' + hash);
+   history.replaceState(null, '', '#' + hash.slice(3));
    target.scrollIntoView();
   }
  }
@@ -15,7 +15,7 @@
  window.addEventListener('hashchange', resolveLegacyAnchor);
  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
  var rtl = document.documentElement.dir === 'rtl';
- var form = document.getElementById("mt-contactForm");
+ var form = document.getElementById("contactForm");
  if (form) {
   if (crypto.randomUUID) form.elements.request_key.value = crypto.randomUUID();
   form.addEventListener('submit', async function (event) {
@@ -34,7 +34,7 @@
    finally { button.disabled = false; }
   });
  }
- var team = document.getElementById("mt-dkTeam");
+ var team = document.getElementById("dkTeam");
  if (team) {
   var tabs = [...team.querySelectorAll(".mt-dk-tab")];
   var groups = [...team.querySelectorAll('[data-team-group]')];
@@ -49,7 +49,7 @@
   team.querySelectorAll('[data-dir]').forEach(function (button) { button.addEventListener('click', function () { var g = grid(); if (!g || !g.children.length) return; shift += Number(button.dataset.dir) * (g.children[0].clientWidth + (parseFloat(getComputedStyle(g).columnGap) || 0)); paint(); }); });
   addEventListener('resize', paint);
  }
- var map = document.getElementById("mt-dkMap");
+ var map = document.getElementById("dkMap");
  if (map) {
   var panes = [...map.querySelectorAll(".mt-asfar-portfolio-pane")], backgrounds = [...map.querySelectorAll(".mt-dk-map__bg")], buttons = [...map.querySelectorAll(".mt-dk-map__dashes button")];
   var current = 0, timer, swap, pinned = false, finished = false, lastStep = 0;
@@ -118,7 +118,7 @@
    });
    addEventListener('resize', release);
    addEventListener('hashchange', release);
-   document.addEventListener('click', function (event) { if (event.target.closest("a, #mt-burger")) release(); });
+   document.addEventListener('click', function (event) { if (event.target.closest("a, #burger")) release(); });
   }
   if (panes.length) {
    place(); addEventListener('resize', place);

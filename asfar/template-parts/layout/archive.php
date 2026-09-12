@@ -6,7 +6,7 @@ if ( ! function_exists( 'get_field' ) ) {
 }
 get_header();
 ?>
-<main id="mt-top" class="mt-asfar-content mt-wrap">
+<main id="top" class="mt-asfar-content mt-wrap">
 	<h1><?php echo is_home() ? esc_html( asfar_option( 'archive_title' ) ) : wp_kses_post( get_the_archive_title() ); ?></h1>
 	<div class="mt-news__grid">
 		<?php while ( have_posts() ) : the_post(); ?>

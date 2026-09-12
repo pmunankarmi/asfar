@@ -54,3 +54,7 @@ This revision uses local ACF Free with a test-only raw repeater row adapter, not
 ## 1.1.8 automatic admin update discovery
 
 Isolated tests verify that admin visits refresh stale GitHub release data and populate the native update notice, preserve other theme updates, throttle checks to five minutes and skip unauthorized users. Syntax and release package checks pass.
+
+## 1.1.9 homepage assignment and anchors
+
+Confirmed staging English homepage retained the old template path after the folder migration. Restored its homepage assignment through WordPress admin and verified three banner slides and homepage section headings. Revised migration version two explicitly queries all Polylang languages. Local checks cover rerunning from version one and both translated homepage assignments. Classes retain mt-; IDs, CSS ID selectors, JavaScript references and anchor links use original names.

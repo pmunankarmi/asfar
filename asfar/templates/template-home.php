@@ -12,7 +12,7 @@ get_header();
 while ( have_posts() ) :
 	the_post();
 	?>
-	<main id="mt-top">
+	<main id="top">
 		<?php get_template_part( 'template-parts/home/banner' ); ?>
 		<?php get_template_part( 'template-parts/home/about' ); ?>
 		<?php get_template_part( 'template-parts/home/vision' ); ?>

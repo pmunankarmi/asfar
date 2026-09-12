@@ -5,8 +5,8 @@ if ( empty( $section['enabled'] ) ) {
 	return;
 }
 ?>
-<section class="mt-dk-team" id="mt-dkTeam">
-	<span id="mt-leadership"></span>
+<section class="mt-dk-team" id="dkTeam">
+	<span id="leadership"></span>
 	<div class="mt-dk-wrap">
 		<div class="mt-dk-team__panel mt-dk-rise">
 			<h2 class="mt-dk-label"><?php echo esc_html( $section['heading'] ?? '' ); ?></h2>

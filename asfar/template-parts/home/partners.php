@@ -1,5 +1,5 @@
 <?php $section = get_field( 'partners_section' ) ?: array(); ?>
-<section class="mt-dk-partners" id="mt-partners">
+<section class="mt-dk-partners" id="partners">
 	<div class="mt-dk-wrap mt-dk-partners__grid">
 		<h2 class="mt-dk-label mt-dk-rise"><?php echo asfar_lines( $section['heading'] ?? '' ); ?></h2>
 		<div class="mt-dk-partners__card mt-dk-rise">

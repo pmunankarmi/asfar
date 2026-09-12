@@ -6,7 +6,7 @@ if ( ! function_exists( 'get_field' ) ) {
 }
 get_header();
 ?>
-<main id="mt-top">
+<main id="top">
 	<?php while ( have_posts() ) : the_post(); ?>
 		<article class="mt-article">
 			<div class="mt-wrap mt-article__grid">

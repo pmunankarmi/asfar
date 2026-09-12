@@ -6,7 +6,7 @@ if ( ! function_exists( 'get_field' ) ) {
 }
 get_header();
 ?>
-<main id="mt-top" class="mt-asfar-content mt-wrap">
+<main id="top" class="mt-asfar-content mt-wrap">
 	<?php while ( have_posts() ) : the_post(); ?>
 		<article>
 			<p><?php echo esc_html( get_field( 'company' ) ); ?></p>

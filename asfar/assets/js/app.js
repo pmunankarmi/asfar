@@ -37,7 +37,7 @@
       closeMenu();
       // land with the section title clear of the fixed nav bar
       var navH = nav ? nav.offsetHeight : 0;
-      scrollToEl(el, el.id === "mt-top" ? 0 : -(navH + 14));
+      scrollToEl(el, el.id === "top" ? 0 : -(navH + 14));
     });
   });
 
@@ -72,7 +72,7 @@
   /* ---------- geo map: pin <-> list hover sync ---------- */
   (function () {
     var pins = Array.prototype.slice.call(document.querySelectorAll(".mt-geopin"));
-    var rows = Array.prototype.slice.call(document.querySelectorAll("#mt-geoList li"));
+    var rows = Array.prototype.slice.call(document.querySelectorAll("#geoList li"));
     if (!pins.length) return;
     function hot(i, on) {
       var p = pins.find(function (x) { return x.getAttribute('data-i') === String(i); });
@@ -325,8 +325,8 @@
     /* ---------- investment map: faithful reference layout (map + marker + company + PR card + tabs) ---------- */
   (function () {
     var SVGNS = 'http://www.w3.org/2000/svg';
-    var dataEl = document.getElementById("mt-invData");
-    var section = document.getElementById("mt-projects");
+    var dataEl = document.getElementById("invData");
+    var section = document.getElementById("projects");
     if (!dataEl || !section) return;
     var DATA; try { DATA = JSON.parse(dataEl.textContent); } catch (e) { return; }
     if (!DATA || !DATA.length) return;
@@ -345,11 +345,11 @@
     });
     section.insertBefore(bgHost, section.firstChild);
 
-    var host = document.getElementById("mt-invMap"),
-        companyEl = document.getElementById("mt-invCompany"), pillEl = document.getElementById("mt-invRegion"),
-        titleEl = document.getElementById("mt-invTitle"), imgEl = document.getElementById("mt-invImg"),
-        bodyEl = document.getElementById("mt-invBody"), moreEl = document.getElementById("mt-invMore"),
-        panel = document.getElementById("mt-invPanel");
+    var host = document.getElementById("invMap"),
+        companyEl = document.getElementById("invCompany"), pillEl = document.getElementById("invRegion"),
+        titleEl = document.getElementById("invTitle"), imgEl = document.getElementById("invImg"),
+        bodyEl = document.getElementById("invBody"), moreEl = document.getElementById("invMore"),
+        panel = document.getElementById("invPanel");
     var tabs = Array.prototype.slice.call(section.querySelectorAll(".mt-invmap__tab"));
     var svgEl = null, regionPaths = [], cur = -1;
 
@@ -423,7 +423,7 @@
        Geometry is MEASURED off the live rects (never hard-coded), so it tracks
        the map at any size. .invmap__inner is direction:ltr in both languages,
        so the run is always map-left -> lede-right and needs no RTL mirror. ---- */
-    var leaderEl = document.getElementById("mt-invLeader");
+    var leaderEl = document.getElementById("invLeader");
     var leaderPath = leaderEl ? leaderEl.querySelector('path') : null;
     var leaderDot = leaderEl ? leaderEl.querySelector('circle') : null;
     var innerEl = section.querySelector(".mt-invmap__inner");
@@ -620,25 +620,25 @@
   if (hero) { requestAnimationFrame(function () { setTimeout(function () { hero.classList.add("mt-is-in"); }, 120); }); }
 
   /* ---------- nav + parallax + atlas on scroll ---------- */
-  var nav = document.getElementById("mt-nav");
-  var progress = document.getElementById("mt-progress");
+  var nav = document.getElementById("nav");
+  var progress = document.getElementById("progress");
   var heroMedia = document.querySelector(".mt-hero__scenes");
   var heroIn = document.querySelector(".mt-hero__in");
   var interludeMedia = document.querySelector(".mt-interlude__media");
   var interlude = document.querySelector(".mt-interlude");
 
   /* atlas elements */
-  var atlasTrack = document.getElementById("mt-atlasTrack");
+  var atlasTrack = document.getElementById("atlasTrack");
   var figs = Array.prototype.slice.call(document.querySelectorAll(".mt-atlas__fig"));
-  var names = Array.prototype.slice.call(document.querySelectorAll("#mt-atlasNames li"));
-  var detail = document.getElementById("mt-atlasDetail");
+  var names = Array.prototype.slice.call(document.querySelectorAll("#atlasNames li"));
+  var detail = document.getElementById("atlasDetail");
   var regionEl = detail ? detail.querySelector(".mt-atlas__region") : null;
   var blurbEl = detail ? detail.querySelector(".mt-atlas__blurb") : null;
-  var bar = document.getElementById("mt-atlasBar");
-  var countEl = document.getElementById("mt-atlasCount");
+  var bar = document.getElementById("atlasBar");
+  var countEl = document.getElementById("atlasCount");
   var current = -1;
   var N = figs.length;
-  var atlasView = document.getElementById("mt-atlasView");
+  var atlasView = document.getElementById("atlasView");
 
   function setActive(i) {
     if (i === current || i < 0 || i >= N) return;
@@ -709,8 +709,8 @@
   }
 
   /* ---------- signature morph fly-through (canvas frame-scrub) ---------- */
-  var flyEl = document.getElementById("mt-fly");
-  var flyCanvas = document.getElementById("mt-flyCanvas");
+  var flyEl = document.getElementById("fly");
+  var flyCanvas = document.getElementById("flyCanvas");
   var flyCtx = flyCanvas ? flyCanvas.getContext('2d') : null;
   var flyTotal = flyCanvas ? (parseInt(flyCanvas.getAttribute('data-frames'), 10) || 0) : 0;
   var flyFrames = [], flyReady = false, flyLoaded = 0, flyCur = -1, flyLm = -1;
@@ -723,9 +723,9 @@
   if (flyEl && flyEl.getAttribute('data-marks')) {
     try { var _m = JSON.parse(flyEl.getAttribute('data-marks')); if (_m && _m.length) flyMarks = _m; } catch (e) {}
   }
-  var flyNameEl = document.getElementById("mt-flyName");
-  var flyCountEl = document.getElementById("mt-flyCount");
-  var flyRegionEl = document.getElementById("mt-flyRegion");
+  var flyNameEl = document.getElementById("flyName");
+  var flyCountEl = document.getElementById("flyCount");
+  var flyRegionEl = document.getElementById("flyRegion");
   function flyDraw(idx) {
     var img = flyFrames[idx]; if (!img || !flyCtx) return;
     var cw = flyCanvas.width, ch = flyCanvas.height;
@@ -801,9 +801,9 @@
   window.addEventListener('resize', function () { current = -1; onScroll(); });
 
   /* ---------- overlay menu (all viewports) ---------- */
-  var burger = document.getElementById("mt-burger");
-  var menu = document.getElementById("mt-menu");
-  var menuScrim = document.getElementById("mt-menuScrim");
+  var burger = document.getElementById("burger");
+  var menu = document.getElementById("menu");
+  var menuScrim = document.getElementById("menuScrim");
   function lockScroll(on) { var v = on ? 'hidden' : ''; document.documentElement.style.overflow = v; document.body.style.overflow = v; }
   function setInert(on) {
     ['main', '.footer'].forEach(function (sel) {
@@ -848,7 +848,7 @@
 
   /* ---------- hero video ---------- */
   (function () {
-    var v = document.getElementById("mt-heroVid");
+    var v = document.getElementById("heroVid");
     if (!v || reduced) return;
     function ready() { v.classList.add("mt-is-ready"); }
     function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
@@ -860,7 +860,7 @@
 
   /* ---------- hero: rotating 3-scene banner (each scene has its own CTA) ---------- */
   (function () {
-    var hero = document.getElementById("mt-heroSlider");
+    var hero = document.getElementById("heroSlider");
     if (!hero) return;
     var scenes = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__scene"));
     var slides = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__slide"));
@@ -906,16 +906,16 @@
     start();
 
     /* ---- "Morph" pill: turn the hero into a SCROLL-SCRUBBED canvas morph; caption tracks the frame ---- */
-    var morphBtn = document.getElementById("mt-heroMorphBtn");
-    var hcanvas = document.getElementById("mt-heroMorphCanvas");
+    var morphBtn = document.getElementById("heroMorphBtn");
+    var hcanvas = document.getElementById("heroMorphCanvas");
     var hctx = hcanvas ? hcanvas.getContext('2d') : null;
     var HTOTAL = hcanvas ? (parseInt(hcanvas.getAttribute('data-frames'), 10) || 0) : 0;
     var hframes = [], hready = false, hloaded = 0, hcur = -1, hlm = -1, hstarted = false, morphOn = false;
     var hmarks = [];
     if (hero.getAttribute('data-morphmarks')) { try { var _hm = JSON.parse(hero.getAttribute('data-morphmarks')); if (_hm && _hm.length) hmarks = _hm; } catch (e) {} }
-    var hNameEl = document.getElementById("mt-heroMorphName");
-    var hSubEl = document.getElementById("mt-heroMorphSub");
-    var hCtaEl = document.getElementById("mt-heroMorphCta");
+    var hNameEl = document.getElementById("heroMorphName");
+    var hSubEl = document.getElementById("heroMorphSub");
+    var hCtaEl = document.getElementById("heroMorphCta");
     function hDraw(idx) {
       var img = hframes[idx]; if (!img || !hctx) return;
       var cw = hcanvas.width, ch = hcanvas.height, ir = img.naturalWidth / img.naturalHeight, cr = cw / ch, dw, dh, dx, dy;
@@ -1025,7 +1025,7 @@
         playing = true;
         stop();
         hero.classList.add("mt-is-film");
-        var v = document.getElementById("mt-heroVid");
+        var v = document.getElementById("heroVid");
         if (v) { try { v.pause(); } catch (e) {} }
         p = 0; lastTs = null; hlm = -1;
         hResize(); hDraw(0); caption(0);
@@ -1034,7 +1034,7 @@
       }
       function leave() {
         hero.classList.remove("mt-is-film");          // the statement slide is back
-        var v = document.getElementById("mt-heroVid");
+        var v = document.getElementById("heroVid");
         if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
         if (window.__heroFilm) window.__heroFilm.cycles = (window.__heroFilm.cycles || 0) + 1;
         filmTimer = setTimeout(enter, INTRO_MS);   // and the journey comes round again
@@ -1049,7 +1049,7 @@
         clearTimeout(filmTimer);
         hero.classList.remove("mt-is-film");
         if (window.__heroFilm) window.__heroFilm.playing = false;
-        var v = document.getElementById("mt-heroVid");
+        var v = document.getElementById("heroVid");
         if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
       };
       /* clicking a dash morphs the destination FILM IMAGE to that destination
@@ -1072,7 +1072,7 @@
       window.__heroGoDest = function (k) {
         stopped = true; playing = false; clearTimeout(filmTimer);
         hero.classList.add("mt-is-film");
-        var v = document.getElementById("mt-heroVid"); if (v) { try { v.pause(); } catch (e) {} }
+        var v = document.getElementById("heroVid"); if (v) { try { v.pause(); } catch (e) {} }
         var target = Math.round((hmarks.length < 2 ? 0 : k / (hmarks.length - 1)) * (HTOTAL - 1));
         hlm = -1; caption(k);                 // caption() also lights dash k
         hResize();
@@ -1149,7 +1149,7 @@
   /* ---------- custom cursor ---------- */
   (function () {
     if (reduced || !window.matchMedia('(hover:hover)').matches) return;
-    var cur = document.getElementById("mt-cursor"); if (!cur) return;
+    var cur = document.getElementById("cursor"); if (!cur) return;
     var x = window.innerWidth / 2, y = window.innerHeight / 2, cx = x, cy = y, shown = false;
     window.addEventListener('pointermove', function (e) {
       if (e.pointerType === 'touch') return;
@@ -1177,7 +1177,7 @@
 
   /* ---------- loader + page-transition curtain ---------- */
   (function () {
-    var loader = document.getElementById("mt-loader"); if (!loader) return;
+    var loader = document.getElementById("loader"); if (!loader) return;
 
     /* The intro belongs to arriving at the HOME PAGE, nothing else.
          - inner pages (news / article / team) never show it
@@ -1359,7 +1359,7 @@
    All user-facing strings come off data-* attributes so each locale
    renders only its own language. */
 (function () {
-  var form = document.getElementById("mt-contactForm");
+  var form = document.getElementById("contactForm");
   if (!form) return;
   var note = form.querySelector(".mt-footer__form-note");
 
@@ -1382,7 +1382,7 @@
      and never drifts — and a scroll-close would slam it shut on mobile the
      moment focusing a field raises the keyboard. */
   var wrap = form.closest ? form.closest('[data-enquire]') : null;
-  var btn = document.getElementById("mt-enquireBtn");
+  var btn = document.getElementById("enquireBtn");
   if (!wrap || !btn) return;
 
   function setOpen(open) {
@@ -1438,7 +1438,7 @@
    Full-screen sections reserve this much at the top. --navh was already
    referenced by .article__aside but nothing ever set it. */
 (function () {
-  var n = document.getElementById("mt-nav");
+  var n = document.getElementById("nav");
   if (!n) return;
   /* Measure the SCROLLED height, not the current one. The nav shrinks once the
      page moves (a smaller logo under .is-scrolled), and the map section — the
@@ -1498,7 +1498,7 @@
     function build() {
       panel = document.createElement('div');
       panel.className = "mt-mexp";
-      panel.id = "mt-memberProfile";
+      panel.id = "memberProfile";
       panel.setAttribute('role', 'region');
       panel.setAttribute('aria-label', COPY.label);
       panel.innerHTML =

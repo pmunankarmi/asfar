@@ -73,8 +73,8 @@
        driven by the .is-film class at the morph's own 2000ms,
      - the five dash indicators (statement + four destinations). */
   (function () {
-    var hero = document.getElementById("mt-heroSlider");
-    if (!hero || !hero.querySelector("#mt-heroMorphCanvas")) return;
+    var hero = document.getElementById("heroSlider");
+    if (!hero || !hero.querySelector("#heroMorphCanvas")) return;
     /* The hero dashes are the SLIDE navigation, owned entirely by app.js
        (3 statement slides, clickable). This layer used to repaint them as
        film-progress every 300ms, which fought the click navigation and left
@@ -90,7 +90,7 @@
 
   /* ---------- sector strip (morph 2000ms) ---------- */
   (function () {
-    var root = document.getElementById("mt-dkSectors");
+    var root = document.getElementById("dkSectors");
     if (!root) return;
     var track = root.querySelector(".mt-dk-sectors__track");
     var cards = Array.prototype.slice.call(track.children);
@@ -157,7 +157,7 @@
      two cards per click reads the same). The 1250ms cover-up belongs to
      the View All News page change, not to in-section paging. */
   (function () {
-    var root = document.getElementById("mt-dkNews");
+    var root = document.getElementById("dkNews");
     if (!root) return;
     var strip = root.querySelector(".mt-dk-news__strip");
     if (!strip) return;
@@ -195,7 +195,7 @@
 
   /* ---------- FAQ accordion (morph 2000ms) ---------- */
   (function () {
-    var list = document.getElementById("mt-dkFaq");
+    var list = document.getElementById("dkFaq");
     if (!list) return;
     var items = Array.prototype.slice.call(list.querySelectorAll(".mt-dk-faq__item"));
     function setH(wrap, h) { wrap.style.height = h + 'px'; }
@@ -257,7 +257,7 @@
 
   /* ---------- back to top ---------- */
   (function () {
-    var t = document.getElementById("mt-dkTop");
+    var t = document.getElementById("dkTop");
     if (!t) return;
     t.addEventListener('click', function (e) {
       e.preventDefault();
@@ -307,7 +307,7 @@
      negative margin, so its straight top edge painted over the news wave. When
      the team is not present, disable the covers entirely so every section sits
      in normal flow and the section waves show. */
-  var teamEl = document.getElementById("mt-dkTeam");
+  var teamEl = document.getElementById("dkTeam");
   var teamOn = teamEl && !teamEl.hidden && teamEl.getClientRects().length;
   var covers = (teamOn ? ['dkTeam', 'partners'] : []).map(function (id) {
     var el = document.getElementById(id);

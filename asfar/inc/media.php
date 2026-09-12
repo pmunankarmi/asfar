@@ -27,11 +27,10 @@ function asfar_render_map_artwork() {
  // Inline only the exact supplied artwork, never an arbitrary uploaded SVG.
  if ( is_file( $file ) && hash_equals( asfar_media_manifest()[ $path ], hash_file( 'sha256', $file ) ) ) {
   $svg = file_get_contents( $file );
-  $svg = preg_replace_callback( '/\b(class|id)="([^"]+)"/', function ( $match ) {
+  $svg = preg_replace_callback( '/\b(class)="([^"]+)"/', function ( $match ) {
    $names = preg_split( '/\s+/', trim( $match[2] ) );
    return $match[1] . '="' . implode( ' ', array_map( function ( $name ) { return 'mt-' . $name; }, $names ) ) . '"';
   }, $svg );
-  $svg = preg_replace( '/url\(#([^)]+)\)/', 'url(#mt-$1)', $svg );
   echo $svg; // Only checksum-verified bundled artwork is rendered.
  }
 }
