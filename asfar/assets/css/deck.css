@@ -171,7 +171,7 @@
   gap:clamp(14px,1.7vw,22px);justify-content:center}
 /* the two hero buttons persist across all three rotating slides: lifted out
    of the fading slide and pinned below the headline band */
-.mt-hero .mt-hero__cta--fixed{position:absolute;left:0;right:0;top:63%;margin-top:0;z-index:5}
+.mt-hero .mt-hero__cta--fixed{position:absolute;left:0;right:0;top:63%;margin-top:clamp(20px,3vh,32px);z-index:5}
 .mt-hero.mt-is-morph .mt-hero__cta--fixed{display:none}
 /* film captions at the recording's position (overline ~.30 of the
    viewport, title ~.42) — my inset:0 override on .mt-hero__in had let the
