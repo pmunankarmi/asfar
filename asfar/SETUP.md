@@ -81,3 +81,7 @@ From 1.1.8, opening or refreshing WordPress admin automatically checks GitHub re
 From 1.2.0, WordPress Heartbeat checks for releases while admin remains open, with GitHub requests limited to once per two minutes. A notice links to native WordPress Updates without reloading editors. Background checks depend on Heartbeat being enabled and browser activity; they do not automatically install the release.
 
 Theme Settings is organized into four standard ACF tabs: Branding, Footer & Contact, Contact Form, and Interface Labels. Existing field names, saved content and Polylang translations are preserved. Interface labels include accessibility text and should not be cleared simply because they are not visible on the page.
+
+## Maintenance pages
+
+From 1.2.2, ASFAR Setup and ASFAR Content Check are hidden from the Appearance menu. Administrators can still access them directly at `wp-admin/themes.php?page=asfar-setup` and `wp-admin/themes.php?page=asfar-content-check`. Their existing permissions and maintenance functions remain intact. Theme Settings, Partners and content editing remain visible.

@@ -44,3 +44,9 @@ add_action( 'template_redirect', function () {
 		exit;
 	}
 } );
+
+// Keep maintenance pages registered for direct access, outside everyday navigation.
+add_action( 'admin_menu', function () {
+ remove_submenu_page( 'themes.php', 'asfar-setup' );
+ remove_submenu_page( 'themes.php', 'asfar-content-check' );
+}, 999 );
