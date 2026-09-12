@@ -148,7 +148,27 @@ function asfar_theme_fields() {
 		if ( 'copyright' === $name ) { $field['instructions'] = 'Use [year] for the current year, for example: © [year] ASFAR. Keep [year] in each Polylang translation. Existing fixed years update automatically.'; }
 		$fields[] = $field;
 	}
-	return $fields;
+	// Tabs organize existing fields without changing their names, keys or saved values.
+	$by_name = array_column( $fields, null, 'name' );
+	$tabs = array(
+		'branding' => array( 'Branding', array( 'site_logo', 'dark_logo', 'site_name' ) ),
+		'footer' => array( 'Footer & Contact', array( 'footer_logo', 'ownership_logo', 'ownership_label', 'contact_email', 'social_links', 'copyright', 'contact_button', 'back_top' ) ),
+		'form' => array( 'Contact Form', array( 'notification_recipients', 'form_subject', 'name_label', 'name_placeholder', 'email_label', 'email_placeholder', 'message_label', 'message_placeholder', 'send_label', 'form_success', 'form_error', 'form_invalid' ) ),
+		'interface' => array( 'Interface Labels', array( 'home_label', 'primary_label', 'open_menu', 'close_menu', 'menu_label', 'close', 'bio_empty', 'bio_label', 'not_found', 'back_home', 'archive_title', 'previous_label', 'next_label', 'banner_label' ) ),
+	);
+	$organized = array(
+		asfar_field( 'translation_help', 'English & Arabic', 'message', array(
+			'message' => 'Set the source wording here. Manage English and Arabic translations under <a href="' . esc_url( admin_url( 'admin.php?page=mlang_strings' ) ) . '">Languages → Translations</a>.',
+		) ),
+	);
+	foreach ( $tabs as $name => $tab ) {
+		$organized[] = asfar_field( 'tab_' . $name, $tab[0], 'tab', array( 'placement' => 'top' ) );
+		if ( 'interface' === $name ) {
+			$organized[] = asfar_field( 'interface_help', 'Navigation & Accessibility', 'message', array( 'message' => 'These labels describe navigation, buttons and dialogs, including text used by screen readers. Usually you only need to edit their translations under Languages → Translations.' ) );
+		}
+		foreach ( $tab[1] as $field_name ) { $organized[] = $by_name[ $field_name ]; }
+	}
+	return $organized;
 }
 
 function asfar_register_field_group( $id, $title, $fields, $location, $order = 0 ) {

@@ -62,3 +62,7 @@ Confirmed staging English homepage retained the old template path after the fold
 ## 1.2.0 background update notices
 
 Verified privileged Heartbeat responses discover new releases, preserve other theme updates, respect the two-minute throttle and omit update data for unauthorized users. Browser tests verify the notice appears once, links to WordPress Updates, preserves unsaved input and disappears when no update remains. Syntax and package checks pass. Staging Polylang now has all 42 registered strings populated in both languages; all three translation pages were reloaded to verify no blank entries.
+
+## 1.2.1 tabbed Theme Settings
+
+Organized existing fields with standard ACF tabs, retaining their names and keys. Integration checks (including logo synchronization and shared translations), syntax and package checks pass. The tab layout has not been installed or visually verified in staging ACF Pro.

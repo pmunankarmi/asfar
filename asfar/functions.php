@@ -1,7 +1,7 @@
 <?php
 /** ASFAR theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ASFAR_VERSION', '1.2.0' );
+define( 'ASFAR_VERSION', '1.2.1' );
 foreach ( array( 'admin', 'anchors', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'source-update', 'template-upgrade', 'forms', 'updates' ) as $asfar_module ) {
  require_once get_template_directory() . '/inc/' . $asfar_module . '.php';
 }
