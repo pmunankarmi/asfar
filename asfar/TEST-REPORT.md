@@ -58,3 +58,7 @@ Isolated tests verify that admin visits refresh stale GitHub release data and po
 ## 1.1.9 homepage assignment and anchors
 
 Confirmed staging English homepage retained the old template path after the folder migration. Restored its homepage assignment through WordPress admin and verified three banner slides and homepage section headings. Revised migration version two explicitly queries all Polylang languages. Local checks cover rerunning from version one and both translated homepage assignments. Classes retain mt-; IDs, CSS ID selectors, JavaScript references and anchor links use original names.
+
+## 1.2.0 background update notices
+
+Verified privileged Heartbeat responses discover new releases, preserve other theme updates, respect the two-minute throttle and omit update data for unauthorized users. Browser tests verify the notice appears once, links to WordPress Updates, preserves unsaved input and disappears when no update remains. Syntax and package checks pass. Staging Polylang now has all 42 registered strings populated in both languages; all three translation pages were reloaded to verify no blank entries.

@@ -20,10 +20,14 @@ if ( ( $updates->response['asfar']['new_version'] ?? '' ) !== '9.0.0' || ! isset
 asfar_refresh_admin_theme_update();
 if ( 1 !== $calls ) { throw new RuntimeException( 'Refresh was not throttled.' ); }
 delete_transient( 'asfar_admin_update_check' );
+ $heartbeat = apply_filters( 'heartbeat_received', array() );
+if ( empty( $heartbeat['asfar_theme_update']['url'] ) ) { throw new RuntimeException( 'Heartbeat update missing.' ); }
+if ( 2 !== $calls ) { throw new RuntimeException( 'Heartbeat refresh missing.' ); }
 wp_set_current_user( 0 );
 asfar_refresh_admin_theme_update();
-if ( 1 !== $calls ) { throw new RuntimeException( 'Unauthorized refresh.' ); }
+if ( 2 !== $calls ) { throw new RuntimeException( 'Unauthorized refresh.' ); }
+if ( isset( apply_filters( 'heartbeat_received', array() )['asfar_theme_update'] ) ) { throw new RuntimeException( 'Unauthorized Heartbeat data.' ); }
 set_transient( 'asfar_github_release', array(), 1 );
 set_site_transient( 'update_themes', $previous );
 delete_transient( 'asfar_github_release' );
-echo "PASS: Admin update discovery, stale cache refresh, five-minute throttle, permissions and preservation of other updates.\n";
+echo "PASS: Admin update discovery, stale cache refresh, two-minute throttle, permissions and preservation of other updates.\n";

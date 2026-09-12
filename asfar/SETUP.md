@@ -77,3 +77,5 @@ Page templates are in `templates/`, homepage sections in `template-parts/home/`,
 Copyright Text supports the standard WordPress `[year]` shortcode, for example `© [year] ASFAR`. Keep the shortcode in each Polylang translation. It uses the WordPress site timezone. Existing copyright text with a fixed 20xx year also displays the current year.
 
 From 1.1.8, opening or refreshing WordPress admin automatically checks GitHub releases, limited to once every five minutes. Available releases appear in the native theme update notice. The manual check remains optional. This checks published releases, not individual commits, and does not install updates automatically. Install this version once to enable the new behavior.
+
+From 1.2.0, WordPress Heartbeat checks for releases while admin remains open, with GitHub requests limited to once per two minutes. A notice links to native WordPress Updates without reloading editors. Background checks depend on Heartbeat being enabled and browser activity; they do not automatically install the release.
