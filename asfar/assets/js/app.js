@@ -37,13 +37,13 @@
       closeMenu();
       // land with the section title clear of the fixed nav bar
       var navH = nav ? nav.offsetHeight : 0;
-      scrollToEl(el, el.id === 'top' ? 0 : -(navH + 14));
+      scrollToEl(el, el.id === "top" ? 0 : -(navH + 14));
     });
   });
 
   /* ---------- scrollspy — current section marked in nav + overlay menu ---------- */
   (function () {
-    var spyLinks = Array.prototype.slice.call(document.querySelectorAll('.nav__links a[href^="#"], .menu__links a[href^="#"]'));
+    var spyLinks = Array.prototype.slice.call(document.querySelectorAll(".mt-nav__links a[href^=\"#\"], .mt-menu__links a[href^=\"#\"]"));
     var ids = {};
     spyLinks.forEach(function (a) { ids[a.getAttribute('href').slice(1)] = 1; });
     var spySections = Object.keys(ids).map(function (id) { return document.getElementById(id); }).filter(Boolean);
@@ -51,7 +51,7 @@
     function setSpy(id) {
       spyLinks.forEach(function (a) {
         var on = a.getAttribute('href') === '#' + id;
-        a.classList.toggle('is-active', on);
+        a.classList.toggle("mt-is-active", on);
         if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
       });
     }
@@ -64,21 +64,21 @@
   /* ---------- reveal-on-scroll ---------- */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
-      if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+      if (en.isIntersecting) { en.target.classList.add("mt-is-in"); io.unobserve(en.target); }
     });
   }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal, .reveal-img, .eyebrow, .geomap').forEach(function (el) { io.observe(el); });
+  document.querySelectorAll(".mt-reveal, .mt-reveal-img, .mt-eyebrow, .mt-geomap").forEach(function (el) { io.observe(el); });
 
   /* ---------- geo map: pin <-> list hover sync ---------- */
   (function () {
-    var pins = Array.prototype.slice.call(document.querySelectorAll('.geopin'));
-    var rows = Array.prototype.slice.call(document.querySelectorAll('#geoList li'));
+    var pins = Array.prototype.slice.call(document.querySelectorAll(".mt-geopin"));
+    var rows = Array.prototype.slice.call(document.querySelectorAll("#geoList li"));
     if (!pins.length) return;
     function hot(i, on) {
       var p = pins.find(function (x) { return x.getAttribute('data-i') === String(i); });
       var r = rows.find(function (x) { return x.getAttribute('data-i') === String(i); });
-      if (p) p.classList.toggle('is-hot', on);
-      if (r) r.classList.toggle('is-hot', on);
+      if (p) p.classList.toggle("mt-is-hot", on);
+      if (r) r.classList.toggle("mt-is-hot", on);
     }
     pins.concat(rows).forEach(function (el) {
       var i = el.getAttribute('data-i');
@@ -98,7 +98,7 @@
   function initCarousel(track) {
     var root = track.closest('[data-carousel-root]') || track.parentElement;
     var cards = Array.prototype.slice.call(track.children);
-    var btns = Array.prototype.slice.call(root.querySelectorAll('.js-carbtn'));
+    var btns = Array.prototype.slice.call(root.querySelectorAll(".mt-js-carbtn"));
     if (!cards.length) return null;
 
     var index = 0, drag = null;
@@ -121,17 +121,17 @@
 
     function go(i, animate) {
       index = Math.min(maxIndex(), Math.max(0, i));
-      if (animate === false) track.classList.add('is-dragging');
+      if (animate === false) track.classList.add("mt-is-dragging");
       apply(offsetFor(index));
       /* forced reflow rather than rAF: with rAF deferred (backgrounded tab) the
          class was never removed, leaving the track stuck with transition:none
          and the grabbing cursor for the rest of the session. */
-      if (animate === false) { void track.offsetHeight; track.classList.remove('is-dragging'); }
+      if (animate === false) { void track.offsetHeight; track.classList.remove("mt-is-dragging"); }
       btns.forEach(function (b) {
         var d = +b.getAttribute('data-dir');
         b.disabled = d < 0 ? index <= 0 : index >= maxIndex();
       });
-      root.classList.toggle('is-static', maxIndex() === 0);
+      root.classList.toggle("mt-is-static", maxIndex() === 0);
     }
 
     btns.forEach(function (b) {
@@ -153,7 +153,7 @@
       if (!dragging) {
         if (Math.abs(drag.moved) < 6) return;    // still a click, not a swipe
         dragging = true;
-        track.classList.add('is-dragging');
+        track.classList.add("mt-is-dragging");
         try { track.setPointerCapture(drag.id); } catch (err) {}
       }
       apply(drag.base + drag.moved);
@@ -162,7 +162,7 @@
       if (!drag) return;
       var moved = drag.moved, wasDrag = dragging;
       drag = null; dragging = false;
-      track.classList.remove('is-dragging');
+      track.classList.remove("mt-is-dragging");
       if (!wasDrag) return;                      // plain click -> let the link work
       var dir = (rtl() ? 1 : -1) * Math.sign(moved);
       go(Math.abs(moved) > step() / 3 ? index + dir : index);
@@ -229,20 +229,20 @@
       if (en.isIntersecting && !el.__cdone) { el.__cdone = 1; animateCount(el); }
     });
   }, { threshold: 0.6 });
-  document.querySelectorAll('.stat__num').forEach(function (el) { cio.observe(el); });
+  document.querySelectorAll(".mt-stat__num").forEach(function (el) { cio.observe(el); });
 
   /* --- the 4 figures beside the map, optionally per-region --- */
   var _ledgerRows = null, _ledgerGlobals = null;
   function ledgerRows() {
-    if (!_ledgerRows) _ledgerRows = Array.prototype.slice.call(document.querySelectorAll('.invmap__stats .stat'));
+    if (!_ledgerRows) _ledgerRows = Array.prototype.slice.call(document.querySelectorAll(".mt-invmap__stats .mt-stat"));
     return _ledgerRows;
   }
   /* the REAL portfolio totals, captured once from the authored markup */
   function ledgerGlobals() {
     if (_ledgerGlobals) return _ledgerGlobals;
     _ledgerGlobals = ledgerRows().map(function (row) {
-      var n = row.querySelector('.stat__num'), sf = row.querySelector('.stat__suffix'),
-          u = row.querySelector('.stat__unit'), l = row.querySelector('.stat__label');
+      var n = row.querySelector(".mt-stat__num"), sf = row.querySelector(".mt-stat__suffix"),
+          u = row.querySelector(".mt-stat__unit"), l = row.querySelector(".mt-stat__label");
       return { count: n ? n.getAttribute('data-count') : '0',
                dec: n ? (n.getAttribute('data-dec') || '') : '',
                suffix: sf ? sf.textContent : '',
@@ -304,29 +304,29 @@
     rows.forEach(function (row, i) {
       var src = per ? d.stats[i] : g[i]; if (!src) return;
       var ab = abbreviate(src.count, src.suffix || '');
-      var numEl = row.querySelector('.stat__num');
+      var numEl = row.querySelector(".mt-stat__num");
       setStatValue(numEl, ab.count, src.dec || '');
       if (numEl) {
         if (ab.exact != null) numEl.setAttribute('title', fmtCount(ab.exact, 0));
         else numEl.removeAttribute('title');
       }
-      var sf = row.querySelector('.stat__suffix'); if (sf) sf.textContent = ab.suffix;
-      var u = row.querySelector('.stat__unit');
+      var sf = row.querySelector(".mt-stat__suffix"); if (sf) sf.textContent = ab.suffix;
+      var u = row.querySelector(".mt-stat__unit");
       if (u) {
         var ut = src.unit;
         /* deck: letter-units fuse to the number ("1.1B SAR"), word-units and
            M\u00B2 take a space ("570 Rooms", "339K M\u00B2") */
         u.textContent = (ut === 'M SAR' || ut === 'B SAR') ? ut : '\u00A0' + ut;
       }
-      var l = row.querySelector('.stat__label');  if (l) l.textContent = src.label;
+      var l = row.querySelector(".mt-stat__label");  if (l) l.textContent = src.label;
     });
   }
 
     /* ---------- investment map: faithful reference layout (map + marker + company + PR card + tabs) ---------- */
   (function () {
     var SVGNS = 'http://www.w3.org/2000/svg';
-    var dataEl = document.getElementById('invData');
-    var section = document.getElementById('projects');
+    var dataEl = document.getElementById("invData");
+    var section = document.getElementById("projects");
     if (!dataEl || !section) return;
     var DATA; try { DATA = JSON.parse(dataEl.textContent); } catch (e) { return; }
     if (!DATA || !DATA.length) return;
@@ -335,22 +335,22 @@
        Layers are built from DATA so the picture can never drift from the
        region it belongs to. */
     var bgHost = document.createElement('div');
-    bgHost.className = 'invmap__bgs'; bgHost.setAttribute('aria-hidden', 'true');
+    bgHost.className = "mt-invmap__bgs"; bgHost.setAttribute('aria-hidden', 'true');
     var bgLayers = {};
     DATA.forEach(function (e) {
       var b = document.createElement('div');
-      b.className = 'invmap__bg';
+      b.className = "mt-invmap__bg";
       b.style.backgroundImage = 'url("' + e.img + '")';
       bgHost.appendChild(b); bgLayers[e.hot] = b;
     });
     section.insertBefore(bgHost, section.firstChild);
 
-    var host = document.getElementById('invMap'),
-        companyEl = document.getElementById('invCompany'), pillEl = document.getElementById('invRegion'),
-        titleEl = document.getElementById('invTitle'), imgEl = document.getElementById('invImg'),
-        bodyEl = document.getElementById('invBody'), moreEl = document.getElementById('invMore'),
-        panel = document.getElementById('invPanel');
-    var tabs = Array.prototype.slice.call(section.querySelectorAll('.invmap__tab'));
+    var host = document.getElementById("invMap"),
+        companyEl = document.getElementById("invCompany"), pillEl = document.getElementById("invRegion"),
+        titleEl = document.getElementById("invTitle"), imgEl = document.getElementById("invImg"),
+        bodyEl = document.getElementById("invBody"), moreEl = document.getElementById("invMore"),
+        panel = document.getElementById("invPanel");
+    var tabs = Array.prototype.slice.call(section.querySelectorAll(".mt-invmap__tab"));
     var svgEl = null, regionPaths = [], cur = -1;
 
     /* deck grading: the sea slide (p14/Yanbu) runs ICE accents, the mountain
@@ -401,7 +401,7 @@
         if (x === undefined && e.mark && e.mark.length === 2) { x = e.mark[0]; y = e.mark[1]; }
         if (x === undefined) return;
         var g = document.createElementNS(SVGNS, 'g');
-        g.setAttribute('class', 'inv-pin');
+        g.setAttribute('class', "mt-inv-pin");
         [['inv-marker_halo', PIN_R.halo], ['inv-marker_pulse', PIN_R.pulse], ['inv-marker_dot', PIN_R.dot]].forEach(function (m) {
           var c = document.createElementNS(SVGNS, 'circle');
           c.setAttribute('class', m[0]); c.setAttribute('r', m[1]);
@@ -423,14 +423,14 @@
        Geometry is MEASURED off the live rects (never hard-coded), so it tracks
        the map at any size. .invmap__inner is direction:ltr in both languages,
        so the run is always map-left -> lede-right and needs no RTL mirror. ---- */
-    var leaderEl = document.getElementById('invLeader');
+    var leaderEl = document.getElementById("invLeader");
     var leaderPath = leaderEl ? leaderEl.querySelector('path') : null;
     var leaderDot = leaderEl ? leaderEl.querySelector('circle') : null;
-    var innerEl = section.querySelector('.invmap__inner');
-    var middleEl = section.querySelector('.invmap__middle');
+    var innerEl = section.querySelector(".mt-invmap__inner");
+    var middleEl = section.querySelector(".mt-invmap__middle");
     var hotCur = null;
 
-    function leaderOff() { if (leaderEl) leaderEl.classList.remove('is-on'); }
+    function leaderOff() { if (leaderEl) leaderEl.classList.remove("mt-is-on"); }
 
     function drawLeader(quiet) {
       if (!leaderEl || !leaderPath || !innerEl || !middleEl) return;
@@ -439,7 +439,7 @@
       var ir = innerEl.getBoundingClientRect();
       // aim at the company title itself, not the column box — the box is taller
       // than its text and the line would otherwise end in empty space above it
-      var anchorEl = section.querySelector('.invmap__company') || middleEl;
+      var anchorEl = section.querySelector(".mt-invmap__company") || middleEl;
       var mr = anchorEl.getBoundingClientRect();
       var pr;
       try { pr = hotCur.getBoundingClientRect(); } catch (e) { return leaderOff(); }
@@ -465,10 +465,10 @@
       if (leaderDot) { leaderDot.setAttribute('cx', sx.toFixed(1)); leaderDot.setAttribute('cy', sy.toFixed(1)); }
       var len = 600; try { len = Math.ceil(leaderPath.getTotalLength()); } catch (e) {}
       leaderEl.style.setProperty('--leader-len', len);
-      if (quiet) { leaderEl.classList.add('is-on'); return; }
-      leaderEl.classList.remove('is-on');
+      if (quiet) { leaderEl.classList.add("mt-is-on"); return; }
+      leaderEl.classList.remove("mt-is-on");
       void leaderEl.offsetWidth;                     // reflow so the draw-on replays
-      leaderEl.classList.add('is-on');
+      leaderEl.classList.add("mt-is-on");
     }
 
     /* deck direction 04: name the active region ON the map, beside its pin.
@@ -478,7 +478,7 @@
       if (!svgEl) return;
       if (!mapLabel) {
         mapLabel = document.createElementNS(SVGNS, 'text');
-        mapLabel.setAttribute('class', 'invmap__maplabel');
+        mapLabel.setAttribute('class', "mt-invmap__maplabel");
         svgEl.appendChild(mapLabel);
       }
       var pin = d && pins.filter(function (p) { return p.hot === d.hot; })[0];
@@ -494,7 +494,7 @@
       /* every province, not just the four tagged ones — regionPaths holds only
          [data-region] paths, so testing against it exits at a province border
          instead of the coastline and the label still lands on the country */
-      var allRegions = svgEl.querySelectorAll('.invmap__region');
+      var allRegions = svgEl.querySelectorAll(".mt-invmap__region");
       function insideCountry(px, py) {
         if (!svgEl.createSVGPoint) return false;
         var pt = svgEl.createSVGPoint(); pt.x = px; pt.y = py;
@@ -520,7 +520,7 @@
       var all = d.hot === 'all';
       // the active region reads as a cream fill (deck direction 04)
       regionPaths.forEach(function (p) {
-        p.classList.toggle('is-hot', !all && p.getAttribute('data-region') === d.hot);
+        p.classList.toggle("mt-is-hot", !all && p.getAttribute('data-region') === d.hot);
       });
       placeMapLabel(all ? null : d);
       // No province is ever filled — the country stays one flat colour and the
@@ -540,26 +540,26 @@
       if (pillEl) pillEl.textContent = d.region;
       if (titleEl) titleEl.textContent = d.title;
       if (imgEl) { imgEl.src = d.img; imgEl.alt = d.title; }
-      Object.keys(bgLayers).forEach(function (h) { bgLayers[h].classList.toggle('is-active', h === d.hot); });
+      Object.keys(bgLayers).forEach(function (h) { bgLayers[h].classList.toggle("mt-is-active", h === d.hot); });
       if (bodyEl) bodyEl.textContent = d.body;
       if (moreEl) moreEl.setAttribute('href', d.href || '#');
-      tabs.forEach(function (t, k) { t.classList.toggle('is-active', k === i); t.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
-      if (typeof dashes !== 'undefined') dashes.forEach(function (d, k) { d.classList.toggle('is-active', k === i); });
-      section.classList.toggle('is-active', !!d.hot);
+      tabs.forEach(function (t, k) { t.classList.toggle("mt-is-active", k === i); t.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+      if (typeof dashes !== 'undefined') dashes.forEach(function (d, k) { d.classList.toggle("mt-is-active", k === i); });
+      section.classList.toggle("mt-is-active", !!d.hot);
       applyLedger(d);
       applyAccent(d);
       paintMap(d);
-      if (panel) { panel.classList.remove('is-in'); requestAnimationFrame(function () { requestAnimationFrame(function () { panel.classList.add('is-in'); }); }); }
+      if (panel) { panel.classList.remove("mt-is-in"); requestAnimationFrame(function () { requestAnimationFrame(function () { panel.classList.add("mt-is-in"); }); }); }
     }
     tabs.forEach(function (t) { t.addEventListener('click', function () { render(+t.getAttribute('data-i')); }); });
     /* deck p14 dash indicators, bottom-left — the labelled tabs remain the
        primary selector; the dashes mirror them and are clickable too */
     var dashHost = document.createElement('div');
-    dashHost.className = 'invmap__dashes';
+    dashHost.className = "mt-invmap__dashes";
     var dashes = tabs.map(function (t, k) {
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'invmap__dash';
+      b.className = "mt-invmap__dash";
       b.textContent = t.textContent.trim();     // the region name rides the dash
       b.setAttribute('aria-label', t.textContent.trim());
       b.addEventListener('click', function () { render(k); });
@@ -567,7 +567,7 @@
       return b;
     });
     section.appendChild(dashHost);
-    var def = 0; tabs.forEach(function (t, k) { if (t.classList.contains('is-active')) def = k; });
+    var def = 0; tabs.forEach(function (t, k) { if (t.classList.contains("mt-is-active")) def = k; });
     render(def);
     if (host) {
       fetch(asfarSettings.assets + 'img/saudi-invest-map.svg').then(function (r) { return r.text(); }).then(function (svg) {
@@ -589,13 +589,13 @@
 
   /* ---------- sectors triptych (cinematic image accordion) ---------- */
   (function () {
-    var root = document.querySelector('.tript');
+    var root = document.querySelector(".mt-tript");
     if (!root) return;
-    var panels = Array.prototype.slice.call(root.querySelectorAll('.tript__panel'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll(".mt-tript__panel"));
     if (panels.length < 2) return;
-    root.classList.add('tript--live');
+    root.classList.add("mt-tript--live");
     function setOpen(i) {
-      panels.forEach(function (p, k) { p.classList.toggle('is-open', k === i); });
+      panels.forEach(function (p, k) { p.classList.toggle("mt-is-open", k === i); });
       root.setAttribute('data-open', i);
     }
     panels.forEach(function (p, k) {
@@ -616,42 +616,42 @@
   })();
 
   /* hero on-load reveal */
-  var hero = document.querySelector('.hero');
-  if (hero) { requestAnimationFrame(function () { setTimeout(function () { hero.classList.add('is-in'); }, 120); }); }
+  var hero = document.querySelector(".mt-hero");
+  if (hero) { requestAnimationFrame(function () { setTimeout(function () { hero.classList.add("mt-is-in"); }, 120); }); }
 
   /* ---------- nav + parallax + atlas on scroll ---------- */
-  var nav = document.getElementById('nav');
-  var progress = document.getElementById('progress');
-  var heroMedia = document.querySelector('.hero__scenes');
-  var heroIn = document.querySelector('.hero__in');
-  var interludeMedia = document.querySelector('.interlude__media');
-  var interlude = document.querySelector('.interlude');
+  var nav = document.getElementById("nav");
+  var progress = document.getElementById("progress");
+  var heroMedia = document.querySelector(".mt-hero__scenes");
+  var heroIn = document.querySelector(".mt-hero__in");
+  var interludeMedia = document.querySelector(".mt-interlude__media");
+  var interlude = document.querySelector(".mt-interlude");
 
   /* atlas elements */
-  var atlasTrack = document.getElementById('atlasTrack');
-  var figs = Array.prototype.slice.call(document.querySelectorAll('.atlas__fig'));
-  var names = Array.prototype.slice.call(document.querySelectorAll('#atlasNames li'));
-  var detail = document.getElementById('atlasDetail');
-  var regionEl = detail ? detail.querySelector('.atlas__region') : null;
-  var blurbEl = detail ? detail.querySelector('.atlas__blurb') : null;
-  var bar = document.getElementById('atlasBar');
-  var countEl = document.getElementById('atlasCount');
+  var atlasTrack = document.getElementById("atlasTrack");
+  var figs = Array.prototype.slice.call(document.querySelectorAll(".mt-atlas__fig"));
+  var names = Array.prototype.slice.call(document.querySelectorAll("#atlasNames li"));
+  var detail = document.getElementById("atlasDetail");
+  var regionEl = detail ? detail.querySelector(".mt-atlas__region") : null;
+  var blurbEl = detail ? detail.querySelector(".mt-atlas__blurb") : null;
+  var bar = document.getElementById("atlasBar");
+  var countEl = document.getElementById("atlasCount");
   var current = -1;
   var N = figs.length;
-  var atlasView = document.getElementById('atlasView');
+  var atlasView = document.getElementById("atlasView");
 
   function setActive(i) {
     if (i === current || i < 0 || i >= N) return;
     current = i;
-    figs.forEach(function (f, k) { f.classList.toggle('is-active', k === i); });
-    names.forEach(function (n, k) { n.classList.toggle('is-active', k === i); });
+    figs.forEach(function (f, k) { f.classList.toggle("mt-is-active", k === i); });
+    names.forEach(function (n, k) { n.classList.toggle("mt-is-active", k === i); });
     if (countEl) countEl.textContent = ('0' + (i + 1)).slice(-2);
     if (detail && regionEl && blurbEl) {
-      detail.classList.add('is-swap');
+      detail.classList.add("mt-is-swap");
       setTimeout(function () {
-        regionEl.textContent = detail.querySelector('.atlas__region').getAttribute('data-region-' + i);
+        regionEl.textContent = detail.querySelector(".mt-atlas__region").getAttribute('data-region-' + i);
         blurbEl.textContent = blurbEl.getAttribute('data-blurb-' + i);
-        detail.classList.remove('is-swap');
+        detail.classList.remove("mt-is-swap");
       }, 300);
     }
   }
@@ -692,7 +692,7 @@
     // nav state
     if (nav) {
       var past = y > window.innerHeight * 0.72;
-      nav.classList.toggle('is-scrolled', past);
+      nav.classList.toggle("mt-is-scrolled", past);
     }
     // hero: parallax background + content fade & lift on scroll (cinematic dissolve)
     if (heroMedia && !reduced && y < window.innerHeight * 1.25) {
@@ -709,8 +709,8 @@
   }
 
   /* ---------- signature morph fly-through (canvas frame-scrub) ---------- */
-  var flyEl = document.getElementById('fly');
-  var flyCanvas = document.getElementById('flyCanvas');
+  var flyEl = document.getElementById("fly");
+  var flyCanvas = document.getElementById("flyCanvas");
   var flyCtx = flyCanvas ? flyCanvas.getContext('2d') : null;
   var flyTotal = flyCanvas ? (parseInt(flyCanvas.getAttribute('data-frames'), 10) || 0) : 0;
   var flyFrames = [], flyReady = false, flyLoaded = 0, flyCur = -1, flyLm = -1;
@@ -723,9 +723,9 @@
   if (flyEl && flyEl.getAttribute('data-marks')) {
     try { var _m = JSON.parse(flyEl.getAttribute('data-marks')); if (_m && _m.length) flyMarks = _m; } catch (e) {}
   }
-  var flyNameEl = document.getElementById('flyName');
-  var flyCountEl = document.getElementById('flyCount');
-  var flyRegionEl = document.getElementById('flyRegion');
+  var flyNameEl = document.getElementById("flyName");
+  var flyCountEl = document.getElementById("flyCount");
+  var flyRegionEl = document.getElementById("flyRegion");
   function flyDraw(idx) {
     var img = flyFrames[idx]; if (!img || !flyCtx) return;
     var cw = flyCanvas.width, ch = flyCanvas.height;
@@ -765,7 +765,7 @@
         var img = new Image();
         img.onload = img.onerror = function () {
           if (img.naturalWidth) flyFrames[i] = img;
-          if (++flyLoaded >= flyTotal) { flyReady = true; flyEl.classList.add('is-ready'); flyDraw(0); updateFly(); }
+          if (++flyLoaded >= flyTotal) { flyReady = true; flyEl.classList.add("mt-is-ready"); flyDraw(0); updateFly(); }
         };
         img.src = asfarSettings.assets + 'img/morph/f_' + ('00' + (i + 1)).slice(-3) + '.jpg';
       })(i);
@@ -801,9 +801,9 @@
   window.addEventListener('resize', function () { current = -1; onScroll(); });
 
   /* ---------- overlay menu (all viewports) ---------- */
-  var burger = document.getElementById('burger');
-  var menu = document.getElementById('menu');
-  var menuScrim = document.getElementById('menuScrim');
+  var burger = document.getElementById("burger");
+  var menu = document.getElementById("menu");
+  var menuScrim = document.getElementById("menuScrim");
   function lockScroll(on) { var v = on ? 'hidden' : ''; document.documentElement.style.overflow = v; document.body.style.overflow = v; }
   function setInert(on) {
     ['main', '.footer'].forEach(function (sel) {
@@ -813,44 +813,44 @@
   }
   function openMenu() {
     if (!menu) return;
-    menu.classList.add('is-open'); menu.setAttribute('aria-hidden', 'false');
+    menu.classList.add("mt-is-open"); menu.setAttribute('aria-hidden', 'false');
     burger.setAttribute('aria-expanded', 'true');
     burger.setAttribute('aria-label', burger.getAttribute('data-label-close') || '');
-    burger.classList.add('is-active');
-    if (nav) nav.classList.add('is-menu-open');
-    if (menuScrim) menuScrim.classList.add('is-open');
+    burger.classList.add("mt-is-active");
+    if (nav) nav.classList.add("mt-is-menu-open");
+    if (menuScrim) menuScrim.classList.add("mt-is-open");
     setInert(true); lockScroll(true);
     var first = menu.querySelector('a'); if (first) setTimeout(function () { first.focus(); }, 80);
   }
   function closeMenu() {
     if (!menu) return;
-    var was = menu.classList.contains('is-open');
-    menu.classList.remove('is-open'); menu.setAttribute('aria-hidden', 'true');
+    var was = menu.classList.contains("mt-is-open");
+    menu.classList.remove("mt-is-open"); menu.setAttribute('aria-hidden', 'true');
     if (burger) {
       burger.setAttribute('aria-expanded', 'false');
       burger.setAttribute('aria-label', burger.getAttribute('data-label-open') || '');
-      burger.classList.remove('is-active');
+      burger.classList.remove("mt-is-active");
       if (was) burger.focus();
     }
-    if (nav) nav.classList.remove('is-menu-open');
-    if (menuScrim) menuScrim.classList.remove('is-open');
+    if (nav) nav.classList.remove("mt-is-menu-open");
+    if (menuScrim) menuScrim.classList.remove("mt-is-open");
     setInert(false); lockScroll(false);
   }
   if (menuScrim) menuScrim.addEventListener('click', closeMenu);
   if (burger) {
     burger.addEventListener('click', function () {
-      if (menu.classList.contains('is-open')) closeMenu(); else openMenu();
+      if (menu.classList.contains("mt-is-open")) closeMenu(); else openMenu();
     });
   }
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && menu && menu.classList.contains('is-open')) closeMenu();
+    if (e.key === 'Escape' && menu && menu.classList.contains("mt-is-open")) closeMenu();
   });
 
   /* ---------- hero video ---------- */
   (function () {
-    var v = document.getElementById('heroVid');
+    var v = document.getElementById("heroVid");
     if (!v || reduced) return;
-    function ready() { v.classList.add('is-ready'); }
+    function ready() { v.classList.add("mt-is-ready"); }
     function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
     v.addEventListener('loadeddata', tryPlay);
     v.addEventListener('canplay', tryPlay);
@@ -860,11 +860,11 @@
 
   /* ---------- hero: rotating 3-scene banner (each scene has its own CTA) ---------- */
   (function () {
-    var hero = document.getElementById('heroSlider');
+    var hero = document.getElementById("heroSlider");
     if (!hero) return;
-    var scenes = Array.prototype.slice.call(hero.querySelectorAll('.hero__scene'));
-    var slides = Array.prototype.slice.call(hero.querySelectorAll('.hero__slide'));
-    var dots = Array.prototype.slice.call(hero.querySelectorAll('.hero__dot'));
+    var scenes = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__scene"));
+    var slides = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__slide"));
+    var dots = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__dot"));
     /* the deck skin keeps ONE film scene behind r8's three text slides, so the
        rotation is counted off whichever list is longer — otherwise n===1 and
        every dot resolves back to slide 0 */
@@ -876,22 +876,20 @@
     function set(idx) {
       idx = (idx % n + n) % n;
       if (idx === i) return;
-      [scenes, slides, dots].forEach(function (set) {
+      [scenes, slides].forEach(function (set) {
         /* a lone scene has to stay lit — rotating it would blank the hero */
         if (set.length < 2) return;
-        if (set[i]) set[i].classList.remove('is-active');
-        if (set[idx]) set[idx].classList.add('is-active');
+        if (set[i]) set[i].classList.remove("mt-is-active");
+        if (set[idx]) set[idx].classList.add("mt-is-active");
       });
-      dots.forEach(function (d, k) { d.setAttribute('aria-selected', k === idx ? 'true' : 'false'); });
+      if (!window.__heroGoDest) dots.forEach(function (d, k) { d.classList.toggle("mt-is-active", k === idx); d.setAttribute('aria-pressed', k === idx ? 'true' : 'false'); });
       i = idx;
     }
+    window.__heroSlideGo = set;   /* fallback nav for mobile / reduced motion */
     function next() { set(i + 1); }
     var inView = true;
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function start() { stop(); if (!rotate || hero.classList.contains('is-film')) return; if (!reduced && inView) timer = setInterval(next, DUR); }
-    dots.forEach(function (d, k) {
-      d.addEventListener('click', function () { set(k); start(); });
-    });
+    function start() { stop(); if (!rotate || hero.classList.contains("mt-is-film")) return; if (!reduced && inView) timer = setInterval(next, DUR); }
     // pause on hover / when the tab is hidden
     hero.addEventListener('mouseenter', stop);
     hero.addEventListener('mouseleave', start);
@@ -908,21 +906,16 @@
     start();
 
     /* ---- "Morph" pill: turn the hero into a SCROLL-SCRUBBED canvas morph; caption tracks the frame ---- */
-    var morphBtn = document.getElementById('heroMorphBtn');
-    var hcanvas = document.getElementById('heroMorphCanvas');
+    var morphBtn = document.getElementById("heroMorphBtn");
+    var hcanvas = document.getElementById("heroMorphCanvas");
     var hctx = hcanvas ? hcanvas.getContext('2d') : null;
     var HTOTAL = hcanvas ? (parseInt(hcanvas.getAttribute('data-frames'), 10) || 0) : 0;
     var hframes = [], hready = false, hloaded = 0, hcur = -1, hlm = -1, hstarted = false, morphOn = false;
-    var hmarks = [
-      { name: 'The Mountains', cta: 'Discover Al-Baha', href: '#projects' },
-      { name: 'The Highlands', cta: 'Discover Taif', href: '#projects' },
-      { name: 'The Oasis', cta: 'Discover Al-Ahsa', href: '#projects' },
-      { name: 'The Coast', cta: 'Discover Yanbu', href: '#projects' }
-    ];
+    var hmarks = [];
     if (hero.getAttribute('data-morphmarks')) { try { var _hm = JSON.parse(hero.getAttribute('data-morphmarks')); if (_hm && _hm.length) hmarks = _hm; } catch (e) {} }
-    var hNameEl = document.getElementById('heroMorphName');
-    var hSubEl = document.getElementById('heroMorphSub');
-    var hCtaEl = document.getElementById('heroMorphCta');
+    var hNameEl = document.getElementById("heroMorphName");
+    var hSubEl = document.getElementById("heroMorphSub");
+    var hCtaEl = document.getElementById("heroMorphCta");
     function hDraw(idx) {
       var img = hframes[idx]; if (!img || !hctx) return;
       var cw = hcanvas.width, ch = hcanvas.height, ir = img.naturalWidth / img.naturalHeight, cr = cw / ch, dw, dh, dx, dy;
@@ -972,10 +965,10 @@
     function setMorph(on) {
       morphOn = on;
       toTop();                                     // start the scrub from frame 0
-      hero.classList.toggle('is-morph', on);
-      morphBtn.classList.toggle('is-on', on);
+      hero.classList.toggle("mt-is-morph", on);
+      morphBtn.classList.toggle("mt-is-on", on);
       morphBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      var txt = morphBtn.querySelector('.hero__morph-txt');
+      var txt = morphBtn.querySelector(".mt-hero__morph-txt");
       if (txt) txt.textContent = on ? (morphBtn.getAttribute('data-label-on') || '') : (morphBtn.getAttribute('data-label-off') || '');
       if (on) { stop(); hPreload(); if (hready) { hResize(); hUpdate(); } }
       else { hlm = -1; start(); }
@@ -994,12 +987,21 @@
       var INTRO_MS = 5000;          // one statement beat before the film takes over
       var playing = false, p = 0, lastTs = null, filmInView = true;
       var born = Date.now();
+      var filmTimer = null, stopped = false;   // user taking manual control halts the loop
+      var heroDashes = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__dot"));
+      function syncDash(k) {
+        heroDashes.forEach(function (d, j) {
+          d.classList.toggle("mt-is-active", j === k);
+          d.setAttribute('aria-pressed', j === k ? 'true' : 'false');
+        });
+      }
       function caption(lm) {
         if (lm === hlm) return;
         hlm = lm;
         if (hNameEl) hNameEl.textContent = hmarks[lm].name;
         if (hSubEl) hSubEl.textContent = hmarks[lm].region || '';
         if (hCtaEl) { hCtaEl.textContent = hmarks[lm].cta; hCtaEl.setAttribute('href', hmarks[lm].href); }
+        syncDash(lm);
       }
       function tick(ts) {
         if (!playing) return;
@@ -1019,11 +1021,11 @@
         requestAnimationFrame(tick);
       }
       function enter() {
-        if (playing) return;
+        if (stopped || playing) return;
         playing = true;
         stop();
-        hero.classList.add('is-film');
-        var v = document.getElementById('heroVid');
+        hero.classList.add("mt-is-film");
+        var v = document.getElementById("heroVid");
         if (v) { try { v.pause(); } catch (e) {} }
         p = 0; lastTs = null; hlm = -1;
         hResize(); hDraw(0); caption(0);
@@ -1031,15 +1033,55 @@
         requestAnimationFrame(tick);
       }
       function leave() {
-        hero.classList.remove('is-film');          // the statement slide is back
-        var v = document.getElementById('heroVid');
+        hero.classList.remove("mt-is-film");          // the statement slide is back
+        var v = document.getElementById("heroVid");
         if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
         if (window.__heroFilm) window.__heroFilm.cycles = (window.__heroFilm.cycles || 0) + 1;
-        setTimeout(enter, INTRO_MS);               // and the journey comes round again
+        filmTimer = setTimeout(enter, INTRO_MS);   // and the journey comes round again
       }
       function begin() {
-        setTimeout(enter, Math.max(0, INTRO_MS - (Date.now() - born)));
+        filmTimer = setTimeout(enter, Math.max(0, INTRO_MS - (Date.now() - born)));
       }
+      /* clicking a hero dash hands control to the slides: stop the film loop,
+         drop out of film mode and let the statement slides show. */
+      window.__heroFilmCancel = function () {
+        stopped = true; playing = false;
+        clearTimeout(filmTimer);
+        hero.classList.remove("mt-is-film");
+        if (window.__heroFilm) window.__heroFilm.playing = false;
+        var v = document.getElementById("heroVid");
+        if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
+      };
+      /* clicking a dash morphs the destination FILM IMAGE to that destination
+         (Mountains / Highlands / Oasis / Coast) and shows its caption — the
+         hero's visual journey, driven by hand instead of the auto loop. */
+      var animRAF = null;
+      function morphTo(target, cb) {
+        cancelAnimationFrame(animRAF);
+        var from = hcur < 0 ? 0 : hcur, dur = 780, t0 = null;
+        function fr(ts) {
+          if (t0 == null) t0 = ts;
+          var u = Math.min(1, (ts - t0) / dur);
+          var e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;   // easeInOutQuad
+          var f = Math.round(from + (target - from) * e);
+          if (f !== hcur) { hcur = f; hDraw(f); }
+          if (u < 1) animRAF = requestAnimationFrame(fr); else if (cb) cb();
+        }
+        animRAF = requestAnimationFrame(fr);
+      }
+      window.__heroGoDest = function (k) {
+        stopped = true; playing = false; clearTimeout(filmTimer);
+        hero.classList.add("mt-is-film");
+        var v = document.getElementById("heroVid"); if (v) { try { v.pause(); } catch (e) {} }
+        var target = Math.round((hmarks.length < 2 ? 0 : k / (hmarks.length - 1)) * (HTOTAL - 1));
+        hlm = -1; caption(k);                 // caption() also lights dash k
+        hResize();
+        if (hready) morphTo(target);
+        else hPreload(function () { morphTo(target); });
+      };
+      heroDashes.forEach(function (d, k) {
+        d.addEventListener('click', function () { window.__heroGoDest(k); });
+      });
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (en) {
           filmInView = en[0].isIntersecting;
@@ -1051,13 +1093,24 @@
       else window.addEventListener('load', arm);
       setTimeout(arm, 3000);        // belt: never wait forever on a stalled load event
     })();
+    /* mobile / reduced motion: the film never runs, so the dashes step the
+       statement slides instead of the destination film. */
+    if (!window.__heroGoDest) {
+      var fbDashes = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__dot"));
+      fbDashes.forEach(function (d, k) {
+        d.addEventListener('click', function () {
+          if (window.__heroSlideGo) window.__heroSlideGo(k % Math.max(1, slides.length));
+          fbDashes.forEach(function (dd, j) { dd.classList.toggle("mt-is-active", j === k); dd.setAttribute('aria-pressed', j === k ? 'true' : 'false'); });
+        });
+      });
+    }
   })();
 
   /* ---------- cinematic word-reveal headings ---------- */
   function splitWords(el) {
     if (el.dataset.split) return;
     el.dataset.split = '1';
-    el.classList.add('rw');
+    el.classList.add("mt-rw");
     function walk(node) {
       var out = [];
       Array.prototype.forEach.call(node.childNodes, function (n) {
@@ -1066,8 +1119,8 @@
             if (t.length === 0) return;
             if (/^\s+$/.test(t)) { out.push(document.createTextNode(t)); }
             else {
-              var w = document.createElement('span'); w.className = 'w';
-              var wi = document.createElement('span'); wi.className = 'wi'; wi.textContent = t;
+              var w = document.createElement('span'); w.className = "mt-w";
+              var wi = document.createElement('span'); wi.className = "mt-wi"; wi.textContent = t;
               w.appendChild(wi); out.push(w);
             }
           });
@@ -1080,7 +1133,7 @@
     kids.forEach(function (k) { el.appendChild(k); });
     // no per-word cascade — every word wipes in together (reveal style 9).
     // Set explicitly rather than omitted so nothing inherits a stray delay.
-    Array.prototype.forEach.call(el.querySelectorAll('.wi'), function (wi) {
+    Array.prototype.forEach.call(el.querySelectorAll(".mt-wi"), function (wi) {
       wi.style.transitionDelay = '0s';
     });
   }
@@ -1089,24 +1142,24 @@
     // Deliberately NOT applied to: .hero__title (has its own line treatment),
     // .faq__q (a <summary> — it is an interactive control, leave its DOM alone),
     // or body copy (word-splitting paragraphs reads as a gimmick, not as craft).
-    document.querySelectorAll('.statement, .cta__title, .dhero__title, .pillar h3, .news__title')
+    document.querySelectorAll(".mt-statement, .mt-cta__title, .mt-dhero__title, .mt-pillar h3, .mt-news__title")
       .forEach(function (el) { splitWords(el); io.observe(el); });
   }
 
   /* ---------- custom cursor ---------- */
   (function () {
     if (reduced || !window.matchMedia('(hover:hover)').matches) return;
-    var cur = document.getElementById('cursor'); if (!cur) return;
+    var cur = document.getElementById("cursor"); if (!cur) return;
     var x = window.innerWidth / 2, y = window.innerHeight / 2, cx = x, cy = y, shown = false;
     window.addEventListener('pointermove', function (e) {
       if (e.pointerType === 'touch') return;
       x = e.clientX; y = e.clientY;
-      if (!shown) { shown = true; cur.classList.add('on'); }
+      if (!shown) { shown = true; cur.classList.add("mt-on"); }
     }, { passive: true });
     (function loop() { cx += (x - cx) * 0.22; cy += (y - cy) * 0.22; cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(loop); })();
     var hotSel = 'a,button,[data-cursor],.geopin,.atlas__names button';
-    document.addEventListener('mouseover', function (e) { if (e.target.closest(hotSel)) cur.classList.add('hot'); });
-    document.addEventListener('mouseout', function (e) { if (e.target.closest(hotSel)) cur.classList.remove('hot'); });
+    document.addEventListener('mouseover', function (e) { if (e.target.closest(hotSel)) cur.classList.add("mt-hot"); });
+    document.addEventListener('mouseout', function (e) { if (e.target.closest(hotSel)) cur.classList.remove("mt-hot"); });
   })();
 
   /* ---------- magnetic buttons ---------- */
@@ -1124,7 +1177,7 @@
 
   /* ---------- loader + page-transition curtain ---------- */
   (function () {
-    var loader = document.getElementById('loader'); if (!loader) return;
+    var loader = document.getElementById("loader"); if (!loader) return;
 
     /* The intro belongs to arriving at the HOME PAGE, nothing else.
          - inner pages (news / article / team) never show it
@@ -1133,7 +1186,7 @@
        A new tab or a fresh visit gets the intro again. The outgoing curtain
        still plays on every internal link, so transitions stay smooth. */
     var SEEN = 'asfar:intro';
-    var isInner = document.body.classList.contains('page--inner');
+    var isInner = document.body.classList.contains("mt-page--inner");
     var seen = false;
     try { seen = sessionStorage.getItem(SEEN) === '1'; } catch (e) {}
     /* A wheel flick during the 2.3s curtain scrolled the page behind it, so the
@@ -1167,9 +1220,9 @@
       window.removeEventListener('scroll', pin, { passive: true });
       if ((window.scrollY || 0) !== 0) window.scrollTo(0, 0);
     }
-    function reveal() { setTimeout(function () { release(); loader.classList.add('is-out'); }, 2300); }
+    function reveal() { setTimeout(function () { release(); loader.classList.add("mt-is-out"); }, 2300); }
     if (isInner || seen) {
-      loader.classList.add('is-instant', 'is-out');
+      loader.classList.add("mt-is-instant", "mt-is-out");
     } else {
       /* only when the visit really starts at the top — an arriving #hash owns
          the scroll position and must not be fought */
@@ -1189,10 +1242,10 @@
         /* is-instant sets display:none so the arriving page shows no intro — but
            it also made the outgoing CURTAIN unpaintable, so a click sat dead for
            640ms and then jumped. Drop it before animating. */
-        loader.classList.remove('is-instant');
-        loader.classList.remove('is-out'); loader.classList.add('is-in');
+        loader.classList.remove("mt-is-instant");
+        loader.classList.remove("mt-is-out"); loader.classList.add("mt-is-in");
         requestAnimationFrame(function () { requestAnimationFrame(function () {
-          loader.classList.remove('is-in'); loader.classList.add('is-cover');
+          loader.classList.remove("mt-is-in"); loader.classList.add("mt-is-cover");
         }); });
         setTimeout(function () { window.location.href = href; }, 640);
       });
@@ -1201,10 +1254,10 @@
 
   /* ---------- leadership: group tabs filter the member grid ---------- */
   (function () {
-    var tablist = document.querySelector('.team__tabs');
+    var tablist = document.querySelector(".mt-team__tabs");
     if (!tablist) return;
-    var tabs = Array.prototype.slice.call(tablist.querySelectorAll('.team__tab'));
-    var members = Array.prototype.slice.call(document.querySelectorAll('.team__grid .member'));
+    var tabs = Array.prototype.slice.call(tablist.querySelectorAll(".mt-team__tab"));
+    var members = Array.prototype.slice.call(document.querySelectorAll(".mt-team__grid .mt-member"));
     if (!tabs.length || !members.length) return;
     function apply(group) {
       members.forEach(function (m) {
@@ -1214,15 +1267,15 @@
     }
     tabs.forEach(function (t) {
       t.addEventListener('click', function () {
-        tabs.forEach(function (x) { x.classList.remove('is-active'); x.setAttribute('aria-selected', 'false'); });
-        t.classList.add('is-active');
+        tabs.forEach(function (x) { x.classList.remove("mt-is-active"); x.setAttribute('aria-selected', 'false'); });
+        t.classList.add("mt-is-active");
         t.setAttribute('aria-selected', 'true');
         apply(t.getAttribute('data-group'));
         // the rail's visible-card set just changed -> re-measure and go home
         if (window.__carousels && window.__carousels.team) window.__carousels.team.reset();
       });
     });
-    var active = tablist.querySelector('.team__tab.is-active') || tabs[0];
+    var active = tablist.querySelector(".mt-team__tab.mt-is-active") || tabs[0];
     apply(active.getAttribute('data-group'));
   })();
 
@@ -1233,13 +1286,13 @@
     var box = null, vid = null;
     function build(src) {
       box = document.createElement('div');
-      box.className = 'vlb';
+      box.className = "mt-vlb";
       box.setAttribute('role', 'dialog');
       box.setAttribute('aria-modal', 'true');
       var frame = document.createElement('div');
-      frame.className = 'vlb__frame';
+      frame.className = "mt-vlb__frame";
       var btn = document.createElement('button');
-      btn.className = 'vlb__close';
+      btn.className = "mt-vlb__close";
       btn.type = 'button';
       /* the Arabic page must not announce an English control name */
       btn.setAttribute('aria-label',
@@ -1249,7 +1302,7 @@
       vid.setAttribute('controls', '');
       vid.setAttribute('playsinline', '');
       vid.src = src;
-      frame.appendChild(btn);
+      box.appendChild(btn);
       frame.appendChild(vid);
       box.appendChild(frame);
       document.body.appendChild(box);
@@ -1260,14 +1313,14 @@
     function open(src) {
       if (!box) build(src);
       else if (vid.src !== src) vid.src = src;
-      box.classList.add('is-open');
+      box.classList.add("mt-is-open");
       document.body.style.overflow = 'hidden';
       try { vid.currentTime = 0; } catch (e) {}
       var p = vid.play(); if (p && p.catch) p.catch(function () {});
     }
     function close() {
       if (!box) return;
-      box.classList.remove('is-open');
+      box.classList.remove("mt-is-open");
       document.body.style.overflow = '';
       vid.pause();
     }
@@ -1278,7 +1331,7 @@
       });
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && box && box.classList.contains('is-open')) close();
+      if (e.key === 'Escape' && box && box.classList.contains("mt-is-open")) close();
     });
   })();
 
@@ -1306,15 +1359,15 @@
    All user-facing strings come off data-* attributes so each locale
    renders only its own language. */
 (function () {
-  var form = document.getElementById('contactForm');
+  var form = document.getElementById("contactForm");
   if (!form) return;
-  var note = form.querySelector('.footer__form-note');
+  var note = form.querySelector(".mt-footer__form-note");
 
 
-  function fieldOf(el) { return el.closest ? el.closest('.ffield') : null; }
+  function fieldOf(el) { return el.closest ? el.closest(".mt-ffield") : null; }
 
   form.addEventListener('input', function (e) {
-    var f = fieldOf(e.target); if (f) f.classList.remove('is-bad');
+    var f = fieldOf(e.target); if (f) f.classList.remove("mt-is-bad");
   });
 
   /* member profile overlay moved to top level — it lived inside the
@@ -1329,11 +1382,11 @@
      and never drifts — and a scroll-close would slam it shut on mobile the
      moment focusing a field raises the keyboard. */
   var wrap = form.closest ? form.closest('[data-enquire]') : null;
-  var btn = document.getElementById('enquireBtn');
+  var btn = document.getElementById("enquireBtn");
   if (!wrap || !btn) return;
 
   function setOpen(open) {
-    wrap.classList.toggle('is-open', open);
+    wrap.classList.toggle("mt-is-open", open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     if (open) {
       /* focus() is a no-op while the panel is still visibility:hidden, and the
@@ -1354,7 +1407,7 @@
     }
   }
   function close(refocus) {
-    if (!wrap.classList.contains('is-open')) return;
+    if (!wrap.classList.contains("mt-is-open")) return;
     setOpen(false);
     if (refocus) btn.focus();
   }
@@ -1370,7 +1423,7 @@
   });
 
   btn.addEventListener('click', function () {
-    setOpen(!wrap.classList.contains('is-open'));
+    setOpen(!wrap.classList.contains("mt-is-open"));
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' || e.keyCode === 27) close(true);
@@ -1385,7 +1438,7 @@
    Full-screen sections reserve this much at the top. --navh was already
    referenced by .article__aside but nothing ever set it. */
 (function () {
-  var n = document.getElementById('nav');
+  var n = document.getElementById("nav");
   if (!n) return;
   /* Measure the SCROLLED height, not the current one. The nav shrinks once the
      page moves (a smaller logo under .is-scrolled), and the map section — the
@@ -1393,16 +1446,16 @@
      110px at the top of the page, which showed up as dead space above the map
      title; it would also relayout the section mid-scroll as the nav shrank. */
   function set() {
-    var had = n.classList.contains('is-scrolled');
+    var had = n.classList.contains("mt-is-scrolled");
     /* .nav__logo-img animates its height (56 -> 44), so toggling the class and
        reading offsetHeight returns the PRE-transition value. Kill the transition
        for the measurement, otherwise --navh comes back 110 instead of 90. */
-    var logos = n.querySelectorAll('.nav__logo-img');
+    var logos = n.querySelectorAll(".mt-nav__logo-img");
     var i;
     for (i = 0; i < logos.length; i++) logos[i].style.transition = 'none';
-    if (!had) n.classList.add('is-scrolled');
+    if (!had) n.classList.add("mt-is-scrolled");
     var h = n.offsetHeight;
-    if (!had) n.classList.remove('is-scrolled');
+    if (!had) n.classList.remove("mt-is-scrolled");
     for (i = 0; i < logos.length; i++) logos[i].style.transition = '';
     document.documentElement.style.setProperty('--navh', h + 'px');
   }
@@ -1416,7 +1469,7 @@
    Re-measured on resize and (where supported) when the footer itself
    changes height (e.g. the contact panel wrapping at another width). */
 (function () {
-  var f = document.querySelector('.footer');
+  var f = document.querySelector(".mt-footer");
   if (!f) return;
   function set() {
     document.documentElement.style.setProperty('--footer-h', f.offsetHeight + 'px');
@@ -1435,7 +1488,7 @@
      code change. Nothing is invented: a member with no bio yet gets an explicit
      "to follow" line. */
   (function () {
-    var cards = document.querySelectorAll('.member--opens');
+    var cards = document.querySelectorAll(".mt-member--opens");
     if (!cards.length) return;
     var rtl = document.documentElement.dir === 'rtl';
     var COPY = asfarSettings;
@@ -1444,22 +1497,22 @@
 
     function build() {
       panel = document.createElement('div');
-      panel.className = 'mexp';
-      panel.id = 'memberProfile';
+      panel.className = "mt-mexp";
+      panel.id = "memberProfile";
       panel.setAttribute('role', 'region');
       panel.setAttribute('aria-label', COPY.label);
       panel.innerHTML =
-        '<div class="mexp__in">' +
-          '<span class="mexp__ph"></span>' +
-          '<h3 class="mexp__name"></h3>' +
-          '<p class="mexp__role"></p>' +
-          '<p class="mexp__text"></p>' +
-          '<button type="button" class="mexp__close">×</button>' +
+        "<div class=\"mt-mexp__in\">" +
+          "<span class=\"mt-mexp__ph\"></span>" +
+          "<h3 class=\"mt-mexp__name\"></h3>" +
+          "<p class=\"mt-mexp__role\"></p>" +
+          "<p class=\"mt-mexp__text\"></p>" +
+          "<button type=\"button\" class=\"mt-mexp__close\">×</button>" +
         '</div>';
-      panel.querySelector('.mexp__close').setAttribute('aria-label', COPY.close);
+      panel.querySelector(".mt-mexp__close").setAttribute('aria-label', COPY.close);
       veil = document.createElement('div');
-      veil.className = 'mexp__veil';
-      panel.querySelector('.mexp__close').addEventListener('click', function () { close(); });
+      veil.className = "mt-mexp__veil";
+      panel.querySelector(".mt-mexp__close").addEventListener('click', function () { close(); });
       veil.addEventListener('click', function () { close(); });
     }
 
@@ -1481,19 +1534,19 @@
       var role = card.getAttribute('data-role') || '';
       var photo = card.getAttribute('data-photo') || '';
       var bio = (card.getAttribute('data-bio') || '').trim();
-      var ph = panel.querySelector('.mexp__ph');
+      var ph = panel.querySelector(".mt-mexp__ph");
       if (photo) {
-        ph.className = 'mexp__ph';
+        ph.className = "mt-mexp__ph";
         ph.replaceChildren(); var portrait = document.createElement('img'); portrait.src = photo; portrait.alt = ''; ph.appendChild(portrait);
       } else {
-        ph.className = 'mexp__ph mexp__ph--empty';
+        ph.className = "mt-mexp__ph mt-mexp__ph--empty";
         ph.innerHTML = '<i aria-hidden="true">' + initials(name) + '</i>';
       }
-      panel.querySelector('.mexp__name').textContent = name;
-      panel.querySelector('.mexp__role').textContent = role;
-      var txt = panel.querySelector('.mexp__text');
+      panel.querySelector(".mt-mexp__name").textContent = name;
+      panel.querySelector(".mt-mexp__role").textContent = role;
+      var txt = panel.querySelector(".mt-mexp__text");
       txt.textContent = bio || COPY.empty;
-      txt.className = bio ? 'mexp__text' : 'mexp__text mexp__text--empty';
+      txt.className = bio ? "mt-mexp__text" : "mt-mexp__text mt-mexp__text--empty";
     }
 
     /* Centre the panel across the section and align it to the row the card is
@@ -1502,7 +1555,7 @@
        get the same panel in the same place — anchoring it to the card itself
        put it half off-screen for anyone near the end of the rail. */
     function place(card) {
-      var host = card.closest('.team.section') || card.closest('.teampage');
+      var host = card.closest(".mt-team.mt-section") || card.closest(".mt-teampage");
       if (!host) host = card.closest('section') || document.body;
       if (panel.parentNode !== host) { host.appendChild(veil); host.appendChild(panel); }
       var hr = host.getBoundingClientRect(), cr = card.getBoundingClientRect();
@@ -1524,8 +1577,8 @@
 
     function mark(card, open) {
       if (!card) return;
-      card.classList.toggle('is-open', open);
-      var btn = card.querySelector('.member__name');
+      card.classList.toggle("mt-is-open", open);
+      var btn = card.querySelector(".mt-member__name");
       if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
@@ -1541,25 +1594,25 @@
          requestAnimationFrame left the panel stuck invisible whenever rAF was
          deferred, i.e. in a backgrounded tab. */
       void panel.offsetHeight;
-      veil.classList.add('is-open');
-      panel.classList.add('is-open');
-      var btn = panel.querySelector('.mexp__close');
+      veil.classList.add("mt-is-open");
+      panel.classList.add("mt-is-open");
+      var btn = panel.querySelector(".mt-mexp__close");
       if (btn) btn.focus({ preventScroll: true });
     }
 
     function close() {
       if (!panel || !current) return;
-      panel.classList.remove('is-open');
-      veil.classList.remove('is-open');
+      panel.classList.remove("mt-is-open");
+      veil.classList.remove("mt-is-open");
       mark(current, false);
       current = null;
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
 
     document.addEventListener('click', function (e) {
-      var t = e.target.closest('.member__name, .member--opens .member__ph');
+      var t = e.target.closest(".mt-member__name, .mt-member--opens .mt-member__ph");
       if (!t) return;
-      var card = t.closest('.member--opens');
+      var card = t.closest(".mt-member--opens");
       if (!card) return;
       e.preventDefault();
       if (card === current) close();
@@ -1572,7 +1625,7 @@
        panel, so the panel goes with it */
     document.addEventListener('click', function (e) {
       if (!current) return;
-      if (e.target.closest('.team__tab, .js-carbtn, .team__navbtn')) close();
+      if (e.target.closest(".mt-team__tab, .mt-js-carbtn, .mt-team__navbtn")) close();
     });
     window.addEventListener('resize', function () {
       if (current) place(current);
@@ -1602,11 +1655,11 @@
     if (busy) return;
     busy = true;
     var frame = document.createElement('iframe');
-    frame.className = 'dk-slide';
+    frame.className = "mt-dk-slide";
     frame.setAttribute('aria-hidden', 'true');
     frame.setAttribute('tabindex', '-1');
     frame.setAttribute('scrolling', 'no');
-    document.documentElement.classList.add('dk-sliding');
+    document.documentElement.classList.add("mt-dk-sliding");
     document.body.appendChild(frame);
 
     var started = false;
@@ -1614,9 +1667,9 @@
       if (started) return;
       started = true;
       void frame.offsetHeight;             /* force layout before the flip */
-      frame.classList.add('dk-slide--anim');
+      frame.classList.add("mt-dk-slide--anim");
       void frame.offsetHeight;
-      frame.classList.add('is-up');
+      frame.classList.add("mt-is-up");
       /* commit the navigation once the arriving view owns the screen; the
          document underneath swaps while the frame still covers it, so the
          hand-over is invisible */
@@ -1646,8 +1699,8 @@
      the screen and the frozen overflow kills scrolling, so the page looks stuck.
      Clear that state every time the page is shown or regains focus. */
   function clearSlideState() {
-    document.documentElement.classList.remove('dk-sliding');
-    var f = document.querySelector('.dk-slide');
+    document.documentElement.classList.remove("mt-dk-sliding");
+    var f = document.querySelector(".mt-dk-slide");
     if (f && f.parentNode) f.parentNode.removeChild(f);
     busy = false;
   }
@@ -1664,7 +1717,7 @@
     if (!a || a.hasAttribute('download')) return;
     if (a.target && a.target !== '_self') return;
     var raw = a.getAttribute('href') || '';
-    if (!a.closest('.dk-news, .newspage, .newsarticle, .dk-article')) return;          /* articles + the news index */
+    if (!a.closest(".mt-dk-news, .mt-newspage, .mt-newsarticle, .mt-dk-article")) return;          /* articles + the news index */
     var url;
     try { url = new URL(a.href, location.href); } catch (err) { return; }
     if (url.origin !== location.origin) return;

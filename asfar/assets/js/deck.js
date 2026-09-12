@@ -49,15 +49,15 @@
 
   /* ---------- scroll entrances ---------- */
   (function () {
-    var els = document.querySelectorAll('.dk-rise');
+    var els = document.querySelectorAll(".mt-dk-rise");
     if (!els.length) return;
     if (!('IntersectionObserver' in window) || reduced) {
-      els.forEach(function (e) { e.classList.add('is-in'); });
+      els.forEach(function (e) { e.classList.add("mt-is-in"); });
       return;
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+        if (en.isIntersecting) { en.target.classList.add("mt-is-in"); io.unobserve(en.target); }
       });
     }, { rootMargin: '0px 0px -12% 0px' });
     els.forEach(function (e) { io.observe(e); });
@@ -73,36 +73,26 @@
        driven by the .is-film class at the morph's own 2000ms,
      - the five dash indicators (statement + four destinations). */
   (function () {
-    var hero = document.getElementById('heroSlider');
-    if (!hero) return;
-    var dashes = Array.prototype.slice.call(hero.querySelectorAll('.dk-dashes span, .dk-dashes button'));
-    function paint(i) {
-      dashes.forEach(function (d, n) { d.classList.toggle('is-active', n === i); });
-    }
-    var nav = document.querySelector('header.nav');
-    paint(0);
+    var hero = document.getElementById("heroSlider");
+    if (!hero || !hero.querySelector("#heroMorphCanvas")) return;
+    /* The hero dashes are the SLIDE navigation, owned entirely by app.js
+       (3 statement slides, clickable). This layer used to repaint them as
+       film-progress every 300ms, which fought the click navigation and left
+       the wrong dash lit. It now only manages the nav band behind the film. */
+    var nav = document.querySelector("header.mt-nav");
     setInterval(function () {
-      var f = window.__heroFilm;
-      var filmOn = hero.classList.contains('is-film');
-      /* slide 3: a solid #154751 band sits behind the nav while the film runs.
-         The film LOOPS (leave() re-enters after INTRO_MS), so keying the band
-         on it alone leaves the bar solid at the very top of the page once the
-         first cycle has run — scroll down, come back, and the menu never goes
-         away again. The top of the page is slide 2, whose nav is transparent
-         with the hairline, so the band is held off there. */
+      var filmOn = hero.classList.contains("mt-is-film");
       var atPageTop = (window.scrollY || 0) < 6;
-      if (nav) nav.classList.toggle('is-band',
+      if (nav) nav.classList.toggle("mt-is-band",
         !atPageTop && filmOn && window.scrollY < hero.offsetHeight * .5);
-      if (!filmOn || !f || !f.playing) { paint(0); return; }
-      paint(1 + Math.min(3, Math.round((f.p || 0) * 3)));
     }, 300);
   })();
 
   /* ---------- sector strip (morph 2000ms) ---------- */
   (function () {
-    var root = document.getElementById('dkSectors');
+    var root = document.getElementById("dkSectors");
     if (!root) return;
-    var track = root.querySelector('.dk-sectors__track');
+    var track = root.querySelector(".mt-dk-sectors__track");
     var cards = Array.prototype.slice.call(track.children);
     if (!cards.length) return;
     var prev = root.querySelector('[data-dir="-1"]');
@@ -119,7 +109,7 @@
        screen and the rail stopped early, clipping the final card. */
     function maxShift() {
       var rail = track.parentElement.getBoundingClientRect();
-      var gutter = parseFloat(getComputedStyle(root.querySelector('.dk-wrap') || root).paddingInlineStart) || 0;
+      var gutter = parseFloat(getComputedStyle(root.querySelector(".mt-dk-wrap") || root).paddingInlineStart) || 0;
       var avail = rtl ? (rail.right - gutter) : (window.innerWidth - gutter - rail.left);
       var trackW = cards.length * step() - (step() - cards[0].getBoundingClientRect().width);
       return Math.max(0, trackW - avail);
@@ -131,7 +121,7 @@
     function perView() {
       var s = step(), w = cards[0].getBoundingClientRect().width;
       var rail = track.parentElement.getBoundingClientRect();
-      var gutter = parseFloat(getComputedStyle(root.querySelector('.dk-wrap') || root).paddingInlineStart) || 0;
+      var gutter = parseFloat(getComputedStyle(root.querySelector(".mt-dk-wrap") || root).paddingInlineStart) || 0;
       var avail = rtl ? (rail.right - gutter) : (window.innerWidth - gutter - rail.left);
       return Math.max(1, Math.floor((avail - w) / s) + 1);
     }
@@ -143,7 +133,7 @@
     function paint() {
       var shift = Math.min(current * step(), maxShift());
       track.style.transform = 'translateX(' + ((rtl ? 1 : -1) * shift) + 'px)';
-      cards.forEach(function (c, n) { c.classList.toggle('is-label', n === lit); });
+      cards.forEach(function (c, n) { c.classList.toggle("mt-is-label", n === lit); });
       if (prev) prev.disabled = current <= 0;
       if (next) next.disabled = current >= maxIndex();
     }
@@ -167,9 +157,9 @@
      two cards per click reads the same). The 1250ms cover-up belongs to
      the View All News page change, not to in-section paging. */
   (function () {
-    var root = document.getElementById('dkNews');
+    var root = document.getElementById("dkNews");
     if (!root) return;
-    var strip = root.querySelector('.dk-news__strip');
+    var strip = root.querySelector(".mt-dk-news__strip");
     if (!strip) return;
     var cards = Array.prototype.slice.call(strip.children);
     if (!cards.length) return;
@@ -205,9 +195,9 @@
 
   /* ---------- FAQ accordion (morph 2000ms) ---------- */
   (function () {
-    var list = document.getElementById('dkFaq');
+    var list = document.getElementById("dkFaq");
     if (!list) return;
-    var items = Array.prototype.slice.call(list.querySelectorAll('.dk-faq__item'));
+    var items = Array.prototype.slice.call(list.querySelectorAll(".mt-dk-faq__item"));
     function setH(wrap, h) { wrap.style.height = h + 'px'; }
     /* ⚠ the opening listener MUST be dropped when the row is closed again
        before its own transition finishes. Opening #1 and then #3 300ms later
@@ -219,29 +209,29 @@
       if (w._faqTimer) { clearTimeout(w._faqTimer); w._faqTimer = null; }
     }
     function closeItem(o) {
-      var w = o.querySelector('.dk-faq__awrap');
+      var w = o.querySelector(".mt-dk-faq__awrap");
       clearPending(w);
       setH(w, w.scrollHeight); reflow(w);
-      o.classList.remove('is-open');
+      o.classList.remove("mt-is-open");
       setH(w, 0);
-      o.querySelector('.dk-faq__btn').setAttribute('aria-expanded', 'false');
+      o.querySelector(".mt-dk-faq__btn").setAttribute('aria-expanded', 'false');
     }
     function toggle(item) {
-      var btn = item.querySelector('.dk-faq__btn');
-      var wrap = item.querySelector('.dk-faq__awrap');
-      var open = item.classList.contains('is-open');
+      var btn = item.querySelector(".mt-dk-faq__btn");
+      var wrap = item.querySelector(".mt-dk-faq__awrap");
+      var open = item.classList.contains("mt-is-open");
       items.forEach(function (o) {
-        if (o !== item && o.classList.contains('is-open')) closeItem(o);
+        if (o !== item && o.classList.contains("mt-is-open")) closeItem(o);
       });
       if (open) { closeItem(item); return; }
       clearPending(wrap);
-      item.classList.add('is-open');
+      item.classList.add("mt-is-open");
       setH(wrap, wrap.scrollHeight);
       btn.setAttribute('aria-expanded', 'true');
       /* settle to auto so the answer reflows with the viewport instead of
          holding the pixel height it opened at */
       var settle = function () {
-        if (!item.classList.contains('is-open')) return;
+        if (!item.classList.contains("mt-is-open")) return;
         wrap.style.height = 'auto';
         clearPending(wrap);
       };
@@ -255,19 +245,19 @@
       wrap.addEventListener('transitionend', done);
     }
     items.forEach(function (item) {
-      item.querySelector('.dk-faq__btn').addEventListener('click', function () { toggle(item); });
+      item.querySelector(".mt-dk-faq__btn").addEventListener('click', function () { toggle(item); });
     });
     DK.faqOpen = function (i) {
       var it = items[i];
-      if (it && !it.classList.contains('is-open')) toggle(it);
+      if (it && !it.classList.contains("mt-is-open")) toggle(it);
     };
-    DK.faqIsOpen = function (i) { return items[i] && items[i].classList.contains('is-open'); };
-    DK.faqCloseAll = function () { items.forEach(function (o) { if (o.classList.contains('is-open')) closeItem(o); }); };
+    DK.faqIsOpen = function (i) { return items[i] && items[i].classList.contains("mt-is-open"); };
+    DK.faqCloseAll = function () { items.forEach(function (o) { if (o.classList.contains("mt-is-open")) closeItem(o); }); };
   })();
 
   /* ---------- back to top ---------- */
   (function () {
-    var t = document.getElementById('dkTop');
+    var t = document.getElementById("dkTop");
     if (!t) return;
     t.addEventListener('click', function (e) {
       e.preventDefault();
@@ -317,7 +307,7 @@
      negative margin, so its straight top edge painted over the news wave. When
      the team is not present, disable the covers entirely so every section sits
      in normal flow and the section waves show. */
-  var teamEl = document.getElementById('dkTeam');
+  var teamEl = document.getElementById("dkTeam");
   var teamOn = teamEl && !teamEl.hidden && teamEl.getClientRects().length;
   var covers = (teamOn ? ['dkTeam', 'partners'] : []).map(function (id) {
     var el = document.getElementById(id);
@@ -363,7 +353,7 @@
 
   /* slide 2's hairline under the hero nav belongs to a slide at rest */
   function atTop() {
-    document.documentElement.classList.toggle('is-attop', (window.scrollY || 0) < 6);
+    document.documentElement.classList.toggle("mt-is-attop", (window.scrollY || 0) < 6);
   }
 
   function onScroll() { atTop(); if (!ticking) { ticking = true; requestAnimationFrame(tick); } }
