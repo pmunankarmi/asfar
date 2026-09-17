@@ -52,6 +52,8 @@
  var map = document.getElementById("dkMap");
  if (map) {
   var panes = [...map.querySelectorAll(".mt-asfar-portfolio-pane")], backgrounds = [...map.querySelectorAll(".mt-dk-map__bg")], buttons = [...map.querySelectorAll(".mt-dk-map__dashes button")];
+  var hinting = true;
+  map.classList.add("mt-dk-map--hint");
   var current = 0, timer, swap, pinned = false, finished = false, lastStep = 0;
   var canPin = !reduced && matchMedia('(hover: hover) and (pointer: fine)').matches;
   function place() {
@@ -64,10 +66,11 @@
    pin.style.top = ((box.height - vb.height * scale) / 2 + y * scale) + 'px';
    label.style.left = (parseFloat(pin.style.left) - 16) + 'px'; label.style.top = pin.style.top; label.textContent = pane.dataset.label;
    map.dataset.hot = pane.dataset.hot;
-   svg.querySelectorAll('[data-region]').forEach(function (region) { region.classList.toggle("mt-is-lit", pane.dataset.hot === 'all' || region.dataset.region === pane.dataset.hot); });
+   svg.querySelectorAll('[data-region]').forEach(function (region) { region.classList.toggle("mt-is-lit", !hinting && (pane.dataset.hot === 'all' || region.dataset.region === pane.dataset.hot)); });
   }
   function go(i) {
    if (!panes.length) return;
+   hinting = false; map.classList.remove("mt-dk-map--hint");
    current = (i + panes.length) % panes.length;
    clearTimeout(swap); map.classList.add("mt-is-swapping");
    backgrounds.forEach(function (b, n) { b.classList.toggle("mt-is-active", n === current); });
@@ -122,7 +125,7 @@
   }
   if (panes.length) {
    place(); addEventListener('resize', place);
-   if (!reduced && 'IntersectionObserver' in window) new IntersectionObserver(function (entries) { clearInterval(timer); if (entries[0].isIntersecting && !pinned && !canPin) timer = setInterval(function () { go(current + 1); }, 8000); }).observe(map);
+   if (!reduced && 'IntersectionObserver' in window) new IntersectionObserver(function (entries) { clearInterval(timer); if (entries[0].isIntersecting && !hinting && !pinned && !canPin) timer = setInterval(function () { go(current + 1); }, 8000); }).observe(map);
   }
  }
 })();

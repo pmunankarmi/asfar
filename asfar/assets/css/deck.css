@@ -243,12 +243,19 @@
   height:clamp(24px,2.031vw,40px);border-radius:999px;
   justify-content:center;gap:.45em;font-size:clamp(11px,.9375vw,18px);
   box-shadow:0 0 0 max(1px,.0297vw) rgba(252,247,238,.65) inset}
+/* Only one language is ever shown in the deck pill (the one you switch TO), so
+   the stacked two-option nudge from app.css just knocks the single word off
+   centre. Drop it and let the flex box centre the word. */
+.mt-nav .mt-nav__lang-opt[lang="ar"],
+.mt-nav .mt-nav__lang-opt[lang="en"]{transform:none}
 /* slide 2 drawing #79: 25.93 x 16.79 — THREE bars, ~3 thick on a 7.2 pitch */
 .mt-nav .mt-nav__burger{width:clamp(24px,2.026vw,40px);
   height:clamp(15px,1.312vw,26px)}
-.mt-nav .mt-nav__burger span{height:max(2px,.234vw);border-radius:2px}
+/* three bars, evenly weighted: bar thickness ~= the gap between bars, and the
+   middle bar sits on the exact centre so the two gaps are identical. */
+.mt-nav .mt-nav__burger span{height:max(2.5px,.26vw);border-radius:2px}
 .mt-nav .mt-nav__burger span:nth-child(1){top:0;bottom:auto}
-.mt-nav .mt-nav__burger span:nth-child(2){top:calc(50% - max(1px,.117vw));bottom:auto}
+.mt-nav .mt-nav__burger span:nth-child(2){top:50%;bottom:auto;transform:translateY(-50%)}
 .mt-nav .mt-nav__burger span:nth-child(3){top:auto;bottom:0}
 /* close state: the middle bar goes, the outer two cross */
 .mt-nav .mt-nav__burger.mt-is-active span:nth-child(1){top:50%;transform:translateY(-50%) rotate(45deg)}
@@ -518,13 +525,30 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
 /* Clickable regions carry a faint wash of their own highlight colour by
    default, so the map reads as interactive; the selected one goes to full
    colour via .mt-is-lit. Taif has no data, so it gets no wash and no pointer. */
-.mt-dk-map__stage .mt-invmap__region.mt-dk-clickable{cursor:pointer;
+/* app.css sets .mt-invmap__region{pointer-events:none} for the old static map, so
+   the click wiring never actually fired for a real cursor. Re-enable it on the
+   clickable regions (over the whole fill, not just painted pixels) and make the
+   decorative land + border strokes transparent to clicks so nothing on top of a
+   region swallows the hit. */
+.mt-dk-map__stage .mt-invmap__region.mt-dk-clickable{cursor:pointer;pointer-events:fill;
   transition:fill var(--dk-morph) var(--dk-ease),opacity .25s ease}
-.mt-dk-map__stage .mt-invmap__region[data-region="baha"]:not(.mt-is-lit){fill:rgba(199,152,130,.30)}
-.mt-dk-map__stage .mt-invmap__region[data-region="yanbu"]:not(.mt-is-lit){fill:rgba(202,230,234,.34)}
-.mt-dk-map__stage .mt-invmap__region[data-region="asir"]:not(.mt-is-lit){fill:rgba(177,170,182,.32)}
+.mt-dk-map__stage .mt-invmap__land,
+.mt-dk-map__stage .mt-invmap__borders,
+.mt-dk-map__stage .mt-invmap__borders *{pointer-events:none}
+.mt-dk-map__stage .mt-invmap__region[data-region="baha"]:not(.mt-is-lit){fill:rgba(199,152,130,.40)}
+.mt-dk-map__stage .mt-invmap__region[data-region="yanbu"]:not(.mt-is-lit){fill:rgba(202,230,234,.42)}
+.mt-dk-map__stage .mt-invmap__region[data-region="asir"]:not(.mt-is-lit){fill:rgba(177,170,182,.42)}
 .mt-dk-map__stage .mt-invmap__region.mt-dk-clickable:hover:not(.mt-is-lit),
-.mt-dk-map__stage .mt-invmap__region.mt-dk-clickable:focus-visible:not(.mt-is-lit){opacity:.72;outline:none}
+.mt-dk-map__stage .mt-invmap__region.mt-dk-clickable:focus-visible:not(.mt-is-lit){opacity:.85;outline:none}
+/* Resting hint state: before the visitor engages the map, every clickable area
+   breathes its faint wash so the whole portfolio reads as tappable. The first
+   dash, region click or scroll step commits and this stops. */
+@keyframes dkRegHint{0%,100%{opacity:.5}50%{opacity:1}}
+.mt-dk-map--hint .mt-dk-map__stage .mt-invmap__region.mt-dk-clickable{
+  animation:dkRegHint 2.6s var(--dk-ease) infinite}
+@media (prefers-reduced-motion:reduce){
+  .mt-dk-map--hint .mt-dk-map__stage .mt-invmap__region.mt-dk-clickable{animation:none}
+}
 .mt-dk-map[data-hot="baha"]  .mt-dk-map__val{color:#D0A895}
 .mt-dk-map[data-hot="yanbu"] .mt-dk-map__val{color:#CAE6EA}
 .mt-dk-map[data-hot="asir"]  .mt-dk-map__val{color:#C5BFC9}
@@ -533,14 +557,14 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
 .mt-dk-map__stage .mt-invmap__region.mt-is-lit{fill:#CAE6EA}
 /* marker: 26.0 ring stroked #154751 0.37, 14.0 core #275A61 at 94.9% */
 .mt-dk-map__pin{position:absolute;width:2.031vw;height:2.031vw;margin:-1.016vw;
-  border-radius:50%;background:transparent;z-index:3;
+  border-radius:50%;background:transparent;z-index:3;pointer-events:none;
   border:max(1px,.0289vw) solid var(--dk-teal-deep);
   transition:left var(--dk-morph) var(--dk-ease),top var(--dk-morph) var(--dk-ease)}
 .mt-dk-map__pin::after{content:"";position:absolute;inset:23.1%;border-radius:50%;
   background:var(--dk-tile-hi);opacity:.949}
 .mt-dk-map__pinlab{position:absolute;z-index:3;font-family:var(--dk-readex);
   font-weight:600;font-size:clamp(13px,1.4867vw,46px);color:#FCF7EE;
-  white-space:nowrap;
+  white-space:nowrap;pointer-events:none;
   /* physical, not logical: the label hangs off the pin's LEFT in both
      languages because it follows the map's geometry, not the reading
      direction — mirroring it put the Arabic label on top of the region */

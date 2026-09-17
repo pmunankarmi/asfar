@@ -12,6 +12,7 @@ get_header();
 			<div class="mt-wrap mt-article__grid">
 				<div class="mt-article__body">
 					<header class="mt-article__head">
+						<a class="mt-article__back mt-article__back--top" href="<?php echo esc_url( asfar_home_url() . '#news' ); ?>"><?php echo esc_html( asfar_amv4_label( 'Back to Media Center' ) ); ?></a>
 						<span class="mt-article__pill"><?php echo esc_html( get_field( 'category_label' ) ); ?></span>
 						<h1 class="mt-article__title"><?php the_title(); ?></h1>
 						<p class="mt-article__date"><?php echo esc_html( get_field( 'display_date' ) ?: get_the_date() ); ?></p>

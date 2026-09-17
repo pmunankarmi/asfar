@@ -66,3 +66,9 @@ Verified privileged Heartbeat responses discover new releases, preserve other th
 ## 1.2.1 tabbed Theme Settings
 
 Organized existing fields with standard ACF tabs, retaining their names and keys. Integration checks (including logo synchronization and shared translations), syntax and package checks pass. The tab layout has not been installed or visually verified in staging ACF Pro.
+
+## 1.3.0 AMV4
+
+Compared all supplied HTML and assets against the prior reference. Ported two banner modes, map pointer/hint states, language/menu alignment, article return links and the Arabic heading correction. The isolated migration test verifies exact-match correction, preservation of custom headings/other fields and repeat-run safety. PHP and JavaScript syntax and archive integrity pass.
+
+Browser verification uses a source-derived static preview with the actual theme scripts/styles, not an installed WordPress/ACF environment. Bilingual banner selection, actual map pointer clicks and keyboard selection, mobile reduced-motion navigation and viewport width pass without JavaScript errors. Staging installation and ACF Pro editor verification remain for after the administrator installs the release.

@@ -871,7 +871,8 @@
     var n = Math.max(scenes.length, slides.length);
     /* a single scene means no rotation — but the film engine further down in
        this module must still initialise, so this is a flag, not an early out */
-    var rotate = n >= 2;
+    var journeyMode = !!hero.querySelector("#heroMorphCanvas");
+    var rotate = n >= 2 && !journeyMode;
     var i = 0, timer = null, DUR = 6000;
     function set(idx) {
       idx = (idx % n + n) % n;
@@ -882,7 +883,7 @@
         if (set[i]) set[i].classList.remove("mt-is-active");
         if (set[idx]) set[idx].classList.add("mt-is-active");
       });
-      if (!window.__heroGoDest) dots.forEach(function (d, k) { d.classList.toggle("mt-is-active", k === idx); d.setAttribute('aria-pressed', k === idx ? 'true' : 'false'); });
+      if (!window.__heroMorph) dots.forEach(function (d, k) { d.classList.toggle("mt-is-active", k === idx); d.setAttribute('aria-pressed', k === idx ? 'true' : 'false'); });
       i = idx;
     }
     window.__heroSlideGo = set;   /* fallback nav for mobile / reduced motion */
@@ -910,7 +911,7 @@
     var hcanvas = document.getElementById("heroMorphCanvas");
     var hctx = hcanvas ? hcanvas.getContext('2d') : null;
     var HTOTAL = hcanvas ? (parseInt(hcanvas.getAttribute('data-frames'), 10) || 0) : 0;
-    var hframes = [], hready = false, hloaded = 0, hcur = -1, hlm = -1, hstarted = false, morphOn = false;
+    var hframes = [], hready = false, hloaded = 0, hcur = -1, hlm = -1, hstarted = false, morphOn = false, hCallbacks = [];
     var hmarks = [];
     if (hero.getAttribute('data-morphmarks')) { try { var _hm = JSON.parse(hero.getAttribute('data-morphmarks')); if (_hm && _hm.length) hmarks = _hm; } catch (e) {} }
     var hNameEl = document.getElementById("heroMorphName");
@@ -944,14 +945,16 @@
       }
     }
     function hPreload(cb) {
-      if (hstarted) { if (hready && cb) cb(); return; }
+      if (hready) { if (cb) cb(); return; }
+      if (cb) hCallbacks.push(cb);
+      if (hstarted) return;
       hstarted = true; hResize();
       for (var k = 0; k < HTOTAL; k++) {
         (function (k) {
           var img = new Image();
           img.onload = img.onerror = function () {
             if (img.naturalWidth) hframes[k] = img;
-            if (++hloaded >= HTOTAL) { hready = true; hDraw(0); hUpdate(); if (cb) cb(); }
+            if (++hloaded >= HTOTAL) { hready = true; hDraw(0); hUpdate(); hCallbacks.splice(0).forEach(function (ready) { ready(); }); }
           };
           img.src = asfarSettings.assets + 'img/morph/f_' + ('00' + (k + 1)).slice(-3) + '.jpg';
         })(k);
@@ -982,12 +985,12 @@
        Skipped under prefers-reduced-motion and on mobile
        (the frames are 1200px desktop assets); those keep the video hero. ---- */
     (function () {
-      if (!hcanvas || !hctx || HTOTAL <= 0 || reduced || mqMobile.matches) return;
+      if (!hcanvas || !hctx || HTOTAL <= 0 || !hmarks.length || reduced || mqMobile.matches) return;
       var FILM_MS = 17000;          // one mountain-to-coast pass
       var INTRO_MS = 5000;          // one statement beat before the film takes over
       var playing = false, p = 0, lastTs = null, filmInView = true;
       var born = Date.now();
-      var filmTimer = null, stopped = false;   // user taking manual control halts the loop
+      var filmRAF = null, filmTimer = null, stopped = false, manualMorph = false;   // user control halts the loop
       var heroDashes = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__dot"));
       function syncDash(k) {
         heroDashes.forEach(function (d, j) {
@@ -1001,12 +1004,11 @@
         if (hNameEl) hNameEl.textContent = hmarks[lm].name;
         if (hSubEl) hSubEl.textContent = hmarks[lm].region || '';
         if (hCtaEl) { hCtaEl.textContent = hmarks[lm].cta; hCtaEl.setAttribute('href', hmarks[lm].href); }
-        syncDash(lm);
       }
       function tick(ts) {
         if (!playing) return;
         /* hold the frame (and the clock) while the tab or hero is unseen */
-        if (document.hidden || !filmInView) { lastTs = null; requestAnimationFrame(tick); return; }
+        if (document.hidden || !filmInView) { lastTs = null; filmRAF = requestAnimationFrame(tick); return; }
         if (lastTs == null) lastTs = ts;
         p += (ts - lastTs) / FILM_MS; lastTs = ts;
         if (p > 1) p = 1;
@@ -1017,30 +1019,34 @@
         /* forward only — and at the coast the hero returns to the opening
            slide (canvas fades out, the video resumes), then the journey
            comes round again. Never plays in reverse. */
-        if (p >= 1) { playing = false; if (window.__heroFilm) window.__heroFilm.playing = false; leave(); return; }
-        requestAnimationFrame(tick);
+        if (p >= 1) { playing = false; if (window.__heroFilm) window.__heroFilm.playing = false;
+          if (manualMorph) { manualMorph = false; goStill(); } else leave(); return; }
+        filmRAF = requestAnimationFrame(tick);
       }
       function enter() {
         if (stopped || playing) return;
+        cancelAnimationFrame(filmRAF);
         playing = true;
         stop();
         hero.classList.add("mt-is-film");
-        var v = document.getElementById("heroVid");
+        syncDash(1);
+        var v = document.getElementById('heroVid');
         if (v) { try { v.pause(); } catch (e) {} }
         p = 0; lastTs = null; hlm = -1;
         hResize(); hDraw(0); caption(0);
         window.__heroFilm = { playing: true, frame: 0, p: 0, cycles: (window.__heroFilm && window.__heroFilm.cycles) || 0 };
-        requestAnimationFrame(tick);
+        filmRAF = requestAnimationFrame(tick);
       }
       function leave() {
         hero.classList.remove("mt-is-film");          // the statement slide is back
-        var v = document.getElementById("heroVid");
+        syncDash(0);
+        var v = document.getElementById('heroVid');
         if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
         if (window.__heroFilm) window.__heroFilm.cycles = (window.__heroFilm.cycles || 0) + 1;
         filmTimer = setTimeout(enter, INTRO_MS);   // and the journey comes round again
       }
       function begin() {
-        filmTimer = setTimeout(enter, Math.max(0, INTRO_MS - (Date.now() - born)));
+        if (!stopped && !manualMorph) filmTimer = setTimeout(enter, Math.max(0, INTRO_MS - (Date.now() - born)));
       }
       /* clicking a hero dash hands control to the slides: stop the film loop,
          drop out of film mode and let the statement slides show. */
@@ -1049,38 +1055,29 @@
         clearTimeout(filmTimer);
         hero.classList.remove("mt-is-film");
         if (window.__heroFilm) window.__heroFilm.playing = false;
-        var v = document.getElementById("heroVid");
+        var v = document.getElementById('heroVid');
         if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
       };
-      /* clicking a dash morphs the destination FILM IMAGE to that destination
-         (Mountains / Highlands / Oasis / Coast) and shows its caption — the
-         hero's visual journey, driven by hand instead of the auto loop. */
-      var animRAF = null;
-      function morphTo(target, cb) {
-        cancelAnimationFrame(animRAF);
-        var from = hcur < 0 ? 0 : hcur, dur = 780, t0 = null;
-        function fr(ts) {
-          if (t0 == null) t0 = ts;
-          var u = Math.min(1, (ts - t0) / dur);
-          var e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;   // easeInOutQuad
-          var f = Math.round(from + (target - from) * e);
-          if (f !== hcur) { hcur = f; hDraw(f); }
-          if (u < 1) animRAF = requestAnimationFrame(fr); else if (cb) cb();
-        }
-        animRAF = requestAnimationFrame(fr);
+      /* Two dashes: [0] the still hero image, [1] the full destination
+         morph. Click 0 to hold the still, click 1 to play the whole morph. */
+      function goStill() {
+        stopped = true; manualMorph = false; clearTimeout(filmTimer); cancelAnimationFrame(filmRAF);
+        if (playing) { playing = false; if (window.__heroFilm) window.__heroFilm.playing = false; }
+        hero.classList.remove("mt-is-film");
+        var v = document.getElementById('heroVid'); if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
+        if (window.__heroSlideGo) window.__heroSlideGo(0);
+        syncDash(0);
       }
-      window.__heroGoDest = function (k) {
-        stopped = true; playing = false; clearTimeout(filmTimer);
-        hero.classList.add("mt-is-film");
-        var v = document.getElementById("heroVid"); if (v) { try { v.pause(); } catch (e) {} }
-        var target = Math.round((hmarks.length < 2 ? 0 : k / (hmarks.length - 1)) * (HTOTAL - 1));
-        hlm = -1; caption(k);                 // caption() also lights dash k
-        hResize();
-        if (hready) morphTo(target);
-        else hPreload(function () { morphTo(target); });
-      };
+      function goMorph() {
+        stopped = false; manualMorph = true; clearTimeout(filmTimer);
+        syncDash(1);
+        if (hready) { if (!playing) enter(); else hResize(); }
+        else hPreload(function () { if (!stopped) enter(); });
+      }
+      window.__heroStill = goStill;
+      window.__heroMorph = goMorph;
       heroDashes.forEach(function (d, k) {
-        d.addEventListener('click', function () { window.__heroGoDest(k); });
+        d.addEventListener('click', function () { if (k === 0) goStill(); else goMorph(); });
       });
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (en) {
@@ -1095,7 +1092,7 @@
     })();
     /* mobile / reduced motion: the film never runs, so the dashes step the
        statement slides instead of the destination film. */
-    if (!window.__heroGoDest) {
+    if (!window.__heroMorph) {
       var fbDashes = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__dot"));
       fbDashes.forEach(function (d, k) {
         d.addEventListener('click', function () {

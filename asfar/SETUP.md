@@ -85,3 +85,9 @@ Theme Settings is organized into four standard ACF tabs: Branding, Footer & Cont
 ## Maintenance pages
 
 From 1.2.2, ASFAR Setup and ASFAR Content Check are hidden from the Appearance menu. Administrators can still access them directly at `wp-admin/themes.php?page=asfar-setup` and `wp-admin/themes.php?page=asfar-content-check`. Their existing permissions and maintenance functions remain intact. Theme Settings, Partners and content editing remain visible.
+
+## AMV4 / version 1.3.0
+
+With Landscape Animation enabled, the banner has Overview and The journey controls. Landscape captions still come from the homepage ACF repeater. With animation disabled, navigation continues to follow Banner Slides. New interface strings (Overview, The journey, Back to Media Center) are available in Languages → Translations.
+
+On the next administrator visit, the AMV4 correction updates only the original Arabic About typo and adds missing translations. Edited headings are preserved. Images are unchanged; do not reimport media for this update.

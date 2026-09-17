@@ -77,6 +77,21 @@ body{background:#F2ECE3}
 [dir="rtl"] .mt-article__aside .mt-article__back{margin-inline:auto 0}
 .mt-article__aside .mt-article__back:hover{background:#B08D57;border-color:#B08D57;color:#FCF7EE}
 
+/* ── a compact back link at the head of the story, so readers can return to the
+   media center from the top without scrolling to the foot of the rail ── */
+.mt-article__body .mt-article__back--top{display:inline-flex;align-items:center;gap:.5em;
+  inline-size:auto;align-self:flex-start;
+  margin:0 0 clamp(16px,1.6vw,32px);font-family:"DM Sans",sans-serif;font-weight:400;
+  color:#B08D57;background:transparent;border:1px solid #CDB58F;border-radius:999px;
+  padding:.6em 1.25em;font-size:clamp(12px,.92vw,19px);text-decoration:none;
+  transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+.mt-article__body .mt-article__back--top::before{content:"\2190";font-size:1.05em;line-height:1;
+  transition:transform .3s var(--ease)}
+[dir="rtl"] .mt-article__body .mt-article__back--top::before{content:"\2192"}
+.mt-article__body .mt-article__back--top:hover{background:#B08D57;border-color:#B08D57;color:#FCF7EE}
+.mt-article__body .mt-article__back--top:hover::before{transform:translateX(-2px)}
+[dir="rtl"] .mt-article__body .mt-article__back--top:hover::before{transform:translateX(2px)}
+
 @media (max-width:900px){
   .mt-article__grid{grid-template-columns:1fr;gap:2.4rem}
   .mt-article__morecard{grid-template-columns:minmax(0,1fr) 26%}

@@ -1,8 +1,8 @@
 <?php
 /** ASFAR theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ASFAR_VERSION', '1.2.2' );
-foreach ( array( 'admin', 'anchors', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'source-update', 'template-upgrade', 'forms', 'updates' ) as $asfar_module ) {
+define( 'ASFAR_VERSION', '1.3.0' );
+foreach ( array( 'admin', 'anchors', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'source-update', 'amv4', 'template-upgrade', 'forms', 'updates' ) as $asfar_module ) {
  require_once get_template_directory() . '/inc/' . $asfar_module . '.php';
 }
 add_action( 'after_setup_theme', function () {

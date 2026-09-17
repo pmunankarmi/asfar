@@ -64,11 +64,8 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 		</div>
 		<div class="mt-dk-dashes" id="dkHeroDashes" aria-label="<?php echo esc_attr( asfar_option( 'banner_label' ) ); ?>">
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
-				<?php while ( have_rows( 'banner_animation' ) ) : the_row(); ?>
-					<?php while ( have_rows( 'stops' ) ) : the_row(); ?>
-						<button class="mt-hero__dot <?php echo 1 === get_row_index() ? 'mt-is-active' : ''; ?>" type="button" data-i="<?php echo esc_attr( get_row_index() - 1 ); ?>" aria-label="<?php echo esc_attr( get_sub_field( 'name' ) ); ?>" aria-pressed="<?php echo 1 === get_row_index() ? 'true' : 'false'; ?>"></button>
-					<?php endwhile; ?>
-				<?php endwhile; ?>
+				<button class="mt-hero__dot mt-is-active" type="button" data-i="0" aria-label="<?php echo esc_attr( asfar_amv4_label( 'Overview' ) ); ?>" aria-pressed="true"></button>
+				<button class="mt-hero__dot" type="button" data-i="1" aria-label="<?php echo esc_attr( asfar_amv4_label( 'The journey' ) ); ?>" aria-pressed="false"></button>
 			<?php else : ?>
 				<?php while ( have_rows( 'banner_slides' ) ) : the_row(); ?>
 					<button class="mt-hero__dot <?php echo 1 === get_row_index() ? 'mt-is-active' : ''; ?>" type="button" data-i="<?php echo esc_attr( get_row_index() - 1 ); ?>" aria-label="<?php echo esc_attr( get_sub_field( 'heading' ) ); ?>" aria-pressed="<?php echo 1 === get_row_index() ? 'true' : 'false'; ?>"></button>
