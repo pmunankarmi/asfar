@@ -59,6 +59,24 @@ function asfar_lines( $text ) {
 	return nl2br( esc_html( (string) $text ) );
 }
 
+/** Preserve the source title's line breaks and emphasis, including older imports. */
+function asfar_portfolio_heading( $text ) {
+	$source_titles = array(
+		'ASFAR Investment Portfolio' => "ASFAR\nInvestment\nPortfolio",
+		'محفظة أسفار الاستثمارية' => "محفظة أسفار\nالاستثمارية",
+	);
+	$text = $source_titles[ $text ] ?? (string) $text;
+	$lines = preg_split( '/\R/u', $text );
+	$first = array_shift( $lines );
+	return '<span class="mt-dk-map__title-a">' . esc_html( $first ) . '</span>'
+		. ( $lines ? '<br>' . asfar_lines( implode( "\n", $lines ) ) : '' );
+}
+
+/** Restore square-metre notation flattened by the original content import. */
+function asfar_statistic_value( $text ) {
+	return preg_replace( '/(?<![\p{L}\p{N}])([mMم])(?:2|²)(?![\p{L}\p{N}])/u', '$1<sup>2</sup>', esc_html( (string) $text ) );
+}
+
 function asfar_attachment_url( $id ) {
 	return wp_get_attachment_url( absint( $id ) ) ?: '';
 }

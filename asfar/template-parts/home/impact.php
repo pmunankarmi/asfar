@@ -8,7 +8,7 @@
 					<?php if ( 1 === get_row_index() ) : ?>
 						<span class="mt-dk-impact__frond" aria-hidden="true"></span>
 					<?php endif; ?>
-					<p class="mt-dk-impact__num"><?php echo esc_html( get_sub_field( 'value' ) ); ?></p>
+					<p class="mt-dk-impact__num"><?php echo asfar_statistic_value( get_sub_field( 'value' ) ); ?></p>
 					<p class="mt-dk-impact__lbl"><?php echo asfar_lines( get_sub_field( 'label' ) ); ?></p>
 				</div>
 			<?php endwhile; ?>

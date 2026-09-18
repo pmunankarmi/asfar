@@ -18,7 +18,7 @@ get_header();
 				<?php while ( have_rows( 'statistics' ) ) : the_row(); ?>
 					<div>
 						<dt><?php echo esc_html( get_sub_field( 'label' ) ); ?></dt>
-						<dd><?php echo esc_html( get_sub_field( 'value' ) ); ?></dd>
+						<dd><?php echo asfar_statistic_value( get_sub_field( 'value' ) ); ?></dd>
 					</div>
 				<?php endwhile; ?>
 			</dl>
