@@ -27,3 +27,11 @@ Restored details missing from the original WordPress conversion:
 - Superscript square-metre units in impact statistics, portfolio figures and project details. Text remains escaped; arbitrary HTML is not enabled.
 
 Preserved the requested compact sticky header, rounded button hover, modal layering, banner button spacing, translated CPT links and native editable ACF content. No live content was overwritten. PHP/JavaScript/package validation and isolated formatting checks cover the update; installation and final rendered verification of 1.3.1 remain with the administrator.
+
+## Map interaction correction — 18 September 2026 (1.3.2)
+
+The 1.3.1 wave introduced an earlier SVG in the map section. The interaction script selected that decorative SVG instead of the map artwork, so region highlights and marker coordinates were wrong. Scoped the selector to the map stage and start marker/highlight transitions immediately with the background transition, matching the reference.
+
+Strategic Investments in the live reference displays the Taif rose landscape. Added an optional native ACF Homepage Map Background image field per project, using that reference landscape by default for Strategic Investments and the featured image for the other regions. Existing featured images and content remain unchanged.
+
+The preview now renders the actual PHP portfolio template and shared helpers against fixture ACF/WordPress records, including both decorative SVGs. Browser verification in Arabic and English covered all four selections, their active highlights (one for each region, four for Strategic Investments), marker visibility/coordinates and background URLs. This is a template preview, not a full WordPress runtime. Syntax and package validation also passed. Installation on the live site remains with the administrator.

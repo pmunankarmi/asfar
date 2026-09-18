@@ -16,6 +16,12 @@ for(const lang of ['en','ar']){
  await page.locator('.mt-dk-clickable[data-region="asir"]').click();await page.waitForTimeout(100);assert.equal(await page.locator('#dkMap').getAttribute('data-hot'),'asir');
  await page.locator('.mt-dk-clickable[data-region="yanbu"]').focus();await page.keyboard.press('Enter');await page.waitForTimeout(1200);
  assert.equal(await page.locator('#dkMap').getAttribute('data-hot'),'yanbu');
+ assert.deepEqual(await page.locator('.mt-invmap__region.mt-is-lit').evaluateAll(es=>es.map(e=>e.dataset.region)),['yanbu']);
+ assert.equal(await page.locator('.mt-dk-map__pin').evaluate(e=>e.hidden),false);
+ await page.locator('.mt-dk-map__dashes button').last().click();await page.waitForTimeout(1200);
+ assert.equal(await page.locator('.mt-invmap__region.mt-is-lit').count(),4);
+ assert.equal(await page.locator('.mt-dk-map__pin').evaluate(e=>e.hidden),true);
+ assert.match(await page.locator('.mt-dk-map__bg.mt-is-active').getAttribute('style'),/taif-roses/);
  assert.equal(await page.locator('#dkMap').evaluate(e=>e.classList.contains('mt-dk-map--hint')),false);
  assert.equal(await page.locator('.mt-dk-clickable').first().evaluate(e=>getComputedStyle(e).pointerEvents),'fill');
  await page.emulateMedia({reducedMotion:'no-preference'});

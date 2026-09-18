@@ -11,7 +11,7 @@ $projects = asfar_project_rows( $section['projects'] ?? array() );
 	</div>
 	<div class="mt-dk-map__bgs" aria-hidden="true">
 		<?php foreach ( $projects as $index => $project ) : ?>
-			<div class="mt-dk-map__bg <?php echo 0 === $index ? 'mt-is-active' : ''; ?>" style="background-image: url('<?php echo esc_url( asfar_attachment_url( $project['bg'] ) ); ?>')"></div>
+			<div class="mt-dk-map__bg <?php echo 0 === $index ? 'mt-is-active' : ''; ?>" style="background-image: url('<?php echo esc_url( $project['background_url'] ); ?>')"></div>
 		<?php endforeach; ?>
 	</div>
 	<div class="mt-dk-map__in">

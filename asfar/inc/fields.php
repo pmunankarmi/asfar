@@ -202,6 +202,7 @@ add_action( 'acf/init', function () {
 		asfar_text( 'headline', 'Project Headline' ),
 		asfar_text( 'summary', 'Project Summary', true ),
 		asfar_text( 'map_label', 'Map Label' ),
+		asfar_image_field( 'map_background', 'Homepage Map Background' ),
 		asfar_field( 'map_region', 'Map Region', 'select', array( 'choices' => array( 'baha' => 'Al-Baha', 'yanbu' => 'Yanbu', 'asir' => 'Aseer', 'taif' => 'Taif', 'all' => 'Strategic Investments' ) ) ),
 		asfar_field( 'map_x', 'Map Marker X', 'number' ),
 		asfar_field( 'map_y', 'Map Marker Y', 'number' ),

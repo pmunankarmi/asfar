@@ -57,7 +57,7 @@
   var current = 0, timer, swap, pinned = false, finished = false, lastStep = 0;
   var canPin = !reduced && matchMedia('(hover: hover) and (pointer: fine)').matches;
   function place() {
-   var pane = panes[current], svg = map.querySelector('svg'), pin = map.querySelector(".mt-dk-map__pin"), label = map.querySelector(".mt-dk-map__pinlab");
+   var pane = panes[current], svg = map.querySelector('.mt-dk-map__stage svg'), pin = map.querySelector(".mt-dk-map__pin"), label = map.querySelector(".mt-dk-map__pinlab");
    if (!pane || !svg) return;
    var x = Number(pane.dataset.x), y = Number(pane.dataset.y), vb = svg.viewBox.baseVal, box = svg.getBoundingClientRect();
    var scale = Math.min(box.width / vb.width, box.height / vb.height);
@@ -72,6 +72,7 @@
    if (!panes.length) return;
    hinting = false; map.classList.remove("mt-dk-map--hint");
    current = (i + panes.length) % panes.length;
+   place();
    clearTimeout(swap); map.classList.add("mt-is-swapping");
    backgrounds.forEach(function (b, n) { b.classList.toggle("mt-is-active", n === current); });
    buttons.forEach(function (b, n) { b.classList.toggle("mt-is-active", n === current); b.setAttribute('aria-selected', n === current ? 'true' : 'false'); });

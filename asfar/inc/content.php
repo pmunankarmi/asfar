@@ -175,11 +175,19 @@ function asfar_project_rows( $ids = null ) {
 	}
 	$rows = array();
 	foreach ( get_posts( $query ) as $project ) {
+		$map_background = asfar_value( 'map_background', $project->ID );
+		$region = asfar_value( 'map_region', $project->ID );
+		$background_url = $map_background ? asfar_attachment_url( $map_background ) : '';
+		if ( ! $background_url ) {
+			// The AMV4 reference shows the rose landscape for Strategic Investments.
+			$background_url = 'all' === $region ? asfar_original_image_url( 'img/taif-roses.jpg' ) : asfar_attachment_url( get_post_thumbnail_id( $project ) );
+		}
 		$rows[] = array(
 			'id' => $project->ID,
 			'name' => get_the_title( $project ),
 			'bg' => get_post_thumbnail_id( $project ),
-			'hot' => asfar_value( 'map_region', $project->ID ),
+			'background_url' => $background_url,
+			'hot' => $region,
 			'label' => asfar_value( 'map_label', $project->ID ),
 			'mark_x' => asfar_value( 'map_x', $project->ID ),
 			'mark_y' => asfar_value( 'map_y', $project->ID ),
