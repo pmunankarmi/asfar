@@ -54,8 +54,7 @@
   var panes = [...map.querySelectorAll(".mt-asfar-portfolio-pane")], backgrounds = [...map.querySelectorAll(".mt-dk-map__bg")], buttons = [...map.querySelectorAll(".mt-dk-map__dashes button")];
   var hinting = true;
   map.classList.add("mt-dk-map--hint");
-  var current = 0, timer, swap, pinned = false, finished = false, lastStep = 0;
-  var canPin = !reduced && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var current = 0, timer, swap, visible = false;
   function place() {
    var pane = panes[current], svg = map.querySelector('.mt-dk-map__stage svg'), pin = map.querySelector(".mt-dk-map__pin"), label = map.querySelector(".mt-dk-map__pinlab");
    if (!pane || !svg) return;
@@ -79,54 +78,31 @@
    swap = setTimeout(function () { panes.forEach(function (p, n) { p.hidden = n !== current; }); place(); map.classList.remove("mt-is-swapping"); }, reduced ? 0 : 1000);
   }
   function pause() { clearInterval(timer); }
-  buttons.forEach(function (b, n) { b.addEventListener('click', function () { pause(); go(n); }); });
+  function rearm() {
+   pause();
+   if (reduced || !visible || document.hidden || panes.length < 2) return;
+   timer = setInterval(function () { go(current + 1); }, 8000);
+  }
+  buttons.forEach(function (b, n) { b.addEventListener('click', function () { go(n); rearm(); }); });
   map.querySelectorAll(".mt-invmap__region[data-region]").forEach(function (region) {
    var index = panes.findIndex(function (pane) { return pane.dataset.hot === region.dataset.region; });
    if (index < 0) return;
    region.classList.add("mt-dk-clickable"); region.setAttribute('role', 'button'); region.setAttribute('tabindex', '0');
    region.setAttribute('aria-label', panes[index].querySelector('h3').textContent.trim());
-   function select() { pause(); go(index); }
+   function select() { go(index); rearm(); }
    region.addEventListener('click', select);
    region.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); select(); } });
   });
-  function release() {
-   if (!pinned) return;
-   pinned = false; finished = true;
-   document.documentElement.classList.remove("mt-dk-maplock");
-   if (window.__lenis) window.__lenis.start();
-  }
-  function step(direction) {
-   if (Date.now() - lastStep < 1400) return;
-   var next = current + direction;
-   if (next < 0 || next >= panes.length) { release(); return; }
-   lastStep = Date.now(); go(next);
-  }
-  if (canPin && panes.length > 1) {
-   addEventListener('scroll', function () {
-    if (pinned || finished || document.querySelector(".mt-menu.mt-is-open")) return;
-    var box = map.getBoundingClientRect(), nav = document.querySelector(".mt-nav");
-    if (box.height > innerHeight || box.top > (nav ? nav.offsetHeight : 0) + 10 || box.bottom < innerHeight * .55) return;
-    pinned = true; pause(); go(0); lastStep = 0;
-    var target = scrollY + box.top - Math.max(0, (innerHeight - box.height) / 2);
-    if (window.__lenis) { window.__lenis.scrollTo(target, {immediate:true,force:true}); window.__lenis.stop(); }
-    else scrollTo(0, target);
-    document.documentElement.classList.add("mt-dk-maplock");
-   }, {passive:true});
-   addEventListener('wheel', function (event) { if (pinned && Math.abs(event.deltaY) > 0) { event.preventDefault(); step(event.deltaY > 0 ? 1 : -1); } }, {passive:false});
-   addEventListener('keydown', function (event) {
-    if (!pinned) return;
-    if (['Escape','Tab','Home','End'].includes(event.key)) { release(); return; }
-    if (['INPUT','TEXTAREA','SELECT','BUTTON','A'].includes(event.target.tagName)) return;
-    if (['ArrowDown','PageDown',' '].includes(event.key)) { event.preventDefault(); step(1); }
-    else if (['ArrowUp','PageUp'].includes(event.key)) { event.preventDefault(); step(-1); }
-   });
-   addEventListener('resize', release);
-   addEventListener('hashchange', release);
-   document.addEventListener('click', function (event) { if (event.target.closest("a, #burger")) release(); });
-  }
   if (panes.length) {
    place(); addEventListener('resize', place);
-   if (!reduced && 'IntersectionObserver' in window) new IntersectionObserver(function (entries) { clearInterval(timer); if (entries[0].isIntersecting && !hinting && !pinned && !canPin) timer = setInterval(function () { go(current + 1); }, 8000); }).observe(map);
+   if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+     visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .35;
+     if (visible && hinting && !reduced) go(current);
+     rearm();
+    }, { threshold: .35 }).observe(map);
+   }
+   document.addEventListener('visibilitychange', rearm);
   }
  }
 })();
