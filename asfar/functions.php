@@ -1,8 +1,8 @@
 <?php
 /** ASFAR theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ASFAR_VERSION', '1.0.1' );
-foreach ( array( 'content', 'fields', 'media', 'setup', 'forms', 'updates' ) as $asfar_module ) {
+define( 'ASFAR_VERSION', '1.3.4' );
+foreach ( array( 'admin', 'anchors', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'source-update', 'amv4', 'template-upgrade', 'forms', 'updates' ) as $asfar_module ) {
  require_once get_template_directory() . '/inc/' . $asfar_module . '.php';
 }
 add_action( 'after_setup_theme', function () {
@@ -12,14 +12,16 @@ add_action( 'after_setup_theme', function () {
  add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
  register_nav_menus( array( 'primary' => 'Primary navigation', 'footer' => 'Footer navigation', 'drawer' => 'Expanded navigation' ) );
 } );
+// Use the classic editor for pages, posts and custom post types.
 add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
+add_filter( 'use_block_editor_for_post', '__return_false', 100 );
 add_filter( 'use_widgets_block_editor', '__return_false' );
-add_action( 'init', function () { remove_post_type_support( 'page', 'editor' ); remove_post_type_support( 'post', 'editor' ); } );
+
 add_action( 'wp_enqueue_scripts', function () {
  $uri = get_template_directory_uri();
  wp_enqueue_style( 'asfar-app', $uri . '/assets/css/app.css', array(), ASFAR_VERSION );
  wp_enqueue_style( 'asfar-deck', $uri . '/assets/css/deck.css', array( 'asfar-app' ), ASFAR_VERSION );
- if ( ! is_page_template( 'template-home.php' ) ) { wp_enqueue_style( 'asfar-article', $uri . '/assets/css/deck-article.css', array( 'asfar-deck' ), ASFAR_VERSION ); }
+ if ( ! is_page_template( 'templates/template-home.php' ) ) { wp_enqueue_style( 'asfar-article', $uri . '/assets/css/deck-article.css', array( 'asfar-deck' ), ASFAR_VERSION ); }
  if ( 'ar' === asfar_language() ) { wp_enqueue_style( 'asfar-rtl', $uri . '/assets/css/app-rtl.css', array( 'asfar-deck' ), ASFAR_VERSION ); }
  wp_enqueue_style( 'asfar', get_stylesheet_uri(), array( 'asfar-deck' ), ASFAR_VERSION );
  asfar_enqueue_image_styles();
@@ -34,4 +36,9 @@ add_action( 'admin_notices', function () {
  if ( ! function_exists( 'acf_add_options_page' ) ) { echo '<div class="notice notice-error"><p>ASFAR requires ACF Pro for content editing. Install and activate your licensed copy; no premium plugin is bundled.</p></div>'; }
  if ( ! function_exists( 'pll_current_language' ) ) { echo '<div class="notice notice-warning"><p>Activate Polylang and add English (en) and Arabic (ar) to enable bilingual navigation.</p></div>'; }
  if ( ! get_option( 'asfar_seed_complete' ) ) { echo '<div class="notice notice-info"><p>Use Appearance → ASFAR Setup to import the supplied content.</p></div>'; }
+} );
+
+add_filter( 'body_class', function ( $classes ) {
+ if ( ! is_page_template( 'templates/template-home.php' ) ) { $classes[] = 'mt-page--inner'; }
+ return $classes;
 } );

@@ -39,73 +39,73 @@
 }
 
 /* ── shared plumbing ─────────────────────────────────────── */
-.dk-wrap{width:100%;margin-inline:auto;
+.mt-dk-wrap{width:100%;margin-inline:auto;
   /* the deck's 47px gutter is 3.67vw of its 1280 canvas — hold that ratio and
      let the content run the full width of the viewport instead of stopping at
      1280 and leaving dead margins on a wide screen */
   padding-inline:clamp(18px,3.67vw,110px)}
-.dk-label{font-family:var(--dk-readex);font-weight:700;
+.mt-dk-label{font-family:var(--dk-readex);font-weight:700;
   font-size:clamp(22px,2.896vw,90px);line-height:1.214;letter-spacing:.01em;
   text-transform:uppercase;color:var(--dk-gold);margin:0}
-.dk-label--terra{color:var(--dk-terra)}
-.dk-sub{font-family:var(--dk-readex);font-weight:300;
+.mt-dk-label--terra{color:var(--dk-terra)}
+.mt-dk-sub{font-family:var(--dk-readex);font-weight:300;
   font-size:clamp(13px,1.15vw,25px);line-height:1.55;color:var(--dk-ink);margin:0}
 /* the About label's own caption sits heavier and in ink */
-.dk-about__row .dk-sub{font-weight:500;
+.mt-dk-about__row .mt-dk-sub{font-weight:500;
   font-size:clamp(12px,1.2523vw,39px);line-height:1.310}
 /* the deck drops the label block 17.3px below the card's top edge */
-.dk-about__row .dk-label{margin-top:1.352vw}
+.mt-dk-about__row .mt-dk-label{margin-top:1.352vw}
 
 /* wave dividers — path lifted from the deck's own custGeom.
    The section dividers crop the viewBox to just the curve (0 0 1280 44),
    so the band is short while the curve keeps its full sweep — the tall
    124px box was mostly dead fill below the curve. */
-.dk-wave{display:block;width:100%;height:clamp(46px,9.5vw,124px);
+.mt-dk-wave{display:block;width:100%;height:clamp(46px,9.5vw,124px);
   margin-bottom:-1px;pointer-events:none}
-.dk-wave--tight{height:clamp(26px,3.1vw,62px)}
-.dk-wave svg{display:block;width:100%;height:100%}
+.mt-dk-wave--tight{height:clamp(26px,3.1vw,62px)}
+.mt-dk-wave svg{display:block;width:100%;height:100%}
 
 /* the deck's soft entrance: content slides up as a section arrives */
-.dk-rise{opacity:0;transform:translateY(26px);
+.mt-dk-rise{opacity:0;transform:translateY(26px);
   transition:opacity 1100ms var(--dk-ease),transform 1100ms var(--dk-ease)}
-.dk-rise.is-in{opacity:1;transform:none}
+.mt-dk-rise.mt-is-in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
-  .dk-rise{transition:none;opacity:1;transform:none}
+  .mt-dk-rise{transition:none;opacity:1;transform:none}
 }
 
 /* ── NAV (deck chrome: band + logo + العربية + burger only) ── */
-.nav{background:transparent}
-.nav .nav__links{display:none}                     /* deck nav carries no links */
-.nav .nav__in{padding-block:clamp(10px,1.2vh,14px)}
+.mt-nav{background:transparent}
+.mt-nav .mt-nav__links{display:none}                     /* deck nav carries no links */
+.mt-nav .mt-nav__in{padding-block:clamp(10px,1.2vh,14px)}
 /* Deck nav lockup is 101.6 x 30.2 and never changes between slides, so the
    logo holds ONE height in every nav state — 0.910 of the deck's 30.2 for
    the client's 10% reduction = 27.5 deck px = 2.148vw. It was vh-based,
    which collapsed it to 19.8 deck px on a wide viewport. */
-.nav .nav__logo-img,
-.nav.is-scrolled .nav__logo-img,
-.page--inner .nav .nav__logo-img{height:clamp(28px,2.148vw,52px)}
-.nav.is-scrolled,.page--inner .nav{background:var(--dk-nav)}
-.nav.is-scrolled{box-shadow:none}
+.mt-nav .mt-nav__logo-img,
+.mt-nav.mt-is-scrolled .mt-nav__logo-img,
+.mt-page--inner .mt-nav .mt-nav__logo-img{height:clamp(28px,2.148vw,52px)}
+.mt-nav.mt-is-scrolled,.mt-page--inner .mt-nav{background:var(--dk-nav)}
+.mt-nav.mt-is-scrolled{box-shadow:none}
 /* The bar is SOLID in the deck. app.css cross-fades the background over 500ms,
    which over the hero photo leaves a half-opaque teal rectangle with a hard
    bottom edge — it reads as a seam torn across the image mid-scroll. Snap it
    instead: the switch happens at 0.72vh, where the hero is already leaving. */
-.nav{transition:box-shadow .5s var(--ease),backdrop-filter .5s var(--ease)}
+.mt-nav{transition:box-shadow .5s var(--ease),backdrop-filter .5s var(--ease)}
 /* العربية / EN pill: 83.7x26.2, Readex Light 12px, hairline cream */
 /* slide 2 drawing #77: an 83 x 26.01 hairline pill, 0.38px cream stroke, no
    fill, holding one word — the language you switch TO. Burger #79 is
    25.93 x 16.79 sitting 27.57 to its side. */
-.nav .nav__lang{border:0;box-shadow:0 0 0 max(1px,.03vw) rgba(252,247,238,.65) inset;
+.mt-nav .mt-nav__lang{border:0;box-shadow:0 0 0 max(1px,.03vw) rgba(252,247,238,.65) inset;
   border-radius:999px;padding:0;
   inline-size:6.484vw;min-inline-size:70px;
   block-size:2.032vw;min-block-size:24px;
   display:inline-flex;align-items:center;justify-content:center;
   font-family:var(--dk-readex);font-weight:300;
   font-size:clamp(10px,.938vw,30px);color:#FCF7EE}
-.nav .nav__lang a,.nav .nav__lang span{color:#FCF7EE;text-decoration:none;
+.mt-nav .mt-nav__lang a,.mt-nav .mt-nav__lang span{color:#FCF7EE;text-decoration:none;
   display:inline-flex;align-items:center;justify-content:center;
   inline-size:100%;block-size:100%}
-.nav .nav__side{gap:2.154vw}
+.mt-nav .mt-nav__side{gap:2.154vw}
 
 /* ── HERO — the site's canvas-morph film + the deck's intro ─────
    The deck's animated slide 3 is a recording of THIS hero's film
@@ -117,17 +117,17 @@
    downward as the page scrolls, so it reaches ~110px past this box — without a
    clip it paints straight over the section below while you scroll, which reads
    as a hard seam across the hero with a slice of another frame beyond it. */
-.dk-film{position:absolute;inset:0;z-index:1;overflow:hidden}
+.mt-dk-film{position:absolute;inset:0;z-index:1;overflow:hidden}
 /* slide 2's photograph is 2.11:1 and the deck shows it whole across the top of
    the canvas; on a taller viewport it is cropped, so the horizon is held high
    to keep the ridge line and the juniper framed as the slide frames them. */
-.hero .hero__img{object-fit:cover;object-position:center 38%}
+.mt-hero .mt-hero__img{object-fit:cover;object-position:center 38%}
 /* Slide 2 carries NO wash over the photograph — app.css lays a flat 37% veil
    across the hero for the film's brighter frames, which drains this sunset by
    ~60 levels in the sky. The still beat gets a much lighter treatment: enough
    at the top for the logo and at the foot for the CTAs, and clear through the
    middle where the ridge line and the headline sit. */
-.hero:not(.is-film) .hero__scrim{
+.mt-hero:not(.mt-is-film) .mt-hero__scrim{
   background:
     linear-gradient(rgba(6,14,12,.10),rgba(6,14,12,.10)),
     linear-gradient(180deg,
@@ -137,66 +137,74 @@
       rgba(8,18,16,.20) 86%,
       rgba(7,16,14,.30) 100%)}
 /* deck slide 2 typography: Inter Light + pill CTAs */
-.hero .hero__kicker{font-family:var(--dk-readex);font-weight:300;
+.mt-hero .mt-hero__kicker{font-family:var(--dk-readex);font-weight:300;
   font-size:clamp(15px,1.66vw,21.3px);letter-spacing:.01em;text-transform:none;
   margin:0 0 .15em}
-.hero .hero__kicker-rule,.hero .hero__kicker-dia{display:none}
-.hero .hero__title{font-family:var(--dk-readex);font-weight:500;
+.mt-hero .mt-hero__kicker-rule,.mt-hero .mt-hero__kicker-dia{display:none}
+.mt-hero .mt-hero__title{font-family:var(--dk-readex);font-weight:500;
   font-size:clamp(30px,4.59vw,58.7px);line-height:1.21;letter-spacing:0;margin:0}
-.hero .hero__title b{font-weight:700}
-.hero .hero__cta .btn{font-family:var(--dk-sans);font-weight:500;
+.mt-hero .mt-hero__title b{font-weight:700}
+.mt-hero .mt-hero__cta .mt-btn{font-family:var(--dk-sans);font-weight:500;
   font-size:clamp(12px,1.15vw,14.7px);letter-spacing:.01em;text-transform:none;
   border-radius:999px;padding:.55rem 1.9rem;min-width:clamp(150px,15.2vw,194.6px)}
-.hero .btn--gold{background:rgba(166,130,74,.75);border:1px solid #A6824A;color:#FCF7EE}
-.hero .btn--gold:hover{background:rgba(166,130,74,.95)}
-.hero .btn--line-light{background:rgba(166,130,74,.05);border:1px solid #A6824A;color:#FCF7EE}
-.hero .btn--line-light:hover{background:rgba(166,130,74,.25)}
+.mt-hero .mt-btn--gold{background:rgba(166,130,74,.75);border:1px solid #A6824A;color:#FCF7EE}
+.mt-hero .mt-btn--gold:hover{background:rgba(166,130,74,.95)}
+.mt-hero .mt-btn--line-light{background:rgba(166,130,74,.05);border:1px solid #A6824A;color:#FCF7EE}
+.mt-hero .mt-btn--line-light:hover{background:rgba(166,130,74,.25)}
 /* intro block at the deck's fractions (kicker 286/654, title 315, CTAs 466) */
-.hero .hero__in{position:absolute;inset:0;padding:0;display:block;z-index:4}
-.hero .hero__slides{position:absolute;left:0;right:0;top:35.9%}
-.hero .hero__slide{display:flex;flex-direction:column;align-items:center;text-align:center}
+.mt-hero .mt-hero__in{position:absolute;inset:0;padding:0;display:block;z-index:4}
+.mt-hero .mt-hero__slides{position:absolute;left:0;right:0;top:35.9%}
+.mt-hero .mt-hero__slide{display:flex;flex-direction:column;align-items:center;text-align:center}
 /* r8's three statements cross-fade inside ONE grid cell. app.css fades them
    over .85s with no stagger, so mid-change both headlines sit near-opaque on
    top of each other and read as one garbled line. Hand over instead: the
    outgoing clears completely before the incoming starts. */
-.hero .hero__slide{
+.mt-hero .mt-hero__slide{
   transition:opacity 380ms var(--dk-ease),
              transform 380ms var(--dk-ease),
              visibility 0s 380ms}
-.hero .hero__slide.is-active{
+.mt-hero .mt-hero__slide.mt-is-active{
   transition:opacity 380ms var(--dk-ease) 380ms,
              transform 380ms var(--dk-ease) 380ms,
              visibility 0s}
-.hero .hero__cta{margin-top:clamp(30px,9.3vh,61px);display:flex;
+.mt-hero .mt-hero__cta{margin-top:clamp(30px,9.3vh,61px);display:flex;
   gap:clamp(14px,1.7vw,22px);justify-content:center}
+/* the two hero buttons persist across all three rotating slides: lifted out
+   of the fading slide and pinned below the headline band */
+.mt-hero .mt-hero__cta--fixed{position:absolute;left:0;right:0;top:63%;margin-top:0;z-index:5}
+.mt-hero.mt-is-morph .mt-hero__cta--fixed{display:none}
 /* film captions at the recording's position (overline ~.30 of the
-   viewport, title ~.42) — my inset:0 override on .hero__in had let the
+   viewport, title ~.42) — my inset:0 override on .mt-hero__in had let the
    morphcap drift to the top */
-.hero .hero__morphcap{position:absolute;left:0;right:0;top:28.5%;
+.mt-hero .mt-hero__morphcap{position:absolute;left:0;right:0;top:28.5%;
   display:flex;flex-direction:column;align-items:center;text-align:center}
-.hero .hero__morphcap .hero__title{font-family:var(--dk-sans);font-weight:600;
+.mt-hero .mt-hero__morphcap .mt-hero__title{font-family:var(--dk-sans);font-weight:600;
   font-size:clamp(34px,5vw,64px);line-height:1.15}
-.hero .hero__morph-over,.hero .hero__morph-sub{font-family:var(--dk-sans);
+.mt-hero .mt-hero__morph-over,.mt-hero .mt-hero__morph-sub{font-family:var(--dk-sans);
   font-weight:600;font-size:clamp(9px,0.86vw,11px);letter-spacing:.32em;
   text-transform:uppercase;color:rgba(252,247,238,.92);margin:0}
-.hero .hero__morph-over{margin-bottom:.9em}
-.hero .hero__morph-sub{margin-top:.8em;letter-spacing:.3em}
-.hero .hero__morphcap .hero__cta{margin-top:clamp(16px,3vh,26px)}
-.hero .hero__morphcap .btn{min-width:0;padding:.55rem 1.6rem}
-[dir="rtl"] .hero .hero__morphcap .hero__title{
+.mt-hero .mt-hero__morph-over{margin-bottom:.9em}
+.mt-hero .mt-hero__morph-sub{margin-top:.8em;letter-spacing:.3em}
+.mt-hero .mt-hero__morphcap .mt-hero__cta{margin-top:clamp(16px,3vh,26px)}
+.mt-hero .mt-hero__morphcap .mt-btn{min-width:0;padding:.55rem 1.6rem}
+[dir="rtl"] .mt-hero .mt-hero__morphcap .mt-hero__title{
   font-family:"IBM Plex Sans Arabic",var(--dk-sans);font-weight:700}
-[dir="rtl"] .hero .hero__morph-over,[dir="rtl"] .hero .hero__morph-sub{letter-spacing:.06em}
+[dir="rtl"] .mt-hero .mt-hero__morph-over,[dir="rtl"] .mt-hero .mt-hero__morph-sub{letter-spacing:.06em}
 
 /* scene dashes — 34.6x3.3, pitch 38.85, centred at y566/654 */
-.dk-dashes{position:absolute;left:50%;transform:translateX(-50%);
+.mt-dk-dashes{position:absolute;left:50%;transform:translateX(-50%);
   bottom:clamp(56px,13.4vh,88px);display:flex;gap:4.3px;z-index:6}
-.dk-dashes span,.dk-dashes button{display:block;width:clamp(24px,2.7vw,34.6px);height:3.3px;
+.mt-dk-dashes span,.mt-dk-dashes button{display:block;width:clamp(24px,2.7vw,34.6px);height:3.3px;
   border:0;padding:0;border-radius:2px;background:rgba(252,247,238,.17);
-  transition:background-color .45s var(--dk-ease)}
-.dk-dashes .is-active{background:rgba(252,247,238,.84)}
+  position:relative;transition:background-color .45s var(--dk-ease)}
+/* the visible bar is only 3.3px tall — far too thin to click. A transparent
+   pad extends the hit area to ~31px tall without changing the look. */
+.mt-dk-dashes button{cursor:pointer}
+.mt-dk-dashes button::before{content:"";position:absolute;left:0;right:0;top:-14px;bottom:-14px}
+.mt-dk-dashes .mt-is-active{background:rgba(252,247,238,.84)}
 /* cream wave over the hero's bottom edge; the deck shape hangs mostly below
    the canvas so only its top ~70px shows */
-.hero .dk-wave{position:absolute;left:0;right:0;bottom:-1px;z-index:5;
+.mt-hero .mt-dk-wave{position:absolute;left:0;right:0;bottom:-1px;z-index:5;
   transform:translateY(43.5%)}
 /* The statement hands over to the film across the morph's 2000ms, but as
    TWO halves rather than a simultaneous fade: the outgoing layer clears in
@@ -206,74 +214,81 @@
    other for two seconds. Each layer's delay lives on its INCOMING state, so
    the hand-off is clean in both directions.
    app.css's display:none is overridden on both so the exits can animate. */
-.hero .hero__slides{
+.mt-hero .mt-hero__slides{
   transition:opacity calc(var(--dk-morph)/2) var(--dk-ease) calc(var(--dk-morph)/2),
              transform calc(var(--dk-morph)/2) var(--dk-ease) calc(var(--dk-morph)/2)}
-.hero.is-film .hero__slides{display:block;opacity:0;pointer-events:none;
+.mt-hero.mt-is-film .mt-hero__slides{display:block;opacity:0;pointer-events:none;
   transform:translateX(-7%);transition-delay:0s}
-[dir="rtl"] .hero.is-film .hero__slides{transform:translateX(7%)}
-.hero .hero__morphcap{display:block;opacity:0;pointer-events:none;
+[dir="rtl"] .mt-hero.mt-is-film .mt-hero__slides{transform:translateX(7%)}
+.mt-hero .mt-hero__morphcap{display:block;opacity:0;pointer-events:none;
   transition:opacity calc(var(--dk-morph)/2) var(--dk-ease)}
-.hero.is-film .hero__morphcap,.hero.is-morph .hero__morphcap{
+.mt-hero.mt-is-film .mt-hero__morphcap,.mt-hero.mt-is-morph .mt-hero__morphcap{
   opacity:1;pointer-events:auto;transition-delay:calc(var(--dk-morph)/2)}
 /* during the film the deck shows a solid teal band behind the nav */
-.nav.is-band:not(.is-scrolled){background:var(--dk-nav)}
+.mt-nav.mt-is-band:not(.mt-is-scrolled){background:var(--dk-nav)}
 
 /* ── NAV — the deck's own bar (measured off PDF page 6) ─────────────────
    Bar 1280 x 89.0 deck px => 6.953vw, gutter 47.2 => 3.67vw (same as
-   .dk-wrap, so the logo lines up with every section label below it).
+   .mt-dk-wrap, so the logo lines up with every section label below it).
    Bar fill is #275A61 — the deck's impact-slide bar — held for every
    section so the nav reads as one consistent element. Pill 83.0 x 26.0
    with a 0.38 hairline in #FCF7EE; burger 25.9 x 16.8.
    ⚠ The logo deliberately keeps its client-approved 10% reduction — the
    deck lockup is 101.6 x 30.2 and ours is 0.910 of that. That instruction
    post-dates the deck, so it is NOT reset to the deck size. */
-.nav .nav__in,.nav.is-scrolled .nav__in,.page--inner .nav .nav__in{
+.mt-nav .mt-nav__in,.mt-nav.mt-is-scrolled .mt-nav__in,.mt-page--inner .mt-nav .mt-nav__in{
   padding-block:0;min-height:clamp(62px,6.953vw,150px);
   padding-inline:clamp(18px,3.67vw,110px)}
-.nav .nav__lang{min-width:clamp(72px,6.484vw,128px);
+.mt-nav .mt-nav__lang{min-width:clamp(72px,6.484vw,128px);
   height:clamp(24px,2.031vw,40px);border-radius:999px;
   justify-content:center;gap:.45em;font-size:clamp(11px,.9375vw,18px);
   box-shadow:0 0 0 max(1px,.0297vw) rgba(252,247,238,.65) inset}
+/* Only one language is ever shown in the deck pill (the one you switch TO), so
+   the stacked two-option nudge from app.css just knocks the single word off
+   centre. Drop it and let the flex box centre the word. */
+.mt-nav .mt-nav__lang-opt[lang="ar"],
+.mt-nav .mt-nav__lang-opt[lang="en"]{transform:none}
 /* slide 2 drawing #79: 25.93 x 16.79 — THREE bars, ~3 thick on a 7.2 pitch */
-.nav .nav__burger{width:clamp(24px,2.026vw,40px);
+.mt-nav .mt-nav__burger{width:clamp(24px,2.026vw,40px);
   height:clamp(15px,1.312vw,26px)}
-.nav .nav__burger span{height:max(2px,.234vw);border-radius:2px}
-.nav .nav__burger span:nth-child(1){top:0;bottom:auto}
-.nav .nav__burger span:nth-child(2){top:calc(50% - max(1px,.117vw));bottom:auto}
-.nav .nav__burger span:nth-child(3){top:auto;bottom:0}
+/* three bars, evenly weighted: bar thickness ~= the gap between bars, and the
+   middle bar sits on the exact centre so the two gaps are identical. */
+.mt-nav .mt-nav__burger span{height:max(2.5px,.26vw);border-radius:2px}
+.mt-nav .mt-nav__burger span:nth-child(1){top:0;bottom:auto}
+.mt-nav .mt-nav__burger span:nth-child(2){top:50%;bottom:auto;transform:translateY(-50%)}
+.mt-nav .mt-nav__burger span:nth-child(3){top:auto;bottom:0}
 /* close state: the middle bar goes, the outer two cross */
-.nav .nav__burger.is-active span:nth-child(1){top:50%;transform:translateY(-50%) rotate(45deg)}
-.nav .nav__burger.is-active span:nth-child(2){opacity:0}
-.nav .nav__burger.is-active span:nth-child(3){top:50%;bottom:auto;transform:translateY(-50%) rotate(-45deg)}
+.mt-nav .mt-nav__burger.mt-is-active span:nth-child(1){top:50%;transform:translateY(-50%) rotate(45deg)}
+.mt-nav .mt-nav__burger.mt-is-active span:nth-child(2){opacity:0}
+.mt-nav .mt-nav__burger.mt-is-active span:nth-child(3){top:50%;bottom:auto;transform:translateY(-50%) rotate(-45deg)}
 
 /* Slide 2 draws a hairline under the hero nav — drawing #11, a 0.67px #FCF7EE
    stroke. It belongs to a STATIC slide, so on the page it is shown only while
    the hero is at rest: left on during the scroll it stays pinned across the
    moving photograph and reads as a tear through the image. Weight matched to
    the deck's stroke rather than the hard 1px it had been. */
-.nav:not(.is-scrolled){border-bottom:0}
-html.is-attop .nav:not(.is-scrolled){
+.mt-nav:not(.mt-is-scrolled){border-bottom:0}
+html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
   border-bottom:max(1px,.052vw) solid rgba(252,247,238,.72)}
-.nav:not(.is-scrolled) .nav__in{padding-block:clamp(16px,4.2vh,27px)}
+.mt-nav:not(.mt-is-scrolled) .mt-nav__in{padding-block:clamp(16px,4.2vh,27px)}
 /* pill buttons reused by news/footer */
-.dk-btn{display:inline-block;font-family:var(--dk-sans);font-weight:500;
+.mt-dk-btn{display:inline-block;font-family:var(--dk-sans);font-weight:500;
   font-size:clamp(12px,1.15vw,14.7px);border-radius:999px;text-decoration:none;
   padding:.55rem 1.9rem;text-align:center}
 
 /* ── ABOUT + VISION (slides 4–5) ─────────────────────────── */
-.dk-about{background:var(--dk-cream);color:var(--dk-ink);
+.mt-dk-about{background:var(--dk-cream);color:var(--dk-ink);
   padding-block:clamp(40px,6vh,72px) clamp(44px,7vh,84px)}
-.dk-about__row{display:grid;
+.mt-dk-about__row{display:grid;
   /* deck: label box at x47.2, card at x251.5, both inside the 47.2 gutter —
      204.3 / 980.5 of the 1185.6 content box */
   grid-template-columns:17.232% 82.768%;
   gap:0;align-items:start;
   margin-bottom:clamp(34px,4vw,80px)}
-.dk-about__row:last-child{margin-bottom:0}
-.dk-about{padding-block:clamp(40px,6vh,72px) clamp(30px,4vw,70px)}
-.dk-card{background:var(--dk-card);border-radius:var(--dk-r);position:relative}
-.dk-about__card{position:relative;overflow:hidden;
+.mt-dk-about__row:last-child{margin-bottom:0}
+.mt-dk-about{padding-block:clamp(40px,6vh,72px) clamp(30px,4vw,70px)}
+.mt-dk-card{background:var(--dk-card);border-radius:var(--dk-r);position:relative}
+.mt-dk-about__card{position:relative;overflow:hidden;
   /* the deck's 980 x 233.1 proportion as a FLOOR, not a lock: the card holds
      the deck's exact height for short copy but grows for the r8 body text,
      which runs two paragraphs. Card width is 82.768% of the 92.66vw content
@@ -288,73 +303,80 @@ html.is-attop .nav:not(.is-scrolled){
    Measured against the card in that same render (x252.0 y167.0,
    980.0 x 233.1): left 68.219%, top -32.059%, 34.811% x 146.270%,
    end overhang 3.030%. Fill #FCF7EE at 61.176% — the card clips the rest. */
-.dk-about__frond{position:absolute;z-index:0;pointer-events:none;
+.mt-dk-about__frond{position:absolute;z-index:0;pointer-events:none;
   inset-inline-end:-3.030%;top:-32.059%;
   width:34.811%;height:146.270%;
   background-color:rgba(252,247,238,.61176);
   -webkit-mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%;
   mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%}
-[dir="rtl"] .dk-about__frond{transform:scaleX(-1)}
+[dir="rtl"] .mt-dk-about__frond{transform:scaleX(-1)}
 /* lift the copy above the watermark — must NOT match the frond itself,
    or the absolute positioning is overridden and it drops into flow */
-.dk-about__card > h3,.dk-about__card > p{position:relative;z-index:1}
+.mt-dk-about__card > h3,.mt-dk-about__card > p{position:relative;z-index:1}
 /* deck: heading box 95.5 over 2 lines at 37.33px -> 1.28; body box 61.7
    over 3 lines at 16px -> 1.285; 11.2px between them (0.875vw) */
-.dk-about__card h3{font-family:var(--dk-sans);font-weight:300;
+.mt-dk-about__card h3{font-family:var(--dk-sans);font-weight:300;
   font-size:clamp(22px,2.896vw,90px);line-height:1.295;
   margin:0 0 0.867vw;color:var(--dk-ink)}
 /* deck body box is 654.5 of the 921.2 content box */
-.dk-about__card p{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-about__card p{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(12px,1.2523vw,39px);line-height:1.313;color:var(--dk-ink);
   max-width:71%;margin:0}
 /* r8's About body runs to two paragraphs; space them on the deck's own
    heading-to-body rhythm (11.2 deck px = 0.875vw) */
-.dk-about__card p + p{margin-top:.875vw}
+.mt-dk-about__card p + p{margin-top:.875vw}
 /* same light display treatment as the card heading, in gold */
-.dk-about__pif{grid-column:2;display:block;text-align:end;
+.mt-dk-about__pif{grid-column:2;display:block;text-align:end;
   font-family:var(--dk-readex);font-weight:500;
   font-size:clamp(16px,1.8805vw,58px);line-height:1.2;letter-spacing:0;
   color:var(--dk-gold);
   margin-top:1.234vw}
+/* the real PIF lockup (apif-logo.png is white-only, so render its shape in the
+   brand gold via a mask); replaces the plain gold text */
+.mt-dk-about__pif{color:transparent;font-size:0;line-height:0;justify-self:end;
+  width:clamp(120px,13vw,184px);aspect-ratio:645/118;
+  background-color:var(--dk-gold);
+  -webkit-mask:var(--asfar-image-apif-logo) no-repeat right center/contain;
+  mask:var(--asfar-image-apif-logo) no-repeat right center/contain}
 /* the deck gives both vision columns the same width (470.5 each) — hold the
    even split so the tan card keeps the About card's proportions on any screen */
 /* ── OUR VISION — its own beige band between the cream About section
    and the teal Impact band, waves top and bottom ── */
-.dk-vision-band{background:var(--dk-card);color:var(--dk-ink);
+.mt-dk-vision-band{background:var(--dk-card);color:var(--dk-ink);
   padding-block:clamp(24px,3.4vw,68px) clamp(28px,4.3vw,86px)}
-.dk-vision__row{display:grid;
+.mt-dk-vision__row{display:grid;
   grid-template-columns:minmax(150px,clamp(150px,14vw,290px)) 1fr;
   gap:clamp(18px,1.6vw,34px);align-items:start}
-.dk-vision{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+.mt-dk-vision{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:clamp(16px,2.9vw,59px)}
 /* the copy sits at the BOTTOM of the tan card and the diamond motif rides
    the top-right corner, clipped by the card */
-.dk-vision__tan{background:var(--dk-tan);border-radius:var(--dk-r);
+.mt-dk-vision__tan{background:var(--dk-tan);border-radius:var(--dk-r);
   color:#FCF7EE;padding:clamp(20px,2.4vw,52px) clamp(22px,2.4vw,52px);
   /* the deck's card is 470.5 x 315.2 — hold that ratio exactly */
   aspect-ratio:470.5/315.2;
   display:flex;flex-direction:column;
-  justify-content:flex-end;position:relative;overflow:hidden}
+  justify-content:flex-start;position:relative;overflow:hidden}
 /* traced from the deck: Graphic 46 = image11.svg, full frame, 236.2x220.5
    at (587.7,108.0) against a 470.5x315.2 card — so 50.20% wide, hanging
    21.66% past the card's trailing edge and 12.12% above its top. Drawn as a
    background image so the artwork keeps its own #F2ECE3. */
-.dk-vision__motif{position:absolute;z-index:0;pointer-events:none;
-  inset-inline-end:-21.66%;top:-12.12%;
+.mt-dk-vision__motif{position:absolute;z-index:0;pointer-events:none;
+  inset-inline-end:-21.66%;bottom:-12.12%;
   width:50.20%;aspect-ratio:236.2/220.5;
   background:var(--asfar-image-asfar-motif-a) no-repeat center/100% 100%}
-[dir="rtl"] .dk-vision__motif{transform:scaleX(-1)}
-.dk-vision__tan > h3,.dk-vision__tan > p{position:relative;z-index:1}
-.dk-vision__tan h3{font-family:var(--dk-sans);font-weight:300;
+[dir="rtl"] .mt-dk-vision__motif{transform:scaleX(-1)}
+.mt-dk-vision__tan > h3,.mt-dk-vision__tan > p{position:relative;z-index:1}
+.mt-dk-vision__tan h3{font-family:var(--dk-sans);font-weight:300;
   font-size:clamp(21px,1.9vw,40px);line-height:1.24;
   margin:0 0 clamp(10px,1.1vw,24px)}
-.dk-vision__tan p{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-vision__tan p{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(13px,1.1vw,23px);line-height:1.55;margin:0;max-width:92%}
-.dk-vision__col{display:grid;gap:clamp(14px,2vh,20px);align-content:stretch}
+.mt-dk-vision__col{display:grid;gap:clamp(14px,2vh,20px);align-content:stretch}
 /* row gap is 31.4 of a 470.5 card = 6.67%, and the column tracks the
    viewport 1:1, so 0.0667 x 0.3708vw = 2.474vw */
-.dk-vision__col{display:grid;gap:clamp(14px,2.474vw,52px);align-content:stretch}
-.dk-vision__card{background:var(--dk-cream);position:relative;overflow:hidden;
+.mt-dk-vision__col{display:grid;gap:clamp(14px,2.474vw,52px);align-content:stretch}
+.mt-dk-vision__card{background:var(--dk-cream);position:relative;overflow:hidden;
   padding:clamp(14px,1.5vw,34px) clamp(22px,2.2vw,48px);
   /* deck card 470.5 x 141.9 — two of these plus the gap equal the tan
      card's height exactly, as they do in the deck */
@@ -363,18 +385,18 @@ html.is-attop .nav:not(.is-scrolled){
    (r=62153 b=35279 -> only the top-left 37.85% x 64.72% shows) and stretched
    into 49.2x78.5 on a 470.5x141.9 card. background-size reproduces that crop
    exactly: 100/0.37847 x 100/0.64721 = 264.22% x 154.51%, anchored top-left. */
-.dk-vision__dia{position:absolute;z-index:0;pointer-events:none;
+.mt-dk-vision__dia{position:absolute;z-index:0;pointer-events:none;
   inset-inline-end:-2.04%;top:9.23%;
   width:10.46%;aspect-ratio:49.2/78.5;
   background:var(--asfar-image-asfar-motif-a) no-repeat left top/264.22% 154.51%}
-.dk-vision__card:nth-of-type(2) .dk-vision__dia{top:8.81%;
+.mt-dk-vision__card:nth-of-type(2) .mt-dk-vision__dia{top:8.81%;
   background-image:var(--asfar-image-asfar-motif-b)}
-[dir="rtl"] .dk-vision__dia{transform:scaleX(-1)}
-.dk-vision__card > h3,.dk-vision__card > p{position:relative;z-index:1}
-.dk-vision__card h3{font-family:var(--dk-sans);font-weight:400;
+[dir="rtl"] .mt-dk-vision__dia{transform:scaleX(-1)}
+.mt-dk-vision__card > h3,.mt-dk-vision__card > p{position:relative;z-index:1}
+.mt-dk-vision__card h3{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(14px,1.5vw,31px);line-height:1.3;
   margin:0 0 clamp(7px,.8vw,17px);color:var(--dk-ink)}
-.dk-vision__card p{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-vision__card p{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(10.5px,.875vw,18px);line-height:1.55;color:var(--dk-ink);
   max-width:none;margin:0}
 
@@ -385,7 +407,7 @@ html.is-attop .nav:not(.is-scrolled){
    band = #113A43). The gaps are NOT uniform — 30.0 after the hi tile, 26.0
    between the rest — so the grid spells out its own gutter columns.
    Label span top y170.7 #FCF7EE; values #CAE6EA. */
-.dk-impact{background:var(--dk-teal-deep);color:#FCF7EE;
+.mt-dk-impact{background:var(--dk-teal-deep);color:#FCF7EE;
   /* Measured against the deck band, which runs 602.9 deck px from the wave
      crest (y50.3) to the foot of the bottom wave (y653.2). Landmarks, from
      that crest: label line box 116.4, tiles 194.8 -> 467.9, teal ends 602.9.
@@ -394,51 +416,51 @@ html.is-attop .nav:not(.is-scrolled){
      where both wave clamps are at their caps. */
   padding-block:6.492vw 7.454vw}   /* +3.5vw each side: more air around the
      tiles without touching the tiles themselves */
-.dk-impact .dk-label{color:#FCF7EE;margin:0 0 2.607vw}
-.dk-impact__tiles{display:grid;gap:0;
+.mt-dk-impact .mt-dk-label{color:#FCF7EE;margin:0 0 2.607vw}
+.mt-dk-impact__tiles{display:grid;gap:0;
   grid-template-columns:27.004% 2.532% 22.025% 2.194% 22.025% 2.194% 22.025%;
   grid-auto-rows:21.336vw}
 /* deck sets "INVESTMENT  IMPACT" 424.2 wide at 37.07px; ours runs 434.6
    untracked, so the impact label alone pulls its tracking back */
-.dk-impact .dk-label{letter-spacing:-.0065em}
-.dk-impact__tile:nth-child(1){grid-column:1}
-.dk-impact__tile:nth-child(2){grid-column:3}
-.dk-impact__tile:nth-child(3){grid-column:5}
-.dk-impact__tile:nth-child(4){grid-column:7}
+.mt-dk-impact .mt-dk-label{letter-spacing:-.0065em}
+.mt-dk-impact__tile:nth-child(1){grid-column:1}
+.mt-dk-impact__tile:nth-child(2){grid-column:3}
+.mt-dk-impact__tile:nth-child(3){grid-column:5}
+.mt-dk-impact__tile:nth-child(4){grid-column:7}
 /* Every tile is measured from its own TOP so the four figures sit on one
    baseline and the four labels start on one line, whatever length r8's copy
    runs to. Bottom-anchoring cannot do that here: the hero label is 24.07px
    over three lines where its neighbours are 13.03px over two, so anchoring
    the foot pushes the hero's figure out of line with the rest. */
-.dk-impact__tile{background:#113A43;border-radius:var(--dk-r);
+.mt-dk-impact__tile{background:#113A43;border-radius:var(--dk-r);
   position:relative;overflow:hidden;
   display:flex;flex-direction:column;justify-content:flex-start;
   padding:12.407vw 10.421% 2.344vw}
-.dk-impact__tile--hi{background:#275A61;padding:11.781vw 5.906% 2.344vw}
+.mt-dk-impact__tile--hi{background:#275A61;padding:11.781vw 5.906% 2.344vw}
 /* same traced-from-the-PDF treatment as the About card: page 6 drawing #84,
    x183.6 y190.6 215.9 x 259.2 filled #154751 — the band colour, so it reads
    DARKER than the tile it sits on. Rotation is baked into the path. */
-.dk-impact__frond{position:absolute;z-index:0;pointer-events:none;
+.mt-dk-impact__frond{position:absolute;z-index:0;pointer-events:none;
   inset-inline-end:-10.156%;top:-19.956%;
   width:67.469%;height:94.911%;
   background-color:var(--dk-teal-deep);
   -webkit-mask:var(--asfar-image-asfar-frond-impact) no-repeat center/100% 100%;
   mask:var(--asfar-image-asfar-frond-impact) no-repeat center/100% 100%}
-[dir="rtl"] .dk-impact__frond{transform:scaleX(-1)}
-.dk-impact__tile > .dk-impact__num,
-.dk-impact__tile > .dk-impact__lbl{position:relative;z-index:1}
-.dk-impact__num{font-family:var(--dk-readex);font-weight:500;
+[dir="rtl"] .mt-dk-impact__frond{transform:scaleX(-1)}
+.mt-dk-impact__tile > .mt-dk-impact__num,
+.mt-dk-impact__tile > .mt-dk-impact__lbl{position:relative;z-index:1}
+.mt-dk-impact__num{font-family:var(--dk-readex);font-weight:500;
   font-size:2.5055vw;line-height:1.2;margin:0 0 1.477vw;color:#CAE6EA}
-.dk-impact__num sup{font-size:.6556em;vertical-align:baseline;
+.mt-dk-impact__num sup{font-size:.6556em;vertical-align:baseline;
   position:relative;top:-.323em}
-.dk-impact__tile--hi .dk-impact__num{font-size:3.3648vw;font-weight:600;
+.mt-dk-impact__tile--hi .mt-dk-impact__num{font-size:3.3648vw;font-weight:600;
   margin-bottom:1.148vw}
 /* deck slide 6: label 13.03px on a 17.03 baseline pitch, set from the tile's
    own inset — r8's labels are longer than the deck's, so they get the whole
    tile width rather than the deck's 62% column */
-.dk-impact__lbl{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-impact__lbl{font-family:var(--dk-sans);font-weight:400;
   font-size:1.0180vw;line-height:1.3055;margin:0;color:#FCF7EE;max-width:none}
-.dk-impact__tile--hi .dk-impact__lbl{font-family:var(--dk-readex);font-weight:500;
+.mt-dk-impact__tile--hi .mt-dk-impact__lbl{font-family:var(--dk-readex);font-weight:500;
   font-size:1.8805vw;line-height:1.2;color:#CAE6EA;max-width:none}
 
 /* ── INVESTMENT PORTFOLIO — map (slides 7–8) ─────────────── */
@@ -448,127 +470,154 @@ html.is-attop .nav:not(.is-scrolled){
    14.0 gutter, panel 864.0->1233.0. Panel top 124.0, map top 152.1.
    ⚠ The deck lays NO scrim over the photograph — the beach reads at full
    brightness. Our old 62% gradient is gone. */
-.dk-map{position:relative;min-height:clamp(560px,51.109vw,1100px);
+.mt-dk-map{position:relative;min-height:clamp(560px,51.109vw,1100px);
   color:#FCF7EE;overflow:hidden;display:flex;align-items:stretch}
-.dk-map__bgs{position:absolute;inset:0}
-.dk-map__bg{position:absolute;inset:0;background-size:cover;
+.mt-dk-map__bgs{position:absolute;inset:0}
+.mt-dk-map__bg{position:absolute;inset:0;background-size:cover;
   background-position:center;opacity:0;transform:scale(1.04);
   transition:opacity var(--dk-morph) var(--dk-ease),
              transform var(--dk-morph) var(--dk-ease)}
-.dk-map__bg.is-active{opacity:1;transform:none}
+.mt-dk-map__bg.mt-is-active{opacity:1;transform:none}
 /* The deck lays no scrim — but its own photograph is a dark shipwreck and
    deep sea, so white type reads on it (the sand behind the title samples
    ~rgb(106,100,92)). Our destination photos are far brighter, and with no
    scrim the title disappears into the surf. A flat veil brings any photo
    down to roughly the deck's tonality without the old left-heavy gradient. */
-.dk-map__bg::after{content:"";position:absolute;inset:0;
+.mt-dk-map__bg::after{content:"";position:absolute;inset:0;
   background:rgba(10,35,40,.45)}
-.dk-map__in{position:relative;z-index:2;width:100%;
+.mt-dk-map__in{position:relative;z-index:2;width:100%;
   margin-inline:auto;
   padding:9.6875vw clamp(18px,3.67vw,110px) 3.758vw;
   display:grid;
   grid-template-columns:21.248% 46.459% 1.180% 31.113%;
   gap:0;align-items:start}
-.dk-map__title{grid-column:1;margin:2.713vw 0 0;
+.mt-dk-map__title{grid-column:1;margin:2.713vw 0 0;
   font-family:var(--dk-readex);font-weight:300;
   font-size:clamp(20px,2.5055vw,78px);line-height:1.188;letter-spacing:.01em;
   text-transform:uppercase;color:#D2DDDE}
-.dk-map__title-a{font-weight:700;color:#FCF7EE;
+.mt-dk-map__title-a{font-weight:700;color:#FCF7EE;
   font-size:calc(37.07 / 32.07 * 1em)}
-.dk-map__stage{grid-column:2;position:relative;
+.mt-dk-map__stage{grid-column:2;position:relative;
   height:35.477vw;margin-top:2.195vw}
 /* deck p7: base fill #C9C4CD at 16.08%, outlines #FCF7EE at 45.1%,
    stroke 0.67 and dash 3.50/2.00 in deck px. The SVG is 911x751 over the
    deck's 551x454.1 box, i.e. 0.6048 deck px per user unit, so the stroke is
    0.67/0.6048 = 1.108 units and the dash 5.79/3.31. */
-.dk-map__stage svg{width:100%;height:100%}
+.mt-dk-map__stage svg{width:100%;height:100%}
 /* land silhouette and the 44 dashed borders are the deck's own vectors; the
    dash (3.50/2.00) and stroke (0.67) are its values converted into the SVG's
    551x454.09 box. Fill and stroke are carried above the deck's .1608/.451 so
    the map still reads over our bright destination photography. */
-.dk-map__stage .invmap__land{fill:rgba(201,196,205,.30)}
-.dk-map__stage .invmap__borders{fill:none;stroke:rgba(252,247,238,.70);
+.mt-dk-map__stage .mt-invmap__land{fill:rgba(201,196,205,.30)}
+.mt-dk-map__stage .mt-invmap__borders{fill:none;stroke:rgba(252,247,238,.70);
   stroke-width:1.108;stroke-dasharray:5.79 3.31;stroke-linecap:butt}
 /* Slide 7 lights Yanbu #CAE6EA and prints its figures #CAE6EA; slide 8
    lights Taif #EEE6DA and prints them #DECEB4 — the panel's numbers always
    carry the lit region's colour. The deck only draws those two, so Al-Baha,
    Asir and Strategic take the same relationship applied to the brand palette
    (terracotta #A9603F, purple #7D7186, cream #FBF9EE). */
-.dk-map__stage .invmap__region{fill:transparent;stroke:none;
+.mt-dk-map__stage .mt-invmap__region{fill:transparent;stroke:none;
   transition:fill var(--dk-morph) var(--dk-ease)}
-.dk-map__stage .invmap__region[data-region="baha"].is-lit {fill:#C79882}
-.dk-map__stage .invmap__region[data-region="yanbu"].is-lit{fill:#CAE6EA}
-.dk-map__stage .invmap__region[data-region="asir"].is-lit {fill:#B1AAB6}
-.dk-map__stage .invmap__region[data-region="taif"].is-lit {fill:#EEE6DA}
-.dk-map[data-hot="baha"]  .dk-map__val{color:#D0A895}
-.dk-map[data-hot="yanbu"] .dk-map__val{color:#CAE6EA}
-.dk-map[data-hot="asir"]  .dk-map__val{color:#C5BFC9}
-.dk-map[data-hot="taif"]  .dk-map__val{color:#DECEB4}
-.dk-map[data-hot="all"]   .dk-map__val{color:#FBF9EE}
-.dk-map__stage .invmap__region.is-lit{fill:#CAE6EA}
+.mt-dk-map__stage .mt-invmap__region[data-region="baha"].mt-is-lit {fill:#C79882}
+.mt-dk-map__stage .mt-invmap__region[data-region="yanbu"].mt-is-lit{fill:#CAE6EA}
+.mt-dk-map__stage .mt-invmap__region[data-region="asir"].mt-is-lit {fill:#B1AAB6}
+.mt-dk-map__stage .mt-invmap__region[data-region="taif"].mt-is-lit {fill:#EEE6DA}
+/* Clickable regions carry a faint wash of their own highlight colour by
+   default, so the map reads as interactive; the selected one goes to full
+   colour via .mt-is-lit. Taif has no data, so it gets no wash and no pointer. */
+/* app.css sets .mt-invmap__region{pointer-events:none} for the old static map, so
+   the click wiring never actually fired for a real cursor. Re-enable it on the
+   clickable regions (over the whole fill, not just painted pixels) and make the
+   decorative land + border strokes transparent to clicks so nothing on top of a
+   region swallows the hit. */
+.mt-dk-map__stage .mt-invmap__region.mt-dk-clickable{cursor:pointer;pointer-events:fill;
+  transition:fill var(--dk-morph) var(--dk-ease),opacity .25s ease}
+.mt-dk-map__stage .mt-invmap__land,
+.mt-dk-map__stage .mt-invmap__borders,
+.mt-dk-map__stage .mt-invmap__borders *{pointer-events:none}
+.mt-dk-map__stage .mt-invmap__region[data-region="baha"]:not(.mt-is-lit){fill:rgba(199,152,130,.40)}
+.mt-dk-map__stage .mt-invmap__region[data-region="yanbu"]:not(.mt-is-lit){fill:rgba(202,230,234,.42)}
+.mt-dk-map__stage .mt-invmap__region[data-region="asir"]:not(.mt-is-lit){fill:rgba(177,170,182,.42)}
+.mt-dk-map__stage .mt-invmap__region.mt-dk-clickable:hover:not(.mt-is-lit),
+.mt-dk-map__stage .mt-invmap__region.mt-dk-clickable:focus-visible:not(.mt-is-lit){opacity:.85;outline:none}
+/* Resting hint state: before the visitor engages the map, every clickable area
+   breathes its faint wash so the whole portfolio reads as tappable. The first
+   dash, region click or scroll step commits and this stops. */
+@keyframes dkRegHint{0%,100%{opacity:.5}50%{opacity:1}}
+.mt-dk-map--hint .mt-dk-map__stage .mt-invmap__region.mt-dk-clickable{
+  animation:dkRegHint 2.6s var(--dk-ease) infinite}
+@media (prefers-reduced-motion:reduce){
+  .mt-dk-map--hint .mt-dk-map__stage .mt-invmap__region.mt-dk-clickable{animation:none}
+}
+.mt-dk-map[data-hot="baha"]  .mt-dk-map__val{color:#D0A895}
+.mt-dk-map[data-hot="yanbu"] .mt-dk-map__val{color:#CAE6EA}
+.mt-dk-map[data-hot="asir"]  .mt-dk-map__val{color:#C5BFC9}
+.mt-dk-map[data-hot="taif"]  .mt-dk-map__val{color:#DECEB4}
+.mt-dk-map[data-hot="all"]   .mt-dk-map__val{color:#FBF9EE}
+.mt-dk-map__stage .mt-invmap__region.mt-is-lit{fill:#CAE6EA}
 /* marker: 26.0 ring stroked #154751 0.37, 14.0 core #275A61 at 94.9% */
-.dk-map__pin{position:absolute;width:2.031vw;height:2.031vw;margin:-1.016vw;
-  border-radius:50%;background:transparent;z-index:3;
+.mt-dk-map__pin{position:absolute;width:2.031vw;height:2.031vw;margin:-1.016vw;
+  border-radius:50%;background:transparent;z-index:3;pointer-events:none;
   border:max(1px,.0289vw) solid var(--dk-teal-deep);
   transition:left var(--dk-morph) var(--dk-ease),top var(--dk-morph) var(--dk-ease)}
-.dk-map__pin::after{content:"";position:absolute;inset:23.1%;border-radius:50%;
+.mt-dk-map__pin::after{content:"";position:absolute;inset:23.1%;border-radius:50%;
   background:var(--dk-tile-hi);opacity:.949}
-.dk-map__pinlab{position:absolute;z-index:3;font-family:var(--dk-readex);
+.mt-dk-map__pinlab{position:absolute;z-index:3;font-family:var(--dk-readex);
   font-weight:600;font-size:clamp(13px,1.4867vw,46px);color:#FCF7EE;
-  white-space:nowrap;
+  white-space:nowrap;pointer-events:none;
   /* physical, not logical: the label hangs off the pin's LEFT in both
      languages because it follows the map's geometry, not the reading
      direction — mirroring it put the Arabic label on top of the region */
   transform:translate(-100%,-50%);padding-right:2.852vw;
   transition:left var(--dk-morph) var(--dk-ease),top var(--dk-morph) var(--dk-ease)}
-[dir="rtl"] .dk-map__pinlab{transform:translate(-100%,-50%);
+[dir="rtl"] .mt-dk-map__pinlab{transform:translate(-100%,-50%);
   padding-left:0;padding-right:2.852vw}
 /* panel 369.0 x 482.1 at (864.0,124.0), #10353D at 63.14%, 14.1 inset */
-.dk-map__panel{grid-column:4;background:rgba(16,53,61,.6314);
+.mt-dk-map__panel{grid-column:4;background:rgba(16,53,61,.6314);
   border-radius:var(--dk-r);
   padding:2.6828vw 1.078vw 0;height:37.664vw;
   display:flex;flex-direction:column;overflow:hidden}
 /* region 32.07 baseline 189.4; its rule #13 is the heavy one, 1.67 deck px
    at y217.1 — 93.0 below the panel top */
-.dk-map__region{font-family:var(--dk-readex);font-weight:500;
+.mt-dk-map__region{font-family:var(--dk-readex);font-weight:500;
   font-size:clamp(18px,2.5055vw,78px);line-height:1.2;letter-spacing:.02em;
   text-transform:uppercase;margin:0;padding-bottom:1.568vw;
   border-bottom:max(1px,.1305vw) solid #FCF7EE}
-.dk-map__rows{display:grid;gap:0}
+.mt-dk-map__rows{display:grid;gap:0}
 /* value baselines 259.3 / 344.9 / 430.6 / 516.2 -> pitch 85.64 deck px;
    hairlines #14-16 at 302.6 / 388.6 / 473.6, drawn 0.33 deck px */
-.dk-map__row{padding-block:1.4352vw 1.5313vw}
-.dk-map__row+.dk-map__row{
+.mt-dk-map__row{padding-block:1.4352vw 1.5313vw}
+.mt-dk-map__row+.mt-dk-map__row{
   border-top:max(1px,.0258vw) solid rgba(252,247,238,.45)}
-.dk-map__val{font-family:var(--dk-readex);font-weight:500;
+.mt-dk-map__val{font-family:var(--dk-readex);font-weight:500;
   font-size:clamp(15px,1.8773vw,58px);line-height:1.2;margin:0;color:#CAE6EA;
   transition:color var(--dk-morph) var(--dk-ease)}
 /* deck: sup 16.03 over 24.05, baseline lifted 7.0 (= .437 of the sup em) */
-.dk-map__val sup{font-size:.6665em;vertical-align:baseline;
+.mt-dk-map__val sup{font-size:.6665em;vertical-align:baseline;
   position:relative;top:-.437em}
-.dk-map__lab{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-map__lab{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(10px,1.018vw,32px);line-height:1.313;
   color:#FCF7EE;margin:.0586vw 0 0}
 /* the morph: outgoing text slips up, incoming rises — one shared runner */
-.dk-map__panelin{display:contents}
-.dk-map__swap{transition:opacity calc(var(--dk-morph)/2) var(--dk-ease),
+.mt-dk-map__panelin{display:contents}
+.mt-dk-map__swap{transition:opacity calc(var(--dk-morph)/2) var(--dk-ease),
               transform calc(var(--dk-morph)/2) var(--dk-ease)}
-.dk-map.is-swapping .dk-map__swap{opacity:0;transform:translateY(-14px)}
+.mt-dk-map.mt-is-swapping .mt-dk-map__swap{opacity:0;transform:translateY(-14px)}
 /* dashes: 39.0 x 3.0, 4.0 gap, at (51.0, 603.2); active 83.9% else 41.2% */
 /* r8 sets a 38px icon beside every impact label */
-.dk-team__viewall{margin-inline-start:1.469vw}
+.mt-dk-team__viewall{margin-inline-start:1.469vw}
 
-.dk-map__dashes{position:absolute;z-index:4;
+.mt-dk-map__dashes{position:absolute;z-index:4;
   inset-inline-start:3.984vw;bottom:3.75vw;display:flex;gap:.3125vw}
-.dk-map__dashes button{width:3.047vw;min-width:20px;
+.mt-dk-map__dashes button{width:3.047vw;min-width:20px;
   height:max(2px,.234vw);border:0;padding:0;
   border-radius:2px;background:rgba(252,247,238,.4118);cursor:pointer;
   transition:background-color .45s var(--dk-ease)}
-.dk-map__dashes button.is-active{background:rgba(252,247,238,.8392)}
-.dk-map .dk-wave{position:absolute;left:0;right:0;bottom:-1px;z-index:5}
+.mt-dk-map__dashes button.mt-is-active{background:rgba(252,247,238,.8392)}
+.mt-dk-map .mt-dk-wave{position:absolute;left:0;right:0;bottom:-1px;z-index:5}
 /* deck: the cream wave's visible band is 654.2-620.4 = 33.8 deck px, which
    is what leaves the region dashes (y603.2) clear of it */
-.dk-map .dk-wave--tight{height:2.64vw;min-height:22px}
+.mt-dk-map .mt-dk-wave--tight{height:2.64vw;min-height:22px}
 
 /* ── STRATEGIC INVESTMENTS — deck PDF page 11 ("OPTION 1") ───────────────
    Slide 1280 x 654.2 on cream. Title "STRATEGIC" 37.07 bold + "INVESTMENTS"
@@ -579,7 +628,7 @@ html.is-attop .nav:not(.is-scrolled){
    #DECEB4, the live one's glyph #A9603F.
    (The slide's "OPTION 1" chip is a design-option marker for the client, not
    site content, so it is deliberately not reproduced.) */
-.dk-sectors{position:relative;background:var(--dk-cream);color:var(--dk-ink);
+.mt-dk-sectors{position:relative;background:var(--dk-cream);color:var(--dk-ink);
   /* deck: cards end at y551.1, arrows sit 29.0 below that and the wave
      follows 10.1 further on — so the section keeps room under the rail */
   /* The section takes the slide's own proportions and no more: the deck's
@@ -589,90 +638,90 @@ html.is-attop .nav:not(.is-scrolled){
      start its climb from the foot of the screen; that left a dead band of
      empty cream under the cards on tall displays. */
   padding-block:5.102vw 5.024vw;overflow:hidden}
-.dk-sectors__grid{display:grid;
+.mt-dk-sectors__grid{display:grid;
   grid-template-columns:26.016vw 1fr;
   gap:0;align-items:start}
-/* ⚠ :first-child matters — the RAIL also carries .dk-rise, so an unscoped
-   `.dk-sectors__grid > .dk-rise` gave it the same z-index and, being later in
+/* ⚠ :first-child matters — the RAIL also carries .mt-dk-rise, so an unscoped
+   `.mt-dk-sectors__grid > .mt-dk-rise` gave it the same z-index and, being later in
    the DOM, it painted OVER the copy instead of sliding under it. */
-.dk-sectors__grid > .dk-rise:first-child{position:relative;z-index:2}
+.mt-dk-sectors__grid > .mt-dk-rise:first-child{position:relative;z-index:2}
 /* the cream mask: the rail runs full width underneath and is hidden left of
    the deck's 380 boundary */
-.dk-sectors__grid > .dk-rise:first-child::before{content:"";position:absolute;
+.mt-dk-sectors__grid > .mt-dk-rise:first-child::before{content:"";position:absolute;
   /* the copy column is far shorter than the 394.1-tall cards, so the mask
      has to run well past its own box or the rail reappears below the intro */
   inset-block:-8vw -26vw;inset-inline-start:-6vw;
   inset-inline-end:0;background:var(--dk-cream);z-index:-1}
-.dk-sectors .dk-label{color:var(--dk-gold);line-height:1.216}
-.dk-sectors .dk-label b,.dk-sectors__ln2{font-weight:300;display:block}
-.dk-sectors__intro{margin-top:1.336vw;color:#334345;
+.mt-dk-sectors .mt-dk-label{color:var(--dk-gold);line-height:1.216}
+.mt-dk-sectors .mt-dk-label b,.mt-dk-sectors__ln2{font-weight:300;display:block}
+.mt-dk-sectors__intro{margin-top:1.336vw;color:#334345;
   font-family:var(--dk-readex);font-weight:300;
   font-size:clamp(12px,1.25vw,39px);line-height:1.3125;max-width:21.64vw}
 /* rail runs past the wrap to the viewport edge, as it does on the slide */
-.dk-sectors__rail{position:relative;z-index:1;overflow:visible;
+.mt-dk-sectors__rail{position:relative;z-index:1;overflow:visible;
   margin-inline-end:clamp(-110px,-3.67vw,-18px)}
-.dk-sectors__track{display:flex;gap:3.75vw;
+.mt-dk-sectors__track{display:flex;gap:3.75vw;
   transition:transform var(--dk-morph) var(--dk-ease)}
-.dk-sector{flex:0 0 23.984vw;aspect-ratio:307/394.1;
+.mt-dk-sector{flex:0 0 23.984vw;aspect-ratio:307/394.1;
   border-radius:var(--dk-r);
   overflow:hidden;position:relative;background:var(--dk-card);
   transition:background-color calc(var(--dk-morph)/2) var(--dk-ease)}
-.dk-sector img{width:100%;height:100%;object-fit:cover;display:block;
+.mt-dk-sector img{width:100%;height:100%;object-fit:cover;display:block;
   transition:opacity var(--dk-morph) var(--dk-ease)}
 /* the focused card: tan slab, name 21.03 cream inset 16.1 / 335.8 down */
-.dk-sector__name{position:absolute;inset-inline-start:0;bottom:0;
+.mt-dk-sector__name{position:absolute;inset-inline-start:0;bottom:0;
   inset-inline-start:5.24%;padding:0 0 2.625vw;
   font-family:var(--dk-sans);font-weight:400;color:#FCF7EE;
   font-size:clamp(13px,1.6430vw,51px);line-height:1.35;opacity:0;
   transition:opacity calc(var(--dk-morph)/2) var(--dk-ease)}
 /* The tan state is BOTH the resting focus and the hover: pointing at any
    card turns it into the slab with its title and the diamond pattern. */
-.dk-sector.is-label,.dk-sector:hover,.dk-sector:focus-within{background:var(--dk-tan)}
-.dk-sector.is-label > img,.dk-sector:hover > img,
-.dk-sector:focus-within > img{opacity:0}
-.dk-sector.is-label .dk-sector__name,.dk-sector:hover .dk-sector__name,
-.dk-sector:focus-within .dk-sector__name{opacity:1}
+.mt-dk-sector.mt-is-label,.mt-dk-sector:hover,.mt-dk-sector:focus-within{background:var(--dk-tan)}
+.mt-dk-sector.mt-is-label > img,.mt-dk-sector:hover > img,
+.mt-dk-sector:focus-within > img{opacity:0}
+.mt-dk-sector.mt-is-label .mt-dk-sector__name,.mt-dk-sector:hover .mt-dk-sector__name,
+.mt-dk-sector:focus-within .mt-dk-sector__name{opacity:1}
 /* the focused card carries the same diamond motif as the vision tan card:
    cluster bbox x1088.1 y125.1 236.2 x 220.5 against the card at x930 y157
    307 x 394.1 => start 51.50%, top -8.09%, width 76.94%. The card CLIPS it,
    which is what cuts the right-hand diamond on the slide. */
-.dk-sector__pol{position:absolute;z-index:1;pointer-events:none;
+.mt-dk-sector__pol{position:absolute;z-index:1;pointer-events:none;
   inset-inline-start:51.50%;top:-8.09%;
   width:76.94%;aspect-ratio:236.2/220.5;
   background:var(--asfar-image-asfar-motif-a) no-repeat center/100% 100%;
   opacity:0;transition:opacity calc(var(--dk-morph)/2) var(--dk-ease)}
-[dir="rtl"] .dk-sector__pol{transform:scaleX(-1)}
-.dk-sector__pol img{display:none}
-.dk-sector.is-label .dk-sector__pol,.dk-sector:hover .dk-sector__pol,
-.dk-sector:focus-within .dk-sector__pol{opacity:1}
+[dir="rtl"] .mt-dk-sector__pol{transform:scaleX(-1)}
+.mt-dk-sector__pol img{display:none}
+.mt-dk-sector.mt-is-label .mt-dk-sector__pol,.mt-dk-sector:hover .mt-dk-sector__pol,
+.mt-dk-sector:focus-within .mt-dk-sector__pol{opacity:1}
 /* exactly one slab at a time: while the rail is hovered the resting focus
    card hands the tan state over to whichever card is under the pointer */
-.dk-sectors__track:hover .dk-sector.is-label:not(:hover){background:var(--dk-card)}
-.dk-sectors__track:hover .dk-sector.is-label:not(:hover) > img{opacity:1}
-.dk-sectors__track:hover .dk-sector.is-label:not(:hover) .dk-sector__name,
-.dk-sectors__track:hover .dk-sector.is-label:not(:hover) .dk-sector__pol{opacity:0}
+.mt-dk-sectors__track:hover .mt-dk-sector.mt-is-label:not(:hover){background:var(--dk-card)}
+.mt-dk-sectors__track:hover .mt-dk-sector.mt-is-label:not(:hover) > img{opacity:1}
+.mt-dk-sectors__track:hover .mt-dk-sector.mt-is-label:not(:hover) .mt-dk-sector__name,
+.mt-dk-sectors__track:hover .mt-dk-sector.mt-is-label:not(:hover) .mt-dk-sector__pol{opacity:0}
 @media (hover:none){
-  .dk-sector:hover{background:var(--dk-card)}
-  .dk-sector:hover > img{opacity:1}
-  .dk-sector:hover .dk-sector__name,.dk-sector:hover .dk-sector__pol{opacity:0}
-  .dk-sector.is-label{background:var(--dk-tan)}
-  .dk-sector.is-label > img{opacity:0}
-  .dk-sector.is-label .dk-sector__name,.dk-sector.is-label .dk-sector__pol{opacity:1}
+  .mt-dk-sector:hover{background:var(--dk-card)}
+  .mt-dk-sector:hover > img{opacity:1}
+  .mt-dk-sector:hover .mt-dk-sector__name,.mt-dk-sector:hover .mt-dk-sector__pol{opacity:0}
+  .mt-dk-sector.mt-is-label{background:var(--dk-tan)}
+  .mt-dk-sector.mt-is-label > img{opacity:0}
+  .mt-dk-sector.mt-is-label .mt-dk-sector__name,.mt-dk-sector.mt-is-label .mt-dk-sector__pol{opacity:1}
 }
-.dk-arrows{display:flex;gap:1.469vw}
-.dk-arrows--sectors{position:absolute;z-index:5;
+.mt-dk-arrows{display:flex;gap:1.469vw}
+.mt-dk-arrows--sectors{position:absolute;z-index:5;
   inset-inline-end:clamp(18px,3.67vw,110px);bottom:.781vw}
-.dk-arrow{width:1.969vw;height:1.969vw;min-width:26px;min-height:26px;
+.mt-dk-arrow{width:1.969vw;height:1.969vw;min-width:26px;min-height:26px;
   border-radius:50%;cursor:pointer;
   border:max(1px,.078vw) solid #DECEB4;
   background:var(--dk-terra);color:#FCF7EE;
   display:grid;place-items:border-box;place-items:center;
   transition:background-color .3s var(--dk-ease),
   color .3s var(--dk-ease),border-color .3s var(--dk-ease)}
-.dk-arrow:not([disabled]){border-color:var(--dk-terra)}
-.dk-arrow:hover:not([disabled]){background:var(--dk-teal);border-color:var(--dk-teal)}
-.dk-arrow svg{width:44%;height:44%}
-.dk-arrow[disabled]{background:transparent;border-color:#DECEB4;color:#C6B79E;
+.mt-dk-arrow:not([disabled]){border-color:var(--dk-terra)}
+.mt-dk-arrow:hover:not([disabled]){background:var(--dk-teal);border-color:var(--dk-teal)}
+.mt-dk-arrow svg{width:44%;height:44%}
+.mt-dk-arrow[disabled]{background:transparent;border-color:#DECEB4;color:#C6B79E;
   pointer-events:none}
 
 /* ── the Strategic Investments -> News hand-over ─────────────────────────
@@ -705,9 +754,9 @@ html.is-attop .nav:not(.is-scrolled){
    cream sectors shows through) and the news gray filling below. Full width,
    sits above the sectors' left-column mask so no straight edge shows. Both
    sections stay one solid colour. */
-.dk-sectors .dk-wave--tight,.dk-news .dk-wave--tight{position:absolute;left:0;right:0;bottom:0;z-index:4;
+.mt-dk-sectors .mt-dk-wave--tight,.mt-dk-news .mt-dk-wave--tight{position:absolute;left:0;right:0;bottom:0;z-index:4;
   height:2.64vw;min-height:22px;width:100%;pointer-events:none}
-.dk-news .dk-rise{transform:none}
+.mt-dk-news .mt-dk-rise{transform:none}
 
 /* ── NEWS & PRESS RELEASES (slides 12–14) ────────────────── */
 /* ── NEWS & PRESS RELEASES — deck PDF page 12 ────────────────────────────
@@ -718,34 +767,34 @@ html.is-attop .nav:not(.is-scrolled){
    title is 16.03 #FCF7EE inset 12.9, lines 19.0 apart, its last line 36.5
    above the photo's foot. Footer at y580.1: two 25.2 arrows at x1028.9 and
    x1072.9 then a 114.0 x 24.0 pill (#EEE6DA on a #CDB58F hairline). */
-.dk-news{background:var(--dk-card);color:var(--dk-ink);
+.mt-dk-news{background:var(--dk-card);color:var(--dk-ink);
   /* deck: the band sits at y80.3 and the heading's box top at 154.8 — 74.5
      below it, so the heading rides over the band's lower, beige half */
   padding-block:3.242vw 3.828vw;position:relative;z-index:1}
-.dk-news .dk-label{color:var(--dk-terra);margin:0 0 2.469vw;
+.mt-dk-news .mt-dk-label{color:var(--dk-terra);margin:0 0 2.469vw;
   font-size:clamp(20px,2.896vw,90px);line-height:1.214}
-.dk-news__rail{position:relative;overflow:hidden}
-.dk-news__strip{display:flex;gap:var(--dk-newsgap,2.891vw);
+.mt-dk-news__rail{position:relative;overflow:hidden}
+.mt-dk-news__strip{display:flex;gap:var(--dk-newsgap,2.891vw);
   transition:transform var(--dk-morph) var(--dk-ease)}
 /* the deck runs the rail off the edge; the brief is four whole cards to a
    view, so the card is solved from the wrap instead of the 1280 canvas */
-.dk-newscard{display:block;
+.mt-dk-newscard{display:block;
   flex:0 0 calc((100% - 3 * var(--dk-newsgap,2.891vw)) / 4);
   text-decoration:none;color:inherit;
   background:var(--dk-cream);border-radius:var(--dk-r);
   aspect-ratio:311/313.1;overflow:hidden;padding:0}
-.dk-newscard__date{font-family:var(--dk-sans);font-weight:500;
+.mt-dk-newscard__date{font-family:var(--dk-sans);font-weight:500;
   font-size:clamp(10px,1.016vw,32px);color:var(--dk-terra);
   margin:0;padding-block:4.25% 0;padding-inline:3.63% 0;line-height:1.2}
-.dk-newscard__ph{position:relative;display:block;
+.mt-dk-newscard__ph{position:relative;display:block;
   margin-top:1.2%;border-radius:0 0 var(--dk-r) var(--dk-r);
   overflow:hidden;aspect-ratio:311/270.1;background:#DDD5C6}
-.dk-newscard__ph img{width:100%;height:100%;object-fit:cover;display:block;
+.mt-dk-newscard__ph img{width:100%;height:100%;object-fit:cover;display:block;
   transition:transform .6s var(--dk-ease)}
-.dk-newscard:hover .dk-newscard__ph img{transform:scale(1.045)}
-.dk-newscard__grad{position:absolute;inset:auto 0 0 0;height:70%;
+.mt-dk-newscard:hover .mt-dk-newscard__ph img{transform:scale(1.045)}
+.mt-dk-newscard__grad{position:absolute;inset:auto 0 0 0;height:70%;
   background:linear-gradient(180deg,rgba(14,25,27,0),rgba(14,25,27,.44) 46%,rgba(14,25,27,.82))}
-.dk-newscard__title{position:absolute;inset:auto 0 0 0;margin:0;
+.mt-dk-newscard__title{position:absolute;inset:auto 0 0 0;margin:0;
   box-sizing:content-box;height:calc(3 * 1.185em);
   /* the deck's 13.5% stand-off, as a margin -- as padding it sat INSIDE the
      clip box and a fourth line spilled into it instead of being cut */
@@ -753,17 +802,17 @@ html.is-attop .nav:not(.is-scrolled){
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
   font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(11px,1.2523vw,39px);line-height:1.185;color:#FCF7EE}
-.dk-news__foot{display:flex;align-items:center;justify-content:flex-end;
+.mt-dk-news__foot{display:flex;align-items:center;justify-content:flex-end;
   gap:1.469vw;margin-top:3.477vw}
-.dk-news__foot .dk-arrows{gap:1.469vw}
-.dk-pill{display:inline-flex;align-items:center;justify-content:center;
+.mt-dk-news__foot .mt-dk-arrows{gap:1.469vw}
+.mt-dk-pill{display:inline-flex;align-items:center;justify-content:center;
   font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(10px,1.016vw,32px);color:#CDB58F;
   border:max(1px,.052vw) solid #CDB58F;border-radius:999px;
   min-width:8.906vw;height:1.875vw;min-height:26px;
   padding-inline:1.2em;text-decoration:none;background:#EEE6DA;cursor:pointer;
   transition:background-color .3s var(--dk-ease),color .3s var(--dk-ease)}
-.dk-pill:hover{background:var(--dk-teal);border-color:var(--dk-teal);color:#FCF7EE}
+.mt-dk-pill:hover{background:var(--dk-teal);border-color:var(--dk-teal);color:#FCF7EE}
 
 /* ── SECTION COVERS (deck p:cover dir="u", 1750ms) ─────────
    slide16.xml and slide18.xml both carry <p:cover dir="u" p14:dur="1750">, so
@@ -772,10 +821,10 @@ html.is-attop .nav:not(.is-scrolled){
    the push unwinds as it lands — so at rest nothing has moved and there is
    never a gap to see through. deck.js sets --dk-tlift and the transform.
    Stacking runs forward: news 1, team 2, partners 3. */
-.dk-team,.dk-partners{position:relative;
+.mt-dk-team,.mt-dk-partners{position:relative;
   margin-top:calc(-1 * var(--dk-tlift, 0px));will-change:transform}
-.dk-team{z-index:2}
-.dk-partners{z-index:3}
+.mt-dk-team{z-index:2}
+.mt-dk-partners{z-index:3}
 
 /* ── THE ASFAR TEAM (slide 16) ────────────────────────────
    Traced from PowerPoint's own render of page 16. Deck px on the 1280 canvas,
@@ -790,44 +839,44 @@ html.is-attop .nav:not(.is-scrolled){
      arrows       25.2 dia, right edge on the 47 gutter
    The deck sets the stage at x=51 while the panel card sits on the 47 gutter --
    a 4px inconsistency in the original that is reproduced, not corrected. */
-.dk-team{background:var(--dk-card);color:var(--dk-ink);position:relative;z-index:2;
+.mt-dk-team{background:var(--dk-card);color:var(--dk-ink);position:relative;z-index:2;
   padding-block:2.657vw 3.712vw;
   /* the deck's team is a whole slide, so the section owns a screen and the
      deck's internal rhythm is centred inside it */
   min-height:100svh;display:flex;flex-direction:column;justify-content:center;
   will-change:transform}
-.dk-team > .dk-wrap{width:100%}
-.dk-team__panel{background:var(--dk-cream);border-radius:.781vw;
+.mt-dk-team > .mt-dk-wrap{width:100%}
+.mt-dk-team__panel{background:var(--dk-cream);border-radius:.781vw;
   padding:1.810vw 2.5vw .625vw;margin-top:0;min-height:8.909vw}
-.dk-team__panel .dk-label{font-size:clamp(20px,2.896vw,90px);line-height:1.214;
+.mt-dk-team__panel .mt-dk-label{font-size:clamp(20px,2.896vw,90px);line-height:1.214;
   font-weight:600;letter-spacing:0;color:var(--dk-gold);margin:0}
-.dk-team__sub{font-family:var(--dk-readex);font-weight:300;color:#334345;
+.mt-dk-team__sub{font-family:var(--dk-readex);font-weight:300;color:#334345;
   font-size:clamp(11px,1.2523vw,39px);line-height:1.4;margin-top:.474vw}
 
 /* the stage sits 4px right of the gutter and runs off the right edge, so the
    third member column is cut by the canvas exactly as the slide cuts it */
-.dk-team__stage{margin-top:2.421vw;overflow:hidden;
+.mt-dk-team__stage{margin-top:2.421vw;overflow:hidden;
   margin-inline:.3125vw calc(-1 * clamp(18px,3.67vw,110px))}
-.dk-team__rail{display:grid;grid-template-columns:31.641vw minmax(0,1fr);gap:0;
+.mt-dk-team__rail{display:grid;grid-template-columns:31.641vw minmax(0,1fr);gap:0;
   align-items:start;
   transition:opacity 600ms var(--dk-ease),transform 600ms var(--dk-ease)}
-.dk-team__rail.is-out{opacity:0;transform:translateY(30px)}
+.mt-dk-team__rail.mt-is-out{opacity:0;transform:translateY(30px)}
 
-.dk-feat{display:grid;grid-template-columns:14.531vw minmax(0,1fr);
+.mt-dk-feat{display:grid;grid-template-columns:14.531vw minmax(0,1fr);
   column-gap:1.172vw;align-items:start}
-.dk-feat__ph{display:block;border-radius:.391vw;overflow:hidden;
+.mt-dk-feat__ph{display:block;border-radius:.391vw;overflow:hidden;
   aspect-ratio:186/231.05;background:#DDD5C6;cursor:pointer;
   /* the deck has no mat, no ring and no diamond seal on these portraits */
   width:100%;max-width:none;margin:0;padding:0;border:0}
-.dk-feat__ph::after{content:none}
-.dk-feat__ph img{width:100%;height:100%;object-fit:cover;object-position:center 8%;
+.mt-dk-feat__ph::after{content:none}
+.mt-dk-feat__ph img{width:100%;height:100%;object-fit:cover;object-position:center 8%;
   display:block;border-radius:inherit}
-.dk-feat__txt{padding-top:10.076vw;max-inline-size:13.28vw}
-.dk-feat__name{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-feat__txt{padding-top:10.076vw;max-inline-size:13.28vw}
+.mt-dk-feat__name{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(13px,1.6430vw,51px);line-height:1.286;margin:0;cursor:pointer;
   background:none;border:0;padding:0;text-align:start;color:#334345;
   overflow-wrap:normal}
-.dk-feat__role{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-feat__role{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(9px,1.0180vw,32px);line-height:1.3;
   color:var(--dk-terra);margin:0}
 
@@ -835,35 +884,35 @@ html.is-attop .nav:not(.is-scrolled){
    outgoing cards slid straight over the featured member and his name. The
    wrap's right edge already sits on the canvas edge, so clipping here still
    cuts the third column exactly where the deck cuts it. */
-.dk-team__gridwrap{overflow:hidden}
-.dk-team__grid{display:grid;grid-auto-flow:column;
+.mt-dk-team__gridwrap{overflow:hidden}
+.mt-dk-team__grid{display:grid;grid-auto-flow:column;
   grid-template-rows:repeat(2,auto);
   grid-auto-columns:28.164vw;
   column-gap:0;row-gap:2.188vw;
   transition:transform 600ms var(--dk-ease)}
-.dk-mem{display:grid;grid-template-columns:8.906vw minmax(0,1fr);
+.mt-dk-mem{display:grid;grid-template-columns:8.906vw minmax(0,1fr);
   column-gap:1.25vw;align-items:start;
   transition:opacity 380ms var(--dk-ease)}
-.dk-mem.is-gone{opacity:0;pointer-events:none}
-.dk-mem__ph{display:block;border-radius:.391vw;overflow:hidden;aspect-ratio:114/113;
+.mt-dk-mem.mt-is-gone{opacity:0;pointer-events:none}
+.mt-dk-mem__ph{display:block;border-radius:.391vw;overflow:hidden;aspect-ratio:114/113;
   background:#DDD5C6;cursor:pointer;
   width:100%;max-width:none;margin:0;padding:0;border:0}
-.dk-mem__ph::after{content:none}
-.dk-mem__ph img{width:100%;height:100%;object-fit:cover;object-position:center 8%;
+.mt-dk-mem__ph::after{content:none}
+.mt-dk-mem__ph img{width:100%;height:100%;object-fit:cover;object-position:center 8%;
   display:block;border-radius:inherit}
-.dk-mem__txt{padding-top:4.06vw}
-.dk-mem__name{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-mem__txt{padding-top:4.06vw}
+.mt-dk-mem__name{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(10px,1.2523vw,39px);line-height:1.3;margin:0;cursor:pointer;
   background:none;border:0;padding:0;text-align:start;color:#334345}
-.dk-mem__role{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-mem__role{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(9px,1.0180vw,32px);line-height:1.3;
   color:var(--dk-terra);margin:0}
-.dk-team .member:hover .member__ph{border-color:transparent;background:#DDD5C6}
+.mt-dk-team .mt-member:hover .mt-member__ph{border-color:transparent;background:#DDD5C6}
 
-.dk-team__foot{display:flex;align-items:center;justify-content:space-between;
+.mt-dk-team__foot{display:flex;align-items:center;justify-content:space-between;
   margin-top:4.855vw;margin-inline-start:.3125vw}
-.dk-tabs{display:flex;gap:.781vw}
-.dk-tab{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-tabs{display:flex;gap:.781vw}
+.mt-dk-tab{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(9px,1.0156vw,32px);line-height:1;
   color:#DECEB4;
   background:rgba(242,236,227,.749);
@@ -873,41 +922,41 @@ html.is-attop .nav:not(.is-scrolled){
   block-size:2.188vw;min-block-size:24px;
   transition:background-color .35s var(--dk-ease),color .35s var(--dk-ease),
              border-color .35s var(--dk-ease)}
-.dk-tab.is-active{background:rgba(166,130,74,.749);border-color:#A6824A;color:#FCF7EE}
-.dk-team .dk-arrows{gap:1.542vw}
-.dk-team .dk-arrow{min-width:22px;min-height:22px;border-width:max(1px,.109vw)}
-.dk-team .dk-arrow svg{width:56.6%;height:56.6%}
-.dk-team .dk-arrow,.dk-team .dk-arrow[disabled]{color:#DECEB4}
+.mt-dk-tab.mt-is-active{background:rgba(166,130,74,.749);border-color:#A6824A;color:#FCF7EE}
+.mt-dk-team .mt-dk-arrows{gap:1.542vw}
+.mt-dk-team .mt-dk-arrow{min-width:22px;min-height:22px;border-width:max(1px,.109vw)}
+.mt-dk-team .mt-dk-arrow svg{width:56.6%;height:56.6%}
+.mt-dk-team .mt-dk-arrow,.mt-dk-team .mt-dk-arrow[disabled]{color:#DECEB4}
 
 /* a line break after the hyphen would split a surname ("Mishary Al- / Ibraheem");
    no width forces the space break instead, because "Al-Ibraheem" is the longer
    half -- so hyphenated tokens are simply made unbreakable */
-.dk-team .nb{white-space:nowrap}
+.mt-dk-team .mt-nb{white-space:nowrap}
 
 @media (max-width:960px){
-  .dk-team{min-height:0;display:block;padding-block:clamp(34px,8vw,64px)}
-  .dk-team__panel{padding:clamp(14px,3.4vw,24px) clamp(16px,4.4vw,30px);
+  .mt-dk-team{min-height:0;display:block;padding-block:clamp(34px,8vw,64px)}
+  .mt-dk-team__panel{padding:clamp(14px,3.4vw,24px) clamp(16px,4.4vw,30px);
     border-radius:10px;min-height:0}
-  .dk-team__panel .dk-label{font-size:clamp(20px,6vw,42px)}
-  .dk-team__sub{font-size:clamp(12px,3.4vw,16px);margin-top:.5em}
-  .dk-team__stage{margin-inline:0;margin-top:clamp(20px,5vw,34px)}
-  .dk-team__rail{grid-template-columns:1fr;gap:clamp(20px,5vw,34px)}
-  .dk-feat{grid-template-columns:clamp(120px,34vw,190px) minmax(0,1fr);
+  .mt-dk-team__panel .mt-dk-label{font-size:clamp(20px,6vw,42px)}
+  .mt-dk-team__sub{font-size:clamp(12px,3.4vw,16px);margin-top:.5em}
+  .mt-dk-team__stage{margin-inline:0;margin-top:clamp(20px,5vw,34px)}
+  .mt-dk-team__rail{grid-template-columns:1fr;gap:clamp(20px,5vw,34px)}
+  .mt-dk-feat{grid-template-columns:clamp(120px,34vw,190px) minmax(0,1fr);
     column-gap:clamp(12px,3.4vw,22px);align-items:center}
-  .dk-feat__txt{padding-top:0}
-  .dk-feat__name{font-size:clamp(15px,4.6vw,22px)}
-  .dk-feat__role{font-size:clamp(11px,3.1vw,14px)}
-  .dk-team__grid{grid-auto-flow:row;grid-template-rows:none;
+  .mt-dk-feat__txt{padding-top:0}
+  .mt-dk-feat__name{font-size:clamp(15px,4.6vw,22px)}
+  .mt-dk-feat__role{font-size:clamp(11px,3.1vw,14px)}
+  .mt-dk-team__grid{grid-auto-flow:row;grid-template-rows:none;
     grid-template-columns:1fr;grid-auto-columns:auto;
     row-gap:clamp(16px,4.2vw,26px)}
-  .dk-mem{grid-template-columns:clamp(74px,20vw,114px) minmax(0,1fr);
+  .mt-dk-mem{grid-template-columns:clamp(74px,20vw,114px) minmax(0,1fr);
     column-gap:clamp(10px,3vw,16px);align-items:center}
-  .dk-mem__txt{padding-top:0}
-  .dk-mem__name{font-size:clamp(12px,3.7vw,17px)}
-  .dk-mem__role{font-size:clamp(10.5px,3.1vw,14px)}
-  .dk-team__foot{margin-top:clamp(20px,5vw,34px);margin-inline-start:0;
+  .mt-dk-mem__txt{padding-top:0}
+  .mt-dk-mem__name{font-size:clamp(12px,3.7vw,17px)}
+  .mt-dk-mem__role{font-size:clamp(10.5px,3.1vw,14px)}
+  .mt-dk-team__foot{margin-top:clamp(20px,5vw,34px);margin-inline-start:0;
     flex-wrap:wrap;gap:14px}
-  .dk-tab{inline-size:auto;block-size:auto;padding:.5em 1.25em;
+  .mt-dk-tab{inline-size:auto;block-size:auto;padding:.5em 1.25em;
     font-size:clamp(10px,2.7vw,13px)}
 }
 
@@ -924,19 +973,19 @@ html.is-attop .nav:not(.is-scrolled){
      close   gold ring d20.9, centre 36.5 in from the card's right edge
      frond   x 796.04 y 243.77  384.24 x 366.12  #F2ECE3, clipped by the card
    Deck spec: fade, 700ms, page blurred underneath. */
-.mexp{position:fixed;inset:0;z-index:1500;display:grid;place-items:center;
+.mt-mexp{position:fixed;inset:0;z-index:1500;display:grid;place-items:center;
   padding:clamp(16px,4vw,40px);left:0;top:0;width:auto;height:auto;
   opacity:0;visibility:hidden;transform:none!important;
   transition:opacity var(--dk-fade) var(--dk-ease),visibility 0s var(--dk-fade)}
-.mexp.is-open{opacity:1;visibility:visible;transition-delay:0s}
-.mexp__veil{position:fixed;inset:0;z-index:1490;
+.mt-mexp.mt-is-open{opacity:1;visibility:visible;transition-delay:0s}
+.mt-mexp__veil{position:fixed;inset:0;z-index:1490;
   background:rgba(238,230,218,.62);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   opacity:0;visibility:hidden;
   transition:opacity var(--dk-fade) var(--dk-ease),visibility 0s var(--dk-fade)}
-.mexp__veil.is-open{opacity:1;visibility:visible;transition-delay:0s}
+.mt-mexp__veil.mt-is-open{opacity:1;visibility:visible;transition-delay:0s}
 
-.mexp__in{position:relative;overflow:hidden;display:grid;
+.mt-mexp__in{position:relative;overflow:hidden;display:grid;
   grid-template-columns:14.609vw minmax(0,1fr);
   grid-template-rows:auto auto 1fr;
   grid-template-areas:"ph name" "ph role" "ph bio";
@@ -946,60 +995,60 @@ html.is-attop .nav:not(.is-scrolled){
   padding-block:1.5625vw;padding-inline:1.875vw 2.076vw;
   box-shadow:0 34px 90px -30px rgba(20,49,57,.5)}
 /* the frond runs off the bottom of the card and is cut by it */
-.mexp__in::after{content:"";position:absolute;z-index:0;pointer-events:none;
+.mt-mexp__in::after{content:"";position:absolute;z-index:0;pointer-events:none;
   inset-inline-start:39.539vw;top:2.478vw;
   inline-size:30.019vw;aspect-ratio:384.24/366.12;
   background-color:#F2ECE3;
   -webkit-mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%;
   mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%}
-[dir="rtl"] .mexp__in::after{transform:scaleX(-1)}
-.mexp__in > *{position:relative;z-index:1}
+[dir="rtl"] .mt-mexp__in::after{transform:scaleX(-1)}
+.mt-mexp__in > *{position:relative;z-index:1}
 
-.mexp__ph{grid-area:ph;align-self:stretch;display:block;position:relative;
+.mt-mexp__ph{grid-area:ph;align-self:stretch;display:block;position:relative;
   inline-size:100%;block-size:100%;aspect-ratio:auto;
   border-radius:.391vw;overflow:hidden;background:var(--dk-card);
   border:0;padding:0;margin:0;max-width:none}
-.mexp__ph::after{content:none}
-.mexp__ph img{width:100%;height:100%;object-fit:cover;object-position:center 8%;
+.mt-mexp__ph::after{content:none}
+.mt-mexp__ph img{width:100%;height:100%;object-fit:cover;object-position:center 8%;
   display:block;border-radius:inherit}
-.mexp__ph--empty i{position:absolute;inset:0;display:grid;place-items:center;
+.mt-mexp__ph--empty i{position:absolute;inset:0;display:grid;place-items:center;
   font-family:var(--dk-readex);font-style:normal;font-weight:600;
   font-size:1.8rem;color:var(--dk-gold);background:var(--dk-card)}
 
-.mexp__name{grid-area:name;font-family:var(--dk-sans);font-weight:400;
+.mt-mexp__name{grid-area:name;font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(13px,1.643vw,51px);line-height:1.286;color:#334345;
   margin:.887vw 0 0}
-.mexp__role{grid-area:role;font-family:var(--dk-sans);font-weight:400;
+.mt-mexp__role{grid-area:role;font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(9px,1.0156vw,32px);line-height:1.3;
   color:var(--dk-terra);margin:.213vw 0 0}
-.mexp__text{grid-area:bio;font-family:var(--dk-sans);font-weight:400;
+.mt-mexp__text{grid-area:bio;font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(9px,1.018vw,32px);line-height:1.8;color:var(--dk-ink);
   margin:.743vw 0 0;padding-top:1.969vw;
   border-top:max(1px,.052vw) solid var(--dk-gold);
   white-space:pre-line}
-.mexp__text--empty{opacity:.7;font-style:normal}
+.mt-mexp__text--empty{opacity:.7;font-style:normal}
 
-.mexp__close{position:absolute;z-index:3;
+.mt-mexp__close{position:absolute;z-index:3;
   top:2.469vw;inset-inline-end:2.033vw;
   inline-size:1.633vw;block-size:1.633vw;min-inline-size:20px;min-block-size:20px;
   border-radius:50%;cursor:pointer;
   border:max(1px,.055vw) solid var(--dk-gold);background:transparent;color:var(--dk-gold);
   font:400 .8em/1 var(--dk-sans);display:grid;place-items:center;padding:0}
-.mexp__close:hover{background:var(--dk-gold);color:#FCF7EE}
+.mt-mexp__close:hover{background:var(--dk-gold);color:#FCF7EE}
 
 @media (max-width:960px){
-  .mexp__in{grid-template-columns:1fr;grid-template-rows:auto auto auto auto;
+  .mt-mexp__in{grid-template-columns:1fr;grid-template-rows:auto auto auto auto;
     grid-template-areas:"ph" "name" "role" "bio";
     inline-size:min(560px,100%);min-block-size:0;row-gap:clamp(10px,3vw,18px);
     column-gap:0;border-radius:10px;padding:clamp(16px,4.4vw,26px)}
-  .mexp__in::after{display:none}
-  .mexp__ph{block-size:auto;aspect-ratio:187/231.05;
+  .mt-mexp__in::after{display:none}
+  .mt-mexp__ph{block-size:auto;aspect-ratio:187/231.05;
     inline-size:min(190px,52%);margin-inline:auto;border-radius:8px}
-  .mexp__name{font-size:clamp(17px,4.6vw,22px);margin:0}
-  .mexp__role{font-size:clamp(11px,3.1vw,14px);margin:0}
-  .mexp__text{font-size:clamp(12px,3.2vw,14px);margin:clamp(6px,2vw,10px) 0 0;
+  .mt-mexp__name{font-size:clamp(17px,4.6vw,22px);margin:0}
+  .mt-mexp__role{font-size:clamp(11px,3.1vw,14px);margin:0}
+  .mt-mexp__text{font-size:clamp(12px,3.2vw,14px);margin:clamp(6px,2vw,10px) 0 0;
     padding-top:clamp(10px,3vw,16px)}
-  .mexp__close{top:10px;inset-inline-end:10px;inline-size:26px;block-size:26px}
+  .mt-mexp__close{top:10px;inset-inline-end:10px;inline-size:26px;block-size:26px}
 }
 
 /* ── OUR PARTNERS + FAQ (slides 18–20) ───────────────────── */
@@ -1013,58 +1062,58 @@ html.is-attop .nav:not(.is-scrolled){
      frond        1027.57, 287.43   281.93 x 281.74  #FCF7EE at 61.2%
    The eight logos are placed individually — the deck is NOT a grid; each mark
    keeps its own size and optical position inside the card. */
-.dk-partners{background:var(--dk-cream);color:var(--dk-ink);
+.mt-dk-partners{background:var(--dk-cream);color:var(--dk-ink);
   position:relative;overflow:hidden;
   padding-block:7.097vw 0}
-.dk-partners__grid{position:relative;z-index:1;display:grid;
+.mt-dk-partners__grid{position:relative;z-index:1;display:grid;
   grid-template-columns:18.984vw minmax(0,1fr);gap:0;align-items:start}
-.dk-partners .dk-label{margin:2.602vw 0 0;font-size:clamp(20px,2.896vw,90px);
+.mt-dk-partners .mt-dk-label{margin:2.602vw 0 0;font-size:clamp(20px,2.896vw,90px);
   font-weight:600;letter-spacing:0;line-height:1.2156;color:var(--dk-gold)}
-.dk-partners__card{position:relative;overflow:hidden;
+.mt-dk-partners__card{position:relative;overflow:hidden;
   background:var(--dk-card);border-radius:.781vw;
   aspect-ratio:943/271.07;padding:0;display:block}
-.dk-partners__card::after{content:"";position:absolute;z-index:0;pointer-events:none;
+.mt-dk-partners__card::after{content:"";position:absolute;z-index:0;pointer-events:none;
   inset-inline-start:78.216%;top:37.399%;
   inline-size:29.897%;aspect-ratio:281.93/281.74;
   background-color:#FCF7EE;opacity:.612;
   -webkit-mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%;
   mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%}
-[dir="rtl"] .dk-partners__card::after{transform:scaleX(-1)}
-.dk-partners__card img{position:absolute;z-index:1;
+[dir="rtl"] .mt-dk-partners__card::after{transform:scaleX(-1)}
+.mt-dk-partners__card img{position:absolute;z-index:1;
   object-fit:contain;object-position:center;display:block;
   filter:none;opacity:1;max-width:none;max-height:none}
 /* slot order follows the deck, not the DOM: p1 gold mark, p6 rikaz, p4 awn,
    p7 husmak, p8 nmr, p3 accor/mantis, p5 tamimi, p2 kerten */
-.dk-partners__card img:nth-child(1){inset-inline-start:5.832%;top:13.284%;width:7.529%;height:28.044%}
-.dk-partners__card img:nth-child(6){inset-inline-start:19.724%;top:11.809%;width:14.740%;height:30.996%}
+.mt-dk-partners__card img:nth-child(1){inset-inline-start:5.832%;top:13.284%;width:7.529%;height:28.044%}
+.mt-dk-partners__card img:nth-child(6){inset-inline-start:19.724%;top:11.809%;width:14.740%;height:30.996%}
 /* AWN is a stacked lockup and the deck gives it a double-height slot, so it
    straddled both logo rows. Brought onto the top row at the tallest single-row
    height (38.377%, matching Al Tamimi) and centred on that row's centre line
    at 27.31%; the width follows the artwork's own 0.6875 aspect. */
-.dk-partners__card img:nth-child(4){inset-inline-start:42.483%;top:8.121%;width:7.612%;height:38.377%}
-.dk-partners__card img:nth-child(7){inset-inline-start:59.703%;top:18.446%;width:13.361%;height:17.343%}
-.dk-partners__card img:nth-child(8){inset-inline-start:79.745%;top:19.187%;width:16.225%;height:16.236%}
-.dk-partners__card img:nth-child(3){inset-inline-start:4.348%;top:54.614%;width:10.498%;height:30.996%}
-.dk-partners__card img:nth-child(5){inset-inline-start:20.573%;top:50.920%;width:13.043%;height:38.377%}
+.mt-dk-partners__card img:nth-child(4){inset-inline-start:42.483%;top:8.121%;width:7.612%;height:38.377%}
+.mt-dk-partners__card img:nth-child(7){inset-inline-start:59.703%;top:18.446%;width:13.361%;height:17.343%}
+.mt-dk-partners__card img:nth-child(8){inset-inline-start:79.745%;top:19.187%;width:16.225%;height:16.236%}
+.mt-dk-partners__card img:nth-child(3){inset-inline-start:4.348%;top:54.614%;width:10.498%;height:30.996%}
+.mt-dk-partners__card img:nth-child(5){inset-inline-start:20.573%;top:50.920%;width:13.043%;height:38.377%}
 /* Kerten slides left into the gap AWN left behind on the lower row */
-.dk-partners__card img:nth-child(2){inset-inline-start:37.964%;top:61.995%;width:16.649%;height:16.236%}
+.mt-dk-partners__card img:nth-child(2){inset-inline-start:37.964%;top:61.995%;width:16.649%;height:16.236%}
 /* IHCC joins the lower row. The deck's card is 943 x 271.07, so a logo of
    height h% is 2.283 (its own aspect) x h x 271.07/943 = 0.6563h wide. At the
    row's 17.343 height that is 11.38 wide, centred on the row's 70.11 centre
    line (top 61.44) and started at 59.703 so it columns with Husaak above it —
    clear of Kerten's 54.61 edge and of the frond that begins at 78.216. */
-.dk-partners__card img:nth-child(9){inset-inline-start:59.703%;top:61.440%;width:11.380%;height:17.343%}
+.mt-dk-partners__card img:nth-child(9){inset-inline-start:59.703%;top:61.440%;width:11.380%;height:17.343%}
 
 @media (max-width:960px){
-  .dk-partners{padding-block:clamp(40px,10vw,80px) 0;overflow:visible}
-  .dk-partners__grid{display:grid}
-  .dk-partners__grid{grid-template-columns:1fr;gap:clamp(18px,5vw,32px)}
-  .dk-partners .dk-label{margin:0;font-size:clamp(20px,6vw,42px)}
-  .dk-partners__card{aspect-ratio:auto;display:grid;
+  .mt-dk-partners{padding-block:clamp(40px,10vw,80px) 0;overflow:visible}
+  .mt-dk-partners__grid{display:grid}
+  .mt-dk-partners__grid{grid-template-columns:1fr;gap:clamp(18px,5vw,32px)}
+  .mt-dk-partners .mt-dk-label{margin:0;font-size:clamp(20px,6vw,42px)}
+  .mt-dk-partners__card{aspect-ratio:auto;display:grid;
     grid-template-columns:repeat(3,1fr);gap:clamp(14px,4vw,26px);
     padding:clamp(18px,5vw,30px);border-radius:10px}
-  .dk-partners__card::after{display:none}
-  .dk-partners__card img{position:static;inset:auto;width:100%!important;
+  .mt-dk-partners__card::after{display:none}
+  .mt-dk-partners__card img{position:static;inset:auto;width:100%!important;
     height:clamp(38px,11vw,70px)!important;object-fit:contain}
 }
 
@@ -1079,21 +1128,21 @@ html.is-attop .nav:not(.is-scrolled){
                 the question's; 44.71 clear above the panel's bottom
      frond      1012.29,132.71  211.83 sq  #FCF7EE at 61.2%, clipped by the panel
    No +/- sign: the deck shows none. */
-.dk-faq{background:var(--dk-cream);color:var(--dk-ink);position:relative;
+.mt-dk-faq{background:var(--dk-cream);color:var(--dk-ink);position:relative;
   /* the partners card and the FAQ panel sat 53 apart and read as one block */
   padding-block:8vw 4vw}
-.dk-faq__grid{display:grid;grid-template-columns:26.759vw minmax(0,1fr);
+.mt-dk-faq__grid{display:grid;grid-template-columns:26.759vw minmax(0,1fr);
   gap:0;align-items:start}
-.dk-faq .dk-label{margin:.392vw 0 0;font-size:clamp(20px,2.896vw,90px);
+.mt-dk-faq .mt-dk-label{margin:.392vw 0 0;font-size:clamp(20px,2.896vw,90px);
   font-weight:600;letter-spacing:0;line-height:1.2156;color:var(--dk-gold)}
-.dk-faq__list{display:block}
-.dk-faq__item{position:relative;border:0;
+.mt-dk-faq__list{display:block}
+.mt-dk-faq__item{position:relative;border:0;
   border-bottom:max(1px,.052vw) solid #F0DED6;
   border-radius:.664vw;
   transition:background-color var(--dk-morph) var(--dk-ease),
              margin-bottom var(--dk-morph) var(--dk-ease)}
-.dk-faq__item:last-child{border-bottom:0}
-.dk-faq__btn{display:block;width:100%;background:none;border:0;cursor:pointer;
+.mt-dk-faq__item:last-child{border-bottom:0}
+.mt-dk-faq__btn{display:block;width:100%;background:none;border:0;cursor:pointer;
   text-align:start;
   font-family:var(--dk-sans);font-weight:400;color:var(--dk-teal);
   font-size:clamp(11px,1.4867vw,46px);line-height:1.3;
@@ -1103,162 +1152,162 @@ html.is-attop .nav:not(.is-scrolled){
   padding:2.192vw 1.363vw 1.932vw;
   transition:color var(--dk-morph) var(--dk-ease),
              padding-bottom var(--dk-morph) var(--dk-ease)}
-.dk-faq__sign{display:none}
-.dk-faq__awrap{height:0;overflow:hidden;position:relative;z-index:1;
+.mt-dk-faq__sign{display:none}
+.mt-dk-faq__awrap{height:0;overflow:hidden;position:relative;z-index:1;
   transition:height var(--dk-morph) var(--dk-ease)}
-.dk-faq__a{font-family:var(--dk-sans);font-weight:400;
+.mt-dk-faq__a{font-family:var(--dk-sans);font-weight:400;
   font-size:clamp(9px,1.018vw,32px);line-height:1.2295;color:var(--dk-ink);
   margin:0;padding:0 1.363vw 2.916vw;max-inline-size:57.03vw}
 /* the open item swells into the deck's #F2ECE3 panel and pushes the rest down:
    844.0 x 148.04 at y144.04, question baseline 43.43 below the panel top, the
    three answer lines on 16.02 at 74.53/90.55/106.59, then 37.51 to the next rule */
-.dk-faq__item.is-open{background:var(--dk-card);border-bottom-color:transparent;
+.mt-dk-faq__item.mt-is-open{background:var(--dk-card);border-bottom-color:transparent;
   margin-bottom:2.931vw;overflow:hidden}
-.dk-faq__item.is-open .dk-faq__btn{color:var(--dk-gold);
+.mt-dk-faq__item.mt-is-open .mt-dk-faq__btn{color:var(--dk-gold);
   padding-top:1.987vw;padding-bottom:.976vw}
-.dk-faq__item.is-open::after{content:"";position:absolute;z-index:0;pointer-events:none;
+.mt-dk-faq__item.mt-is-open::after{content:"";position:absolute;z-index:0;pointer-events:none;
   inset-inline-start:73.85%;top:-1.34%;
   inline-size:25.098%;aspect-ratio:211.83/211.68;
   background-color:#FCF7EE;opacity:.612;
   -webkit-mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%;
   mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%}
-[dir="rtl"] .dk-faq__item.is-open::after{transform:scaleX(-1)}
-.dk-faq__item.is-open .dk-faq__btn,
-.dk-faq__item.is-open .dk-faq__awrap{position:relative;z-index:1}
+[dir="rtl"] .mt-dk-faq__item.mt-is-open::after{transform:scaleX(-1)}
+.mt-dk-faq__item.mt-is-open .mt-dk-faq__btn,
+.mt-dk-faq__item.mt-is-open .mt-dk-faq__awrap{position:relative;z-index:1}
 
 @media (max-width:960px){
-  .dk-faq{padding-block:clamp(30px,8vw,60px) clamp(30px,8vw,60px)}
-  .dk-faq__grid{grid-template-columns:1fr;gap:clamp(16px,4vw,28px)}
-  .dk-faq .dk-label{margin:0;font-size:clamp(20px,6vw,42px)}
-  .dk-faq__btn{font-size:clamp(13px,3.9vw,18px);
+  .mt-dk-faq{padding-block:clamp(30px,8vw,60px) clamp(30px,8vw,60px)}
+  .mt-dk-faq__grid{grid-template-columns:1fr;gap:clamp(16px,4vw,28px)}
+  .mt-dk-faq .mt-dk-label{margin:0;font-size:clamp(20px,6vw,42px)}
+  .mt-dk-faq__btn{font-size:clamp(13px,3.9vw,18px);
     padding:clamp(14px,4vw,22px) clamp(10px,3vw,16px) clamp(14px,4vw,22px)}
-  .dk-faq__item.is-open .dk-faq__btn{padding-bottom:clamp(6px,2vw,10px)}
-  .dk-faq__a{font-size:clamp(12px,3.3vw,15px);line-height:1.6;
+  .mt-dk-faq__item.mt-is-open .mt-dk-faq__btn{padding-bottom:clamp(6px,2vw,10px)}
+  .mt-dk-faq__a{font-size:clamp(12px,3.3vw,15px);line-height:1.6;
     padding:0 clamp(10px,3vw,16px) clamp(16px,4.4vw,24px);max-inline-size:none}
-  .dk-faq__item.is-open{margin-bottom:clamp(12px,3.4vw,20px)}
-  .dk-faq__item.is-open::after{display:none}
+  .mt-dk-faq__item.mt-is-open{margin-bottom:clamp(12px,3.4vw,20px)}
+  .mt-dk-faq__item.mt-is-open::after{display:none}
 }
 
 /* ── FOOTER (slides 19–20) ───────────────────────────────── */
 /* slide19 #79: the footer's top edge is a shallow wave — it touches the FAQ at
    x428.88 and drops to 10.45 on the left, 22.86 on the right. Drawn at its own
    height so it occupies real space; no negative margin to fight. */
-.dk-footer{position:relative;background:var(--dk-teal-deep);color:#FCF7EE;
+.mt-dk-footer{position:relative;background:var(--dk-teal-deep);color:#FCF7EE;
   margin-top:0}
-.dk-footer__wave{position:relative;block-size:1.786vw;min-block-size:12px;background:var(--dk-cream);
+.mt-dk-footer__wave{position:relative;block-size:1.786vw;min-block-size:12px;background:var(--dk-cream);
   line-height:0;pointer-events:none}
-.dk-footer__wave svg{display:block;width:100%;height:100%}
-.dk-footer__in{display:flex;align-items:center;gap:6.563vw;
+.mt-dk-footer__wave svg{display:block;width:100%;height:100%}
+.mt-dk-footer__in{display:flex;align-items:center;gap:6.563vw;
   padding-block:.781vw 2.011vw}
-.dk-footer__logo{height:3.555vw;min-height:30px;width:auto}
-.dk-footer__item{display:inline-flex;align-items:center;gap:.55em;
+.mt-dk-footer__logo{height:3.555vw;min-height:30px;width:auto}
+.mt-dk-footer__item{display:inline-flex;align-items:center;gap:.55em;
   font-family:var(--dk-sans);font-weight:500;
   font-size:clamp(11.5px,1.05vw,13.3px);color:#FCF7EE;text-decoration:none}
-.dk-footer__item svg{width:1.3em;height:1.3em;color:var(--dk-gold)}
-.dk-footer__cta{margin-inline-start:auto;position:relative}
+.mt-dk-footer__item svg{width:1.3em;height:1.3em;color:var(--dk-gold)}
+.mt-dk-footer__cta{margin-inline-start:auto;position:relative}
 /* r8's enquire panel hangs off the deck's pill */
-.dk-footer__cta .enquire__btn{font:inherit}
-.dk-footer__cta .footer__form{inset-inline-end:0;bottom:calc(100% + .7rem)}
+.mt-dk-footer__cta .mt-enquire__btn{font:inherit}
+.mt-dk-footer__cta .mt-footer__form{inset-inline-end:0;bottom:calc(100% + .7rem)}
 /* below 1080 app.css re-anchors the panel to its trigger's START edge, which
    pushes a 304px form off the side of a narrow screen. Anchor it to the page
    gutter instead and let it shrink. */
 @media (max-width:1080px){
-  .dk-footer__cta{position:static}
-  .dk-footer__cta .footer__form{
+  .mt-dk-footer__cta{position:static}
+  .mt-dk-footer__cta .mt-footer__form{
     inset-inline:auto clamp(12px,3.67vw,110px);
     inline-size:min(304px,calc(100vw - 2 * clamp(12px,3.67vw,110px)))}
 }
-.dk-footer__cta .dk-pill{background:rgba(166,130,74,.749);border-color:#A6824A;color:#FCF7EE;
+.mt-dk-footer__cta .mt-dk-pill{background:rgba(166,130,74,.749);border-color:#A6824A;color:#FCF7EE;
   min-width:9.219vw;height:2.032vw;min-height:24px}
-.dk-footer__cta .dk-pill:hover{background:#8f6f3e;border-color:#8f6f3e}
-.dk-footer__legal{display:flex;align-items:center;gap:1.75vw;
+.mt-dk-footer__cta .mt-dk-pill:hover{background:#8f6f3e;border-color:#8f6f3e}
+.mt-dk-footer__legal{display:flex;align-items:center;gap:1.75vw;
   border-top:max(1px,.026vw) solid #78989C;
   padding-block:.821vw 2.031vw;
   font-family:var(--dk-sans);font-weight:300;font-size:clamp(7px,.627vw,20px);
   letter-spacing:.02em;color:rgba(252,247,238,.75)}
-.dk-footer__legal img{height:1.328vw;min-height:12px;width:auto;opacity:1}
-.dk-footer__top{margin-inline-start:auto;display:inline-flex;align-items:center;
+.mt-dk-footer__legal img{height:1.328vw;min-height:12px;width:auto;opacity:1}
+.mt-dk-footer__top{margin-inline-start:auto;display:inline-flex;align-items:center;
   gap:.5em;color:rgba(252,247,238,.85);text-decoration:none;
   font-size:clamp(8px,.862vw,28px);letter-spacing:.12em;text-transform:uppercase}
-.dk-footer__top svg{width:1.6em;height:1.6em;color:var(--dk-gold)}
+.mt-dk-footer__top svg{width:1.6em;height:1.6em;color:var(--dk-gold)}
 
 /* ── responsive collapses ────────────────────────────────── */
 @media (max-width:960px){
-  .dk-footer__in{gap:clamp(14px,4vw,28px);flex-wrap:wrap;
+  .mt-dk-footer__in{gap:clamp(14px,4vw,28px);flex-wrap:wrap;
     padding-block:clamp(14px,4vw,24px) clamp(12px,3vw,20px)}
-  .dk-footer__logo{height:clamp(32px,9vw,46px)}
-  .dk-footer__legal{gap:clamp(10px,3vw,18px);flex-wrap:wrap;
+  .mt-dk-footer__logo{height:clamp(32px,9vw,46px)}
+  .mt-dk-footer__legal{gap:clamp(10px,3vw,18px);flex-wrap:wrap;
     padding-block:clamp(10px,3vw,16px) clamp(12px,3.4vw,20px)}
-  .dk-footer__legal img{height:clamp(12px,3.2vw,16px)}
-  .dk-about__row{grid-template-columns:1fr}
-  .dk-vision{grid-template-columns:1fr}
+  .mt-dk-footer__legal img{height:clamp(12px,3.2vw,16px)}
+  .mt-dk-about__row{grid-template-columns:1fr}
+  .mt-dk-vision{grid-template-columns:1fr}
   /* the deck's exact card ratios only hold in the two-column desktop
      layout they were measured from; once stacked, a locked ratio clips
      the copy (the tan card is bottom-aligned, so it clips at the TOP).
      Let the cards grow with their content instead. */
-  .dk-vision__tan,.dk-vision__card,.dk-about__card{aspect-ratio:auto}
-  .dk-about__card{min-height:clamp(190px,26vw,300px);padding:5% 5%}
-  .dk-about__row .dk-label{margin-top:0}
-  .dk-about__row{grid-template-columns:1fr;gap:clamp(18px,1.6vw,34px)}
-  .dk-vision__tan{min-height:clamp(230px,44vw,360px)}
-  .dk-vision__card{min-height:clamp(150px,26vw,240px)}
-  .dk-about__card p{max-width:100%}
+  .mt-dk-vision__tan,.mt-dk-vision__card,.mt-dk-about__card{aspect-ratio:auto}
+  .mt-dk-about__card{min-height:clamp(190px,26vw,300px);padding:5% 5%}
+  .mt-dk-about__row .mt-dk-label{margin-top:0}
+  .mt-dk-about__row{grid-template-columns:1fr;gap:clamp(18px,1.6vw,34px)}
+  .mt-dk-vision__tan{min-height:clamp(230px,44vw,360px)}
+  .mt-dk-vision__card{min-height:clamp(150px,26vw,240px)}
+  .mt-dk-about__card p{max-width:100%}
   /* the deck's uneven 4-up gutters only exist in the wide layout */
-  .dk-impact__tiles{grid-template-columns:repeat(2,1fr);
+  .mt-dk-impact__tiles{grid-template-columns:repeat(2,1fr);
     gap:clamp(14px,1.9vw,25px);grid-auto-rows:auto}
-  .dk-impact__tiles .dk-impact__tile:nth-child(n){grid-column:auto}
-  .dk-impact__tile,.dk-impact__tile--hi{padding:6% 6% 7%;
+  .mt-dk-impact__tiles .mt-dk-impact__tile:nth-child(n){grid-column:auto}
+  .mt-dk-impact__tile,.mt-dk-impact__tile--hi{padding:6% 6% 7%;
     min-height:clamp(180px,34vh,236px)}
-  .dk-impact__num{font-size:clamp(22px,3.2vw,34px);margin-bottom:.55em}
-  .dk-impact__tile--hi .dk-impact__num{font-size:clamp(26px,4vw,44px);
+  .mt-dk-impact__num{font-size:clamp(22px,3.2vw,34px);margin-bottom:.55em}
+  .mt-dk-impact__tile--hi .mt-dk-impact__num{font-size:clamp(26px,4vw,44px);
     margin-bottom:.45em}
-  .dk-impact__lbl{font-size:clamp(11px,1.55vw,14px);max-width:none}
-  .dk-impact__tile--hi .dk-impact__lbl{font-size:clamp(15px,2.4vw,25px)}
-  .dk-map__in{grid-template-columns:1fr;align-content:end;
+  .mt-dk-impact__lbl{font-size:clamp(11px,1.55vw,14px);max-width:none}
+  .mt-dk-impact__tile--hi .mt-dk-impact__lbl{font-size:clamp(15px,2.4vw,25px)}
+  .mt-dk-map__in{grid-template-columns:1fr;align-content:end;
     padding-block:clamp(96px,15vh,150px) clamp(48px,9vh,80px)}
-  .dk-map__title,.dk-map__panel{grid-column:1}
-  .dk-map__panel{height:auto;padding:6% 6% 2%}
-  .dk-map__title{margin-top:0;font-size:clamp(20px,4.4vw,34px)}
-  .dk-map__region{font-size:clamp(18px,4.4vw,32px)}
-  .dk-map__val{font-size:clamp(15px,3.4vw,24px)}
-  .dk-map__lab{font-size:clamp(10px,1.7vw,13px)}
-  .dk-map__row{padding-block:3% 4%}
-  .dk-map__dashes button{width:clamp(20px,5vw,39px)}
-  .dk-map__stage{display:none}
-  .dk-news__page{grid-template-columns:repeat(2,1fr)}
+  .mt-dk-map__title,.mt-dk-map__panel{grid-column:1}
+  .mt-dk-map__panel{height:auto;padding:6% 6% 2%}
+  .mt-dk-map__title{margin-top:0;font-size:clamp(20px,4.4vw,34px)}
+  .mt-dk-map__region{font-size:clamp(18px,4.4vw,32px)}
+  .mt-dk-map__val{font-size:clamp(15px,3.4vw,24px)}
+  .mt-dk-map__lab{font-size:clamp(10px,1.7vw,13px)}
+  .mt-dk-map__row{padding-block:3% 4%}
+  .mt-dk-map__dashes button{width:clamp(20px,5vw,39px)}
+  .mt-dk-map__stage{display:none}
+  .mt-dk-news__page{grid-template-columns:repeat(2,1fr)}
   /* the deck's 311-wide card is 24.297vw, which collapses to ~97px on a
      phone and the headline then overruns its photo — give the card a real
      floor and let it grow taller for the extra lines */
-  .dk-newscard{flex:0 0 clamp(228px,64vw,320px);aspect-ratio:311/352}
-  .dk-newscard__date{font-size:clamp(10px,2.7vw,13px)}
-  .dk-newscard__title{font-size:clamp(12px,3.3vw,16px);
+  .mt-dk-newscard{flex:0 0 clamp(228px,64vw,320px);aspect-ratio:311/352}
+  .mt-dk-newscard__date{font-size:clamp(10px,2.7vw,13px)}
+  .mt-dk-newscard__title{font-size:clamp(12px,3.3vw,16px);
     padding-bottom:0;margin-bottom:9%;height:calc(3 * 1.185em)}
-  .dk-news .dk-label{font-size:clamp(20px,6vw,42px)}
-  .dk-news__strip{gap:clamp(14px,4vw,36px)}
-  .dk-pill{min-width:0;height:auto;padding:.5em 1.25em;
+  .mt-dk-news .mt-dk-label{font-size:clamp(20px,6vw,42px)}
+  .mt-dk-news__strip{gap:clamp(14px,4vw,36px)}
+  .mt-dk-pill{min-width:0;height:auto;padding:.5em 1.25em;
     font-size:clamp(10px,2.6vw,13px)}
-  .dk-sectors__grid{grid-template-columns:1fr}
-  .dk-team__rail{grid-template-columns:1fr}
-  .dk-team__grid{grid-template-columns:1fr}
-  .dk-partners__grid,.dk-faq__grid{grid-template-columns:1fr}
-  .dk-partners__card{grid-template-columns:repeat(2,1fr)}
+  .mt-dk-sectors__grid{grid-template-columns:1fr}
+  .mt-dk-team__rail{grid-template-columns:1fr}
+  .mt-dk-team__grid{grid-template-columns:1fr}
+  .mt-dk-partners__grid,.mt-dk-faq__grid{grid-template-columns:1fr}
+  .mt-dk-partners__card{grid-template-columns:repeat(2,1fr)}
 }
 /* Between the 960 collapse and ~1200 the right-hand vision cards are at
    their narrowest while still holding the deck's locked ratio, and the body
    runs about 5px long. Trim the vertical padding rather than break the
    ratio — the columns still finish level, as they do in the deck. */
 @media (min-width:961px) and (max-width:1200px){
-  .dk-vision__card{padding-block:1.05vw}
+  .mt-dk-vision__card{padding-block:1.05vw}
 }
 @media (max-width:600px){
-  .dk-news__page{grid-template-columns:1fr}
-  .dk-impact__tiles{grid-template-columns:1fr}
-  .dk-impact__tile,.dk-impact__tile--hi{min-height:clamp(150px,42vw,220px)}
-  .dk-footer__in{flex-wrap:wrap}
+  .mt-dk-news__page{grid-template-columns:1fr}
+  .mt-dk-impact__tiles{grid-template-columns:1fr}
+  .mt-dk-impact__tile,.mt-dk-impact__tile--hi{min-height:clamp(150px,42vw,220px)}
+  .mt-dk-footer__in{flex-wrap:wrap}
 }
 @media (prefers-reduced-motion:reduce){
-  .dk-map__bg,.dk-sectors__track,.dk-news__page--in,.dk-faq__awrap,
-  .mexp,.mexp__veil{transition:none}
+  .mt-dk-map__bg,.mt-dk-sectors__track,.mt-dk-news__page--in,.mt-dk-faq__awrap,
+  .mt-mexp,.mt-mexp__veil{transition:none}
 }
 
 /* ── RTL (Arabic page) ─────────────────────── */
@@ -1266,24 +1315,24 @@ html.is-attop .nav:not(.is-scrolled){
    run — Light / Medium / SemiBold, never IBM Plex — so the Arabic page uses
    the same family and the same weights as the English side. Readex Pro is a
    full Arabic+Latin family; IBM Plex stays in the stack as a fallback. */
-[dir="rtl"] .dk-label,[dir="rtl"] .dk-sub{letter-spacing:0}
-[dir="rtl"] .hero .hero__kicker,[dir="rtl"] .hero .hero__title{
+[dir="rtl"] .mt-dk-label,[dir="rtl"] .mt-dk-sub{letter-spacing:0}
+[dir="rtl"] .mt-hero .mt-hero__kicker,[dir="rtl"] .mt-hero .mt-hero__title{
   font-family:var(--dk-readex-ar);letter-spacing:0}
-[dir="rtl"] .hero .hero__title{font-weight:300;line-height:1.34}
-[dir="rtl"] .hero .hero__title b{font-weight:500}
-[dir="rtl"] .dk-about__card h3,[dir="rtl"] .dk-vision__tan h3,
-[dir="rtl"] .dk-vision__card h3,[dir="rtl"] .dk-feat__name,
-[dir="rtl"] .dk-mem__name,[dir="rtl"] .dk-newscard__title,
-[dir="rtl"] .mexp__name{font-family:var(--dk-readex-ar);font-weight:600}
-[dir="rtl"] .dk-about__card h3,[dir="rtl"] .dk-vision__tan h3{font-weight:300}
-[dir="rtl"] .dk-vision__card h3{font-weight:400}
-[dir="rtl"] .dk-about__pif{font-family:var(--dk-readex-ar);
+[dir="rtl"] .mt-hero .mt-hero__title{font-weight:300;line-height:1.34}
+[dir="rtl"] .mt-hero .mt-hero__title b{font-weight:500}
+[dir="rtl"] .mt-dk-about__card h3,[dir="rtl"] .mt-dk-vision__tan h3,
+[dir="rtl"] .mt-dk-vision__card h3,[dir="rtl"] .mt-dk-feat__name,
+[dir="rtl"] .mt-dk-mem__name,[dir="rtl"] .mt-dk-newscard__title,
+[dir="rtl"] .mt-mexp__name{font-family:var(--dk-readex-ar);font-weight:600}
+[dir="rtl"] .mt-dk-about__card h3,[dir="rtl"] .mt-dk-vision__tan h3{font-weight:300}
+[dir="rtl"] .mt-dk-vision__card h3{font-weight:400}
+[dir="rtl"] .mt-dk-about__pif{font-family:var(--dk-readex-ar);
   font-weight:500;font-size:clamp(14px,1.6vw,32px)}
-[dir="rtl"] .dk-about__card p,[dir="rtl"] .dk-vision__tan p,
-[dir="rtl"] .dk-vision__card p{font-family:var(--dk-readex-ar);font-weight:300}
-[dir="rtl"] .dk-map__region{letter-spacing:0}
-[dir="rtl"] .dk-sector__name{font-family:var(--dk-readex-ar)}
-[dir="rtl"] .dk-faq__btn{font-family:var(--dk-readex-ar);font-weight:500}
+[dir="rtl"] .mt-dk-about__card p,[dir="rtl"] .mt-dk-vision__tan p,
+[dir="rtl"] .mt-dk-vision__card p{font-family:var(--dk-readex-ar);font-weight:300}
+[dir="rtl"] .mt-dk-map__region{letter-spacing:0}
+[dir="rtl"] .mt-dk-sector__name{font-family:var(--dk-readex-ar)}
+[dir="rtl"] .mt-dk-faq__btn{font-family:var(--dk-readex-ar);font-weight:500}
 
 /* ── opening an article: the deck's <p:cover dir="u"/> ───────────────────
    Slides 14/16/18 are entered on a cover-up — the incoming view RISES and
@@ -1293,17 +1342,21 @@ html.is-attop .nav:not(.is-scrolled){
    Nothing in the layout is transformed, so the fixed nav is untouched. */
 /* the arriving view rises over the outgoing one -- a real, fully loaded
    page in a parked iframe, not a blank panel (deck p:cover dir="u"). */
-.dk-slide{position:fixed;left:0;top:0;width:100%;height:100%;border:0;margin:0;
+.mt-dk-slide{position:fixed;left:0;top:0;width:100%;height:100%;border:0;margin:0;
   z-index:2000;background:var(--dk-card,#F2ECE3);
   transform:translateY(100%);pointer-events:none;will-change:transform;
   box-shadow:0 -40px 80px -50px rgba(14,25,27,.55)}
-.dk-slide--anim{transition:transform var(--dk-cover,1250ms) var(--dk-ease,cubic-bezier(.45,.05,.25,1))}
-.dk-slide.is-up{transform:translateY(0)}
+.mt-dk-slide--anim{transition:transform var(--dk-cover,1250ms) var(--dk-ease,cubic-bezier(.45,.05,.25,1))}
+.mt-dk-slide.mt-is-up{transform:translateY(0)}
 /* hold the outgoing page still while the incoming one covers it */
-html.dk-sliding,html.dk-sliding body{overflow:hidden}
+html.mt-dk-sliding,html.mt-dk-sliding body{overflow:hidden}
 /* the arriving page brings its own fixed nav up on the panel's leading edge,
    so the outgoing page's nav would sit above it for the whole rise — two
    identical menu bars on screen at once. Drop it for the duration. */
-html.dk-sliding .nav{opacity:0;pointer-events:none;
+html.mt-dk-sliding .mt-nav{opacity:0;pointer-events:none;
   transition:opacity 200ms linear}
-@media (prefers-reduced-motion:reduce){.dk-slide{display:none}}
+@media (prefers-reduced-motion:reduce){.mt-dk-slide{display:none}}
+
+/* while the portfolio map is pinned for its scroll-stepper */
+html.mt-dk-maplock{overflow:hidden}
+html.mt-dk-maplock body{overflow:hidden}

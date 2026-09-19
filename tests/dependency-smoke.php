@@ -7,6 +7,6 @@ require rtrim( $argv[1], '/' ) . '/wp-load.php';
 if ( function_exists( 'get_field' ) || function_exists( 'pll_current_language' ) ) { throw new RuntimeException( 'Plugins were not disabled.' ); }
 $map = get_option( 'asfar_page_map' );
 query_posts( array( 'page_id' => $map['index'] ) );
-ob_start(); load_template( get_template_directory() . '/template-home.php' ); $html = ob_get_clean();
+ob_start(); load_template( get_template_directory() . '/templates/template-home.php' ); $html = ob_get_clean();
 if ( ! str_contains( $html, '</html>' ) ) { throw new RuntimeException( 'Rendering incomplete.' ); }
 echo "PASS: Page renders without ACF or Polylang; no PHP fatal error.\n";

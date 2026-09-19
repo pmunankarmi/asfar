@@ -1,143 +1,227 @@
 <?php
-/** Content access: no runtime dependency on seed data or JavaScript dictionaries. */
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+/** Shared data access. Templates contain markup; WordPress contains content. */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function asfar_language() {
- $lang = function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : '';
- if ( ! $lang && is_singular() ) { $lang = get_post_meta( get_the_ID(), '_asfar_language', true ); }
- return 'ar' === $lang ? 'ar' : 'en';
+	$language = function_exists( 'pll_current_language' ) ? pll_current_language( 'slug' ) : '';
+	if ( ! $language && is_singular() && function_exists( 'pll_get_post_language' ) ) {
+		$language = pll_get_post_language( get_queried_object_id(), 'slug' );
+	}
+	return $language ?: 'en';
 }
-function asfar_rows( $name ) { $rows = asfar_option( $name ); return is_array( $rows ) ? $rows : array(); }
-function asfar_options_id() { return 'global_' . asfar_language(); }
+
 function asfar_value( $name, $context = null ) {
- $context = $context ?? get_the_ID();
- if ( function_exists( 'get_field' ) ) { $value = get_field( $name, $context ); }
- else { $value = is_numeric( $context ) ? get_post_meta( $context, $name, true ) : get_option( $context . '_' . $name, '' ); }
- return false === $value || null === $value ? '' : $value;
+	$context = $context ?? get_the_ID();
+	if ( function_exists( 'get_field' ) ) {
+		$value = get_field( $name, $context );
+	} else {
+		$value = is_numeric( $context ) ? get_post_meta( $context, $name, true ) : get_option( $context . '_' . $name, '' );
+	}
+	return null === $value || false === $value ? '' : $value;
 }
-function asfar_option( $name, $lang = null ) { return asfar_value( $name, 'global_' . ( $lang ?? asfar_language() ) ); }
-function asfar_media( $name, $context = null ) { return wp_get_attachment_url( absint( asfar_value( $name, $context ) ) ) ?: ''; }
-function asfar_resolve_url( $url ) {
- if ( ! is_string( $url ) ) { return ''; }
- if ( str_starts_with( $url, '#' ) ) { return asfar_home_url() . $url; }
- $parts = explode( '#', $url, 2 );
- $slug = preg_replace( '/\.html$/', '', $parts[0] );
- $map = get_option( 'asfar_page_map', array() );
- if ( isset( $map[ $slug ] ) ) {
-  $id = $map[ $slug ];
-  if ( function_exists( 'pll_get_post' ) ) { $id = pll_get_post( $id, asfar_language() ) ?: $id; }
-  if ( 'publish' !== get_post_status( $id ) ) { return asfar_home_url(); }
-  return get_permalink( $id ) . ( isset( $parts[1] ) ? '#' . $parts[1] : '' );
- }
- return esc_url_raw( $url );
+
+function asfar_rows( $name, $context = null ) {
+	$rows = asfar_value( $name, $context );
+	return is_array( $rows ) ? $rows : array();
 }
-function asfar_link( $name, $context = null ) {
- $link = asfar_value( $name, $context );
- return asfar_resolve_url( is_array( $link ) ? ( $link['url'] ?? '' ) : $link );
+
+function asfar_section( $name ) {
+	return asfar_rows( $name . '_section' );
 }
-function asfar_home_url() {
- if ( function_exists( 'pll_home_url' ) ) { return pll_home_url( asfar_language() ); }
- return home_url( '/' );
+
+function asfar_option( $name, $language = null ) {
+	$language = $language ?? asfar_language();
+	if ( 'notification_email' === $name ) {
+		foreach ( asfar_rows( 'notification_recipients', 'asfar_shared' ) as $recipient ) {
+			if ( $language === $recipient['language'] ) {
+				return $recipient['email'];
+			}
+		}
+		return '';
+	}
+	$value = asfar_value( $name, 'asfar_shared' );
+	if ( isset( asfar_ui_labels()[ $name ] ) ) {
+		return asfar_translate( (string) $value, $language );
+	}
+	return $value;
 }
+
+function asfar_translate( $text, $language = null ) {
+	if ( function_exists( 'pll_translate_string' ) && '' !== $text ) {
+		return pll_translate_string( $text, $language ?? asfar_language() );
+	}
+	return $text;
+}
+
+function asfar_lines( $text ) {
+	return nl2br( esc_html( (string) $text ) );
+}
+
+/** Preserve the source title's line breaks and emphasis, including older imports. */
+function asfar_portfolio_heading( $text ) {
+	$source_titles = array(
+		'ASFAR Investment Portfolio' => "ASFAR\nInvestment\nPortfolio",
+		'محفظة أسفار الاستثمارية' => "محفظة أسفار\nالاستثمارية",
+	);
+	$text = $source_titles[ $text ] ?? (string) $text;
+	$lines = preg_split( '/\R/u', $text );
+	$first = array_shift( $lines );
+	return '<span class="mt-dk-map__title-a">' . esc_html( $first ) . '</span>'
+		. ( $lines ? '<br>' . asfar_lines( implode( "\n", $lines ) ) : '' );
+}
+
+/** Restore square-metre notation flattened by the original content import. */
+function asfar_statistic_value( $text ) {
+	return preg_replace( '/(?<![\p{L}\p{N}])([mMم])(?:2|²)(?![\p{L}\p{N}])/u', '$1<sup>2</sup>', esc_html( (string) $text ) );
+}
+
+function asfar_attachment_url( $id ) {
+	return wp_get_attachment_url( absint( $id ) ) ?: '';
+}
+
 function asfar_logo( $dark = false ) {
- $id = absint( get_theme_mod( 'custom_logo' ) );
- if ( ! $id ) { return ''; }
- if ( $dark ) { $id = absint( asfar_value( 'dark_logo', 'asfar_shared' ) ) ?: $id; }
- return wp_get_attachment_url( $id ) ?: '';
+	$id = absint( get_theme_mod( 'custom_logo' ) );
+	if ( ! $id ) {
+		return '';
+	}
+	return asfar_attachment_url( $dark ? ( asfar_value( 'dark_logo', 'asfar_shared' ) ?: $id ) : $id );
 }
+
+function asfar_home_url() {
+	return function_exists( 'pll_home_url' ) ? pll_home_url( asfar_language() ) : home_url( '/' );
+}
+
+function asfar_translated_post( $id ) {
+	$id = absint( $id );
+	if ( $id && function_exists( 'pll_get_post' ) ) {
+		$id = pll_get_post( $id, asfar_language() ) ?: $id;
+	}
+	return 'publish' === get_post_status( $id ) ? $id : 0;
+}
+
+function asfar_resolve_url( $url ) {
+	if ( ! is_string( $url ) ) {
+		return '';
+	}
+	if ( str_starts_with( $url, '#' ) ) {
+		return asfar_home_url() . asfar_anchor_url( $url );
+	}
+	$url = asfar_anchor_url( $url );
+	$parts = explode( '#', $url, 2 );
+	$slug = preg_replace( '/\.html$/', '', $parts[0] );
+	$map = get_option( 'asfar_page_map', array() );
+	if ( isset( $map[ $slug ] ) ) {
+		$id = asfar_translated_post( $map[ $slug ] );
+		return $id ? get_permalink( $id ) . ( isset( $parts[1] ) ? '#' . $parts[1] : '' ) : asfar_home_url();
+	}
+	return esc_url_raw( $url );
+}
+
+function asfar_button( $button, $class = 'mt-dk-pill' ) {
+	if ( ! is_array( $button ) || empty( $button['url'] ) || empty( $button['title'] ) ) {
+		return;
+	}
+	get_template_part( 'template-parts/button', null, array( 'button' => $button, 'class' => $class ) );
+}
+
 function asfar_languages() {
- if ( ! function_exists( 'pll_the_languages' ) ) { return; }
- $languages = pll_the_languages( array( 'raw' => 1, 'hide_if_empty' => 0, 'hide_if_no_translation' => 0 ) );
- foreach ( (array) $languages as $language ) {
-  if ( $language['current_lang'] ) { continue; }
-  $url = ! empty( $language['no_translation'] ) ? pll_home_url( $language['slug'] ) : $language['url'];
-  printf( '<a class="nav__lang-opt" href="%s" lang="%s" hreflang="%s">%s</a>', esc_url( $url ), esc_attr( $language['slug'] ), esc_attr( $language['slug'] ), esc_html( $language['name'] ) );
- }
+	if ( ! function_exists( 'pll_the_languages' ) ) {
+		return;
+	}
+	$languages = pll_the_languages( array( 'raw' => 1, 'hide_if_empty' => 0, 'hide_if_no_translation' => 0 ) );
+	get_template_part( 'template-parts/languages', null, array( 'languages' => $languages ?: array() ) );
 }
-function asfar_marks() {
- $marks = asfar_option( 'hero_marks' );
- if ( ! is_array( $marks ) ) { return array(); }
- foreach ( $marks as &$mark ) { $mark['href'] = asfar_resolve_url( $mark['href'] ?? '' ); }
- unset( $mark );
- return $marks ?: array();
+
+function asfar_menu( $location ) {
+	wp_nav_menu( array(
+		'theme_location' => $location,
+		'container' => false,
+		'menu_class' => 'mt-asfar-menu-list',
+		'fallback_cb' => false,
+		'depth' => 1,
+	) );
 }
-function asfar_render_page() {
- $layout = get_post_meta( get_the_ID(), '_asfar_layout', true );
- if ( $layout && preg_match( '/^[a-z0-9-]+$/', $layout ) && file_exists( get_template_directory() . '/template-parts/pages/' . $layout . '.php' ) ) {
-  get_template_part( 'template-parts/pages/' . $layout );
- } else {
-  echo '<main id="top" class="asfar-content"><h1>' . esc_html( get_the_title() ) . '</h1>';
-  foreach ( ( asfar_value( 'paragraphs' ) ?: array() ) as $row ) { echo '<p>' . nl2br( esc_html( $row['text'] ?? '' ) ) . '</p>'; }
-  echo '</main>';
- }
+
+function asfar_team_departments() {
+	$terms = get_terms( array( 'taxonomy' => 'team_department', 'hide_empty' => true, 'lang' => asfar_language() ) );
+	if ( is_wp_error( $terms ) ) {
+		return array();
+	}
+	usort( $terms, function ( $first, $second ) {
+		return (int) get_term_meta( $first->term_id, 'display_order', true ) <=> (int) get_term_meta( $second->term_id, 'display_order', true );
+	} );
+	return $terms;
 }
-function asfar_team_home() {
- $team = asfar_rows( 'team' );
- foreach ( array( 'board', 'leadership', 'committees' ) as $group ) {
-  $members = array_values( array_filter( (array) $team, function ( $m ) use ( $group ) { return $m['group'] === $group; } ) );
-  echo '<div class="asfar-team-group" data-team-group="' . esc_attr( $group ) . '"' . ( 'board' !== $group ? ' hidden' : '' ) . '>';
-  foreach ( $members as $i => $member ) {
-   if ( 1 === $i ) { echo '<div class="dk-team__gridwrap"><div class="dk-team__grid">'; }
-   $class = 0 === $i ? 'dk-feat' : 'dk-mem';
-   printf( '<article class="%s member--opens" data-name="%s" data-role="%s" data-photo="%s" data-bio="%s"><span class="%s__ph member__ph">', esc_attr( $class ), esc_attr( $member['name'] ), esc_attr( $member['role'] ), esc_url( wp_get_attachment_url( absint( $member['photo'] ) ) ?: '' ), esc_attr( $member['bio'] ), esc_attr( $class ) );
-   if ( $member['photo'] ) { echo wp_get_attachment_image( $member['photo'], 'large', false, array( 'alt' => '' ) ); }
-   printf( '</span><div class="%s__txt"><h3><button type="button" class="%s__name member__name" aria-expanded="false">%s</button></h3><p class="%s__role">%s</p></div></article>', esc_attr( $class ), esc_attr( $class ), esc_html( $member['name'] ), esc_attr( $class ), esc_html( $member['role'] ) );
-  }
-  if ( count( $members ) > 1 ) { echo '</div></div>'; }
-  echo '</div>';
- }
+
+function asfar_team_members( $term_id ) {
+	return get_posts( array(
+		'suppress_filters' => false, 'post_type' => 'asfar_team', 'posts_per_page' => -1, 'lang' => asfar_language(),
+		'orderby' => array( 'menu_order' => 'ASC', 'title' => 'ASC' ),
+		'tax_query' => array( array( 'taxonomy' => 'team_department', 'field' => 'term_id', 'terms' => $term_id ) ),
+	) );
 }
-function asfar_portfolio() {
- $rows = asfar_rows( 'portfolio' );
- get_template_part( 'template-parts/portfolio', null, array( 'rows' => $rows ) );
+
+function asfar_project_rows( $ids = null ) {
+	if ( array() === $ids ) { return array(); }
+	$query = array( 'suppress_filters' => false, 'post_type' => 'asfar_project', 'posts_per_page' => -1, 'lang' => asfar_language(), 'orderby' => 'menu_order', 'order' => 'ASC' );
+	if ( $ids ) {
+		$query['post__in'] = array_values( array_filter( array_map( 'asfar_translated_post', $ids ) ) );
+		if ( ! $query['post__in'] ) {
+			return array();
+		}
+		$query['orderby'] = 'post__in';
+	}
+	$rows = array();
+	foreach ( get_posts( $query ) as $project ) {
+		$map_background = asfar_value( 'map_background', $project->ID );
+		$region = asfar_value( 'map_region', $project->ID );
+		$background_url = $map_background ? asfar_attachment_url( $map_background ) : '';
+		if ( ! $background_url ) {
+			// The AMV4 reference shows the rose landscape for Strategic Investments.
+			$background_url = 'all' === $region ? asfar_original_image_url( 'img/taif-roses.jpg' ) : asfar_attachment_url( get_post_thumbnail_id( $project ) );
+		}
+		$rows[] = array(
+			'id' => $project->ID,
+			'name' => get_the_title( $project ),
+			'bg' => get_post_thumbnail_id( $project ),
+			'background_url' => $background_url,
+			'hot' => $region,
+			'label' => asfar_value( 'map_label', $project->ID ),
+			'mark_x' => asfar_value( 'map_x', $project->ID ),
+			'mark_y' => asfar_value( 'map_y', $project->ID ),
+			'stats' => asfar_rows( 'statistics', $project->ID ),
+		);
+	}
+	return $rows;
 }
-function asfar_faq() {
- foreach ( asfar_rows( 'faq' ) as $row ) {
-  echo '<div class="dk-faq__item"><button class="dk-faq__btn" type="button" aria-expanded="false"><span>' . esc_html( $row['question'] ) . '</span><span class="dk-faq__sign" aria-hidden="true"></span></button><div class="dk-faq__awrap"><p class="dk-faq__a">' . esc_html( $row['answer'] ) . '</p></div></div>';
- }
+
+function asfar_faq_items( $page_id ) {
+	$page_id = asfar_translated_post( $page_id );
+	return $page_id ? asfar_rows( 'faq_items', $page_id ) : array();
 }
-function asfar_partners() {
- foreach ( asfar_rows( 'partners' ) as $row ) {
-  if ( $row['url'] ) { echo '<a href="' . esc_url( $row['url'] ) . '">'; }
-  echo wp_get_attachment_image( $row['image'], 'full', false, array( 'alt' => $row['name'], 'loading' => 'lazy' ) );
-  if ( $row['url'] ) { echo '</a>'; }
- }
+
+function asfar_news_query( $home = false ) {
+	$section = asfar_section( 'news' );
+	return new WP_Query( array(
+		'post_type' => 'post', 'posts_per_page' => $home ? max( 1, (int) ( $section['count'] ?? 20 ) ) : 20,
+		'paged' => $home ? 1 : max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ),
+		'lang' => asfar_language(), 'ignore_sticky_posts' => true,
+		'orderby' => array( 'date' => 'DESC', 'ID' => 'ASC' ),
+	) );
 }
-function asfar_sectors() {
- foreach ( asfar_rows( 'sectors' ) as $row ) {
-  echo '<div class="dk-sector">' . wp_get_attachment_image( $row['image'], 'large', false, array( 'alt' => '', 'loading' => 'lazy' ) ) . '<span class="dk-sector__pol" aria-hidden="true"></span><span class="dk-sector__name">' . esc_html( $row['label'] ) . '</span></div>';
- }
-}
-function asfar_social() {
- echo '<div class="dk-wrap asfar-social">';
- asfar_navigation( 'footer' );
- foreach ( asfar_rows( 'social_links' ) as $row ) { echo '<a href="' . esc_url( $row['social_url'] ) . '">' . esc_html( $row['social_label'] ) . '</a> '; }
- echo '</div>';
-}
-function asfar_team_page( $group ) {
- foreach ( asfar_rows( 'team' ) as $row ) {
-  if ( $row['group'] !== $group ) { continue; }
-  printf( '<article class="member member--opens reveal" data-name="%s" data-role="%s" data-photo="%s" data-bio="%s"><span class="member__ph">%s</span><h3><button type="button" class="member__name" aria-expanded="false" aria-controls="memberProfile">%s</button></h3><p>%s</p></article>', esc_attr( $row['name'] ), esc_attr( $row['role'] ), esc_url( wp_get_attachment_url( $row['photo'] ) ?: '' ), esc_attr( $row['bio'] ), $row['photo'] ? wp_get_attachment_image( $row['photo'], 'large', false, array( 'alt' => '' ) ) : '', esc_html( $row['name'] ), esc_html( $row['role'] ) );
- }
-}
-function asfar_news( $home = false ) {
- $query = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => 20, 'paged' => $home ? 1 : max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ), 'lang' => asfar_language(), 'orderby' => 'date', 'order' => 'DESC', 'ignore_sticky_posts' => true ) );
- while ( $query->have_posts() ) {
-  $query->the_post();
-  $url = asfar_value( 'external_url' ) ?: get_permalink();
-  $date = asfar_value( 'display_date' ) ?: get_the_date();
-  if ( $home ) {
-   echo '<a class="dk-newscard" href="' . esc_url( $url ) . '"><p class="dk-newscard__date">' . esc_html( $date ) . '</p><span class="dk-newscard__ph">' . get_the_post_thumbnail( null, 'large', array( 'alt' => '', 'loading' => 'lazy' ) ) . '<span class="dk-newscard__grad" aria-hidden="true"></span><h3 class="dk-newscard__title">' . esc_html( get_the_title() ) . '</h3></span></a>';
-  } else {
-   echo '<article class="news__card reveal"><figure class="news__thumb">' . get_the_post_thumbnail( null, 'large', array( 'alt' => '', 'loading' => 'lazy' ) ) . '</figure><div class="news__body"><span class="news__pill">' . esc_html( $date ) . '</span><h3 class="news__title">' . esc_html( get_the_title() ) . '</h3></div><a class="news__link" href="' . esc_url( $url ) . '"><span>' . esc_html( get_the_title() ) . '</span></a></article>';
-  }
- }
- if ( ! $home && $query->max_num_pages > 1 ) { echo '<nav class="asfar-pagination">' . wp_kses_post( paginate_links( array( 'total' => $query->max_num_pages, 'current' => max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ) ) ) ) . '</nav>'; }
- wp_reset_postdata();
-}
-function asfar_navigation( $location ) {
- $locations = get_nav_menu_locations();
- $items = ! empty( $locations[ $location ] ) ? wp_get_nav_menu_items( $locations[ $location ] ) : array();
- foreach ( (array) $items as $item ) {
-  echo '<a href="' . esc_url( asfar_resolve_url( $item->url ) ) . '"' . ( '_blank' === $item->target ? ' target="_blank" rel="noopener"' : '' ) . '>' . esc_html( $item->title ) . '</a>';
- }
+
+/** Current year follows the timezone configured in WordPress Settings. */
+add_shortcode( 'year', function () {
+	return wp_date( 'Y' );
+} );
+
+function asfar_copyright() {
+	$text = asfar_option( 'copyright' );
+	// Keep previously saved copyright lines current until the editor adds [year].
+	if ( ! has_shortcode( $text, 'year' ) ) {
+		$text = preg_replace( '/(?<![0-9])20[0-9]{2}(?![0-9])/', '[year]', $text, 1 );
+	}
+	return do_shortcode( $text );
 }
