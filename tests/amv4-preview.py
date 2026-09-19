@@ -20,6 +20,12 @@ for lang,file in [('en','index-en.html'),('ar','index.html')]:
  s=re.sub(r'<span id="projects"[^>]*></span>.*?<section class="mt-dk-map".*?</section>',lambda m:rendered,s,flags=re.S)
  s=s.replace('class="mt-dk-sub" style="margin-top:.836em"','class="mt-dk-sub mt-asfar-about-subtitle"')
  assert s.count('class="mt-asfar-portfolio-pane"') == len(data), 'Native map template was not rendered'
+ sectors=re.search(r'<section class="mt-dk-sectors".*?</section>',s,re.S)[0]
+ cards=[{'image':m[0],'label':html.unescape(m[1])} for m in re.findall(r'<div class="mt-dk-sector"><img src="([^"]+)".*?<span class="mt-dk-sector__name">(.*?)</span>',sectors,re.S)]
+ intro=re.search(r'<p class="mt-dk-sub mt-dk-sectors__intro">(.*?)</p>',sectors,re.S)[1]
+ title='Strategic\nInvestments' if lang=='en' else 'استثمارات\nاستراتيجية'
+ native=subprocess.run(['php',str(root/'tests/section-preview.php')],input=json.dumps({'lang':lang,'section':{'heading':title,'description':html.unescape(intro),'sectors':cards}}),text=True,capture_output=True,check=True).stdout
+ s=re.sub(r'<span id="sectors"[^>]*></span>.*?<section class="mt-dk-sectors".*?</section>',lambda m:native,s,flags=re.S)
  s=s.replace('id="contactForm"', 'id="sourceContactForm"')
  s+='''<script>var asfarSettings={assets:'/media/',close:'Close',empty:'',label:'Biography',endpoint:'',error:'',invalid:''};</script><script src="/theme/assets/js/vendor/lenis.min.js"></script><script src="/theme/assets/js/app.js"></script><script src="/theme/assets/js/deck.js"></script><script src="/theme/assets/js/wordpress.js"></script>'''
  (dest/(lang+'.html')).write_text(s)

@@ -208,6 +208,7 @@ function asfar_news_query( $home = false ) {
 		'post_type' => 'post', 'posts_per_page' => $home ? max( 1, (int) ( $section['count'] ?? 20 ) ) : 20,
 		'paged' => $home ? 1 : max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ),
 		'lang' => asfar_language(), 'ignore_sticky_posts' => true,
+		'orderby' => array( 'date' => 'DESC', 'ID' => 'ASC' ),
 	) );
 }
 
