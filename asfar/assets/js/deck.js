@@ -31,6 +31,74 @@
   function reflow(el) { void el.offsetHeight; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
+  // Share mouse/touch dragging between the investment and news rails.
+  // A click still opens a news card; only a horizontal drag cancels the click.
+  function enableRailDragging(track, getIndex, go, getPitch, getMaxShift) {
+    var gesture = null;
+    var suppressClick = false;
+
+    track.addEventListener('dragstart', function (event) { event.preventDefault(); });
+    track.addEventListener('pointerdown', function (event) {
+      if (!event.isPrimary || event.button !== 0) return;
+      suppressClick = false;
+      gesture = {
+        pointer: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        index: getIndex(),
+        shift: Math.min(getIndex() * getPitch(), getMaxShift()),
+        distance: 0,
+        dragging: false
+      };
+    });
+
+    track.addEventListener('pointermove', function (event) {
+      if (!gesture || gesture.pointer !== event.pointerId) return;
+      var distanceX = event.clientX - gesture.x;
+      var distanceY = event.clientY - gesture.y;
+      if (!gesture.dragging) {
+        if (Math.abs(distanceY) > Math.abs(distanceX) && Math.abs(distanceY) > 8) {
+          gesture = null;
+          return;
+        }
+        if (Math.abs(distanceX) < 8) return;
+        gesture.dragging = true;
+        track.setPointerCapture(event.pointerId);
+        track.classList.add('mt-is-dragging');
+        track.style.transition = 'none';
+      }
+      event.preventDefault();
+      gesture.distance = distanceX * (rtl ? 1 : -1);
+      var shift = clamp(gesture.shift + gesture.distance, 0, getMaxShift());
+      track.style.transform = 'translateX(' + (rtl ? shift : -shift) + 'px)';
+    });
+
+    function finish(event) {
+      if (!gesture || gesture.pointer !== event.pointerId) return;
+      var completed = gesture;
+      gesture = null;
+      track.classList.remove('mt-is-dragging');
+      track.style.transition = '';
+      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+      if (!completed.dragging) return;
+      suppressClick = true;
+      var steps = Math.round(completed.distance / getPitch());
+      if (!steps && Math.abs(completed.distance) > 30) steps = Math.sign(completed.distance);
+      go(completed.index + (event.type === 'pointercancel' ? 0 : steps));
+    }
+
+    track.addEventListener('pointerup', finish);
+    track.addEventListener('pointercancel', finish);
+    track.addEventListener('lostpointercapture', finish);
+    track.addEventListener('click', function (event) {
+      if (!suppressClick) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      suppressClick = false;
+    }, true);
+  }
+
+
   /* the morph's cubic-bezier(.45,.05,.25,1), solved for JS scroll animation */
   function bez(p1x, p1y, p2x, p2y) {
     function f(t, a, b) { var u = 1 - t; return 3 * u * u * t * a + 3 * u * t * t * b + t * t * t; }
@@ -144,7 +212,8 @@
     }
     if (prev) prev.addEventListener('click', function () { go(current - 1); });
     if (next) next.addEventListener('click', function () { go(current + 1); });
-    window.addEventListener('resize', paint, { passive: true });
+    enableRailDragging(track, function () { return current; }, go, step, maxShift);
+    window.addEventListener('resize', function () { go(current); }, { passive: true });
 
     paint();
     DK.secGo = go;
@@ -188,7 +257,8 @@
     /* the rail now holds exactly one view of cards, so a click is a page */
     if (prev) prev.addEventListener('click', function () { go(current - perView()); });
     if (next) next.addEventListener('click', function () { go(current + perView()); });
-    window.addEventListener('resize', paint, { passive: true });
+    enableRailDragging(strip, function () { return current; }, go, pitch, function () { return maxIndex() * pitch(); });
+    window.addEventListener('resize', function () { go(current); }, { passive: true });
     paint();
     DK.newsGo = go;
   })();

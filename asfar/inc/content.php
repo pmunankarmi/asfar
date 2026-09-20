@@ -149,9 +149,11 @@ function asfar_team_departments() {
 	if ( is_wp_error( $terms ) ) {
 		return array();
 	}
-	usort( $terms, function ( $first, $second ) {
-		return (int) get_term_meta( $first->term_id, 'display_order', true ) <=> (int) get_term_meta( $second->term_id, 'display_order', true );
+	$terms = array_filter( $terms, function ( $term ) {
+		// Existing terms remain visible until an editor turns the switch off.
+		return '0' !== get_term_meta( $term->term_id, 'show_on_homepage', true );
 	} );
+	$terms = asfar_sort_team_types( array_values( $terms ) );
 	return $terms;
 }
 

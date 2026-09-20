@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASFAR_VERSION', '1.4.1' );
+define( 'ASFAR_VERSION', '1.4.2' );
 
 // Polylang is already loaded before WordPress loads the theme.
 // Avoid registering duplicate hooks if another copy or Polylang Pro is active.
@@ -18,6 +18,7 @@ $asfar_modules = array(
 	'content',
 	'translations',
 	'content-types',
+	'team-types',
 	'fields',
 	'media',
 	'setup',

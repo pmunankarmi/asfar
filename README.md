@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.1 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.2 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.1` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.2` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -46,3 +46,9 @@ Version 1.4.1 loads the supplied Polylang Slug code from `asfar/inc/polylang-slu
 After the theme update, the first administrator visit aligns published, linked Arabic pages, posts and translated custom post types with their English slugs. For example, the Supplier Portal becomes `/supplier-portal/` and `/en/supplier-portal/`. Taxonomy terms and media slugs are unchanged. This one-time migration preserves content and translation IDs, records original URLs in `asfar_slug_history`, updates custom menu links without losing anchors, and redirects old paths while this theme is active. Conflicting same-language slugs are skipped and reported. Later editorial slug changes remain under the editor’s control.
 
 The slug migration is a separate, readable module: `asfar/inc/slug-migration.php`. Its checks are in `tests/shared-slugs.php`, which requires an explicitly marked, isolated WordPress installation. Validation covers shared page/post slugs, alternating language queries with a warm cache, same-language conflicts, reserved URLs, unchanged content, menu anchors, retries and redirects.
+
+Version 1.4.2 adds Team Type display controls and the requested homepage refinements. Under Team → Team Types, edit a term to set Menu Order (lower numbers first) and Show on Homepage. The taxonomy list defaults to the same numeric order and includes Order/Visibility columns. Existing terms stay visible until switched off; hiding a type removes its homepage tab and group without deleting members.
+
+Both hero actions are filled blue. Strategic Investments and News support arrow navigation and mouse/touch dragging in either language; vertical touch scrolling and normal news-card clicks remain available. News arrows are centered with View All News at the side. The expanded menu has smaller text and the supplied motif over its existing blue background, using the Media Library artwork.
+
+Validation: `php tests/team-type-settings.php /path/to/marked-test-wordpress` checks ordering before admin pagination, legacy visibility and active-tab indexing. Browser previews verified English arrows and dragging, Arabic drag direction, blue buttons/menu, and the mobile Arabic menu/news layout. PHP/JavaScript syntax and package integrity checks passed.

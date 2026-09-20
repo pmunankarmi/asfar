@@ -45,6 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</header>
 	<div class="mt-menu__scrim" id="menuScrim" aria-hidden="true"></div>
 	<div class="mt-menu" id="menu" role="dialog" aria-modal="true" aria-hidden="true" aria-label="<?php echo esc_attr( asfar_option( 'menu_label' ) ); ?>">
+		<img class="mt-menu__pattern" src="<?php echo esc_url( asfar_original_image_url( 'img/asfar-motif-a.svg' ) ); ?>" alt="" aria-hidden="true">
 		<div class="mt-menu__grid">
 			<nav class="mt-menu__links" aria-label="<?php echo esc_attr( asfar_option( 'menu_label' ) ); ?>">
 				<?php asfar_menu( 'drawer' ); ?>

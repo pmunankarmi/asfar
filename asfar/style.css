@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.1
+Version: 1.4.2
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -56,3 +56,73 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	z-index: 1;
 }
 .mt-vlb__frame { width: min(1120px, 100%, calc((100dvh - 7rem) * 16 / 9)); }
+
+/* Both hero actions use ASFAR's blue, including their rounded hover state. */
+.mt-hero .mt-hero__cta .mt-btn {
+	background: var(--dk-teal, #24545b);
+	border-color: var(--dk-teal, #24545b);
+	color: #fff;
+	box-shadow: none;
+}
+.mt-hero .mt-hero__cta .mt-btn:hover {
+	background: #163c43;
+	border-color: #163c43;
+	box-shadow: none;
+}
+.mt-hero .mt-hero__cta .mt-btn::after {
+	background: #163c43;
+	border-radius: inherit;
+}
+
+/* Keep arrows centered independently of the View More link's width. */
+.mt-dk-news__foot {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+}
+.mt-dk-news__foot .mt-dk-arrows {
+	grid-column: 2;
+	grid-row: 1;
+	justify-self: center;
+}
+.mt-dk-news__foot > a {
+	grid-column: 3;
+	grid-row: 1;
+	justify-self: end;
+}
+
+/* Vertical page scrolling remains available during touch interactions. */
+.mt-dk-sectors__track,
+.mt-dk-news__strip {
+	touch-action: pan-y;
+	cursor: grab;
+}
+.mt-is-dragging {
+	cursor: grabbing;
+	user-select: none;
+}
+.mt-dk-sectors__track img,
+.mt-dk-news__strip img {
+	-webkit-user-drag: none;
+}
+
+/* A quiet brand motif sits behind the compact navigation links. */
+.mt-menu__links a {
+	font-size: clamp(1.15rem, 3.8vw, 1.55rem);
+	line-height: 1.3;
+}
+.mt-menu__pattern {
+	position: absolute;
+	inset-inline-start: -8%;
+	top: 0;
+	width: 65%;
+	opacity: .16;
+	pointer-events: none;
+}
+.mt-menu__grid {
+	z-index: 1;
+}
+@media (max-width: 480px) {
+	.mt-dk-news__foot { grid-template-columns: 1fr auto 1fr; gap: .6rem; }
+	.mt-dk-news__foot > a { max-width: 100%; padding-inline: .6rem; }
+}

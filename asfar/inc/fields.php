@@ -194,8 +194,16 @@ add_action( 'acf/init', function () {
 		asfar_text( 'job_title', 'Job Title / Position' ),
 		asfar_text( 'biography', 'Biography', true ),
 	), array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'asfar_team' ) ) ) );
-	asfar_register_field_group( 'department', 'Team Type Display Order', array(
-		asfar_field( 'display_order', 'Display Order', 'number', array( 'default_value' => 0 ) ),
+	asfar_register_field_group( 'department', 'Team Type Display Settings', array(
+		asfar_field( 'display_order', 'Menu Order', 'number', array(
+			'default_value' => 0,
+			'instructions' => 'Lower numbers appear first in Team Types and the homepage tabs.',
+		) ),
+		asfar_field( 'show_on_homepage', 'Show on Homepage', 'true_false', array(
+			'default_value' => 1,
+			'ui' => 1,
+			'instructions' => 'Show this team type and its members in the homepage team section.',
+		) ),
 	), array( array( array( 'param' => 'taxonomy', 'operator' => '==', 'value' => 'team_department' ) ) ) );
 	asfar_register_field_group( 'project', 'Project Details', array(
 		asfar_text( 'company', 'Investment Company' ),

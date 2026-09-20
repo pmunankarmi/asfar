@@ -1,7 +1,7 @@
 <?php
 $section = get_field( 'team_section' ) ?: array();
 $departments = asfar_team_departments();
-if ( empty( $section['enabled'] ) ) {
+if ( empty( $section['enabled'] ) || ! $departments ) {
 	return;
 }
 ?>
