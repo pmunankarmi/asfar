@@ -1,8 +1,8 @@
 <?php
 /** ASFAR theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ASFAR_VERSION', '1.3.4' );
-foreach ( array( 'admin', 'anchors', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'source-update', 'amv4', 'template-upgrade', 'forms', 'updates' ) as $asfar_module ) {
+define( 'ASFAR_VERSION', '1.4.0' );
+foreach ( array( 'admin', 'anchors', 'content', 'translations', 'content-types', 'fields', 'media', 'setup', 'migration', 'repair', 'source-update', 'amv4', 'supplier', 'template-upgrade', 'forms', 'updates' ) as $asfar_module ) {
  require_once get_template_directory() . '/inc/' . $asfar_module . '.php';
 }
 add_action( 'after_setup_theme', function () {
@@ -21,9 +21,13 @@ add_action( 'wp_enqueue_scripts', function () {
  $uri = get_template_directory_uri();
  wp_enqueue_style( 'asfar-app', $uri . '/assets/css/app.css', array(), ASFAR_VERSION );
  wp_enqueue_style( 'asfar-deck', $uri . '/assets/css/deck.css', array( 'asfar-app' ), ASFAR_VERSION );
- if ( ! is_page_template( 'templates/template-home.php' ) ) { wp_enqueue_style( 'asfar-article', $uri . '/assets/css/deck-article.css', array( 'asfar-deck' ), ASFAR_VERSION ); }
+ if ( ! is_page_template( array( 'templates/template-home.php', 'templates/template-supplier.php' ) ) ) { wp_enqueue_style( 'asfar-article', $uri . '/assets/css/deck-article.css', array( 'asfar-deck' ), ASFAR_VERSION ); }
  if ( 'ar' === asfar_language() ) { wp_enqueue_style( 'asfar-rtl', $uri . '/assets/css/app-rtl.css', array( 'asfar-deck' ), ASFAR_VERSION ); }
  wp_enqueue_style( 'asfar', get_stylesheet_uri(), array( 'asfar-deck' ), ASFAR_VERSION );
+ if ( is_page_template( 'templates/template-supplier.php' ) ) {
+  wp_enqueue_style( 'asfar-supplier', $uri . '/assets/css/supplier.css', array( 'asfar' ), ASFAR_VERSION );
+  wp_enqueue_script( 'asfar-supplier', $uri . '/assets/js/supplier.js', array(), ASFAR_VERSION, true );
+ }
  asfar_enqueue_image_styles();
  wp_enqueue_script( 'asfar-lenis', $uri . '/assets/js/vendor/lenis.min.js', array(), ASFAR_VERSION, true );
  wp_enqueue_script( 'asfar-app', $uri . '/assets/js/app.js', array( 'asfar-lenis' ), ASFAR_VERSION, true );

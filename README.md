@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.3.4 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.0 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.3.4` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.0` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -36,3 +36,7 @@ Version 1.3.2 fixes map highlighting and marker placement after adding the wave 
 Version 1.3.3 automatically cycles the portfolio every eight seconds while visible, resets the timer after a manual selection, and pauses offscreen or in a hidden browser tab. Reduced motion disables autoplay. Normal page scrolling replaces the previous map scroll lock.
 
 Version 1.3.4 follows the detailed staging comparison: reference map scroll walkthrough and post-interaction autoplay, language-aware slider arrows, lighter Strategic Investments second heading line, reference hero/header spacing and wave geometry, and deterministic chronological news order. See [section audit](SECTION-AUDIT.md).
+
+Version 1.4.0 adds the Supplier Portal from the supplied “Asfar correct” reference and `/staging/v2/`. After installing the update, open WordPress admin: a one-time setup creates linked Arabic and English pages and inserts them before Partner with us in each expanded menu. ACF Pro, Polylang and assigned language menus are required. Edit the pages under Pages → Supplier Portal / بوابة الموردين; content is grouped into Introduction, Registration, Sign In and Contact tabs. Registration options use a native ACF repeater. Existing saved content is preserved on retries. The shared header/footer and supplied Oracle registration/sign-in links are retained. No media reimport is required.
+
+Supplier setup checks: `php tests/supplier.php` verifies translated page creation, menu placement, unique ACF field keys, retry safety and preservation of editor changes. `tests/supplier-preview.php` renders either language with fixture data for browser checks.
