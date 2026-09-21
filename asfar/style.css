@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.3
+Version: 1.4.4
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -147,4 +147,28 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	.mt-dk-feat__role {
 		max-inline-size: 24vw;
 	}
+}
+
+/* Company Profile is the outlined companion to the filled video action. */
+.mt-hero .mt-hero__cta .mt-btn--line-light {
+	background: transparent;
+	border: 2px solid var(--dk-teal, #24545b);
+	color: #fff;
+	box-shadow: none;
+}
+.mt-hero .mt-hero__cta .mt-btn--line-light:hover {
+	background: var(--dk-teal, #24545b);
+	border-color: var(--dk-teal, #24545b);
+}
+
+/* Reduce homepage news typography to 80% of the previous sizes. */
+.mt-dk-news .mt-dk-label { font-size: clamp(16px, 2.3168vw, 72px); }
+.mt-dk-news .mt-dk-newscard__date { font-size: clamp(8px, .8128vw, 25.6px); }
+.mt-dk-news .mt-dk-newscard__title { font-size: clamp(8.8px, 1.00184vw, 31.2px); }
+.mt-dk-news .mt-dk-pill { font-size: clamp(8px, .8128vw, 25.6px); }
+@media (max-width: 960px) {
+	.mt-dk-news .mt-dk-label { font-size: clamp(16px, 4.8vw, 33.6px); }
+	.mt-dk-news .mt-dk-newscard__date { font-size: clamp(8px, 2.16vw, 10.4px); }
+	.mt-dk-news .mt-dk-newscard__title { font-size: clamp(9.6px, 2.64vw, 12.8px); }
+	.mt-dk-news .mt-dk-pill { font-size: clamp(8px, 2.08vw, 10.4px); }
 }

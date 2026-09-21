@@ -216,6 +216,11 @@ function asfar_news_query( $home = false ) {
 		'orderby'             => array( 'date' => 'DESC', 'ID' => 'ASC' ),
 	);
 
+	$ordered_scopes = get_option( 'asfar_ordered_scopes', array() );
+	if ( ! empty( $ordered_scopes['post:post'] ) ) {
+		$query['orderby'] = array( 'menu_order' => 'ASC', 'date' => 'DESC', 'ID' => 'ASC' );
+	}
+
 	// Homepage news is opt-in. The full news archive keeps every published post.
 	if ( $home ) {
 		$query['meta_key'] = 'show_on_homepage';

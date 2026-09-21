@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.3 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.4 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.3` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.4` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -56,3 +56,5 @@ Validation: `php tests/team-type-settings.php /path/to/marked-test-wordpress` ch
 Version 1.4.3 widens the featured team member’s desktop text column to fit the name on one line, with space before the other members. Mobile layouts still wrap naturally. Posts now have a Show on Homepage ACF switch in News Article Content. Only enabled, published posts in the current language appear in homepage news; unset switches are off, and no posts are selected automatically. The full news archive is unchanged. The homepage news section is hidden until at least one post is selected. The existing homepage post-count setting still applies.
 
 Validation: `tests/home-news-selection.php` checks enabled/disabled/unset states, drafts, language separation, deselection and the full archive against isolated WordPress. Browser checks verified a single-line featured name without overlap on desktop and no horizontal overflow at 390px.
+
+Version 1.4.4 adds Tools → Content Order for dragging posts, pages, custom post types and taxonomy terms into order. Choose the content and language, reorder items within their parent group, then click Save Order. Up/down buttons also support keyboard and touch editing. Saved news order applies to the homepage’s selected posts and news archive; Team and Projects use their existing menu order. Company Profile now uses a blue outline, while Watch the Film remains filled blue. Homepage news font sizes are reduced by 20% on desktop and mobile.
