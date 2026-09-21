@@ -58,3 +58,5 @@ Version 1.4.3 widens the featured team member’s desktop text column to fit the
 Validation: `tests/home-news-selection.php` checks enabled/disabled/unset states, drafts, language separation, deselection and the full archive against isolated WordPress. Browser checks verified a single-line featured name without overlap on desktop and no horizontal overflow at 390px.
 
 Version 1.4.4 adds Tools → Content Order for dragging posts, pages, custom post types and taxonomy terms into order. Choose the content and language, reorder items within their parent group, then click Save Order. Up/down buttons also support keyboard and touch editing. Saved news order applies to the homepage’s selected posts and news archive; Team and Projects use their existing menu order. Company Profile now uses a blue outline, while Watch the Film remains filled blue. Homepage news font sizes are reduced by 20% on desktop and mobile.
+
+Native Posts, Pages, Team, Projects and taxonomy lists also have an Order drag handle. Drop a row to save automatically. Moves preserve unseen rows, language and parent groups; use Tools → Content Order for an overview of all siblings or keyboard ordering.

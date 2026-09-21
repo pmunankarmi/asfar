@@ -11,6 +11,7 @@ require dirname( __DIR__ ) . '/asfar/inc/content.php';
 require dirname( __DIR__ ) . '/asfar/inc/content-types.php';
 require dirname( __DIR__ ) . '/asfar/inc/team-types.php';
 require dirname( __DIR__ ) . '/asfar/inc/content-order.php';
+require dirname( __DIR__ ) . '/asfar/inc/list-order.php';
 asfar_register_content_types();
 wp_set_current_user( 1 );
 function verify_order( $condition, $message ) {
@@ -47,6 +48,22 @@ try {
 			$expected_home = array_values( array_intersect( $groups[0], $ids ) );
 			verify_order( $expected_home === array_values( array_intersect( $home_ids, $ids ) ), 'Homepage follows saved post order' );
 		}
+		// Moving two visible rows must retain every unseen sibling.
+		$before = $groups[0];
+		$moved_id = $before[0];
+		$target_id = $before[count( $before ) - 1];
+		verify_order( true === asfar_move_list_item( 'post:' . $type, $moved_id, $target_id, 'after' ), $type . ' native row move saves' );
+		$after = wp_list_pluck( asfar_order_items( 'post:' . $type, 'en' ), 'ID' );
+		verify_order( array_merge( array_slice( $before, 1 ), array( $moved_id ) ) === $after, 'Unseen rows retain their relative order' );
+		verify_order( is_wp_error( asfar_move_list_item( 'post:' . $type, $moved_id, $target_id, 'invalid' ) ), 'Invalid move rejected' );
+		if ( 'page' === $type ) {
+			wp_update_post( array( 'ID' => $moved_id, 'post_parent' => $target_id ) );
+			verify_order( is_wp_error( asfar_move_list_item( 'post:page', $moved_id, $target_id, 'before' ) ), 'Native move cannot change parent groups' );
+			wp_update_post( array( 'ID' => $moved_id, 'post_parent' => 0 ) );
+		}
+		pll_set_post_language( $moved_id, 'ar' );
+		verify_order( is_wp_error( asfar_move_list_item( 'post:' . $type, $moved_id, $target_id, 'before' ) ), 'Native move cannot cross languages' );
+		pll_set_post_language( $moved_id, 'en' );
 		$bad = $groups;
 		$bad[0][] = $groups[0][0];
 		verify_order( is_wp_error( asfar_save_content_order( 'post:' . $type, 'en', $bad ) ), 'Duplicate IDs rejected' );
@@ -61,8 +78,11 @@ try {
 	$desired = array_reverse( $term_ids );
 	verify_order( true === asfar_save_content_order( 'term:team_department', 'en', array( 0 => $desired ) ), 'Taxonomy order saves' );
 	verify_order( $desired === wp_list_pluck( asfar_order_items( 'term:team_department', 'en' ), 'term_id' ), 'Taxonomy order matches admin and homepage comparator' );
+	verify_order( true === asfar_move_list_item( 'term:team_department', $desired[0], $desired[1], 'after' ), 'Native taxonomy move saves' );
+	verify_order( $term_ids === wp_list_pluck( asfar_order_items( 'term:team_department', 'en' ), 'term_id' ), 'Native taxonomy move persists' );
 	foreach ( $term_ids as $id ) { wp_delete_term( $id, 'team_department' ); }
 	wp_set_current_user( 0 );
+	verify_order( is_wp_error( asfar_move_list_item( 'post:post', 1, 2, 'after' ) ), 'Unauthorized native move rejected' );
 	verify_order( is_wp_error( asfar_save_content_order( 'post:post', 'en', array() ) ), 'Unauthorized save rejected' );
 } finally {
 	wp_set_current_user( 1 );

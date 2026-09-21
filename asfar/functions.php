@@ -19,6 +19,7 @@ $asfar_modules = array(
 	'translations',
 	'content-types',
 	'content-order',
+	'list-order',
 	'team-types',
 	'fields',
 	'media',
