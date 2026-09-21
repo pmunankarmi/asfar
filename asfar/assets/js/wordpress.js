@@ -100,6 +100,7 @@
    if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
      visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .35;
+     if (visible && hinting) go(current);
      rearm();
     }, { threshold: .35 }).observe(map);
    }
@@ -114,86 +115,4 @@
  }
 })();
 
-/* Match the reference map scroll walkthrough. */
-(function () {
-  var root = document.getElementById('dkMap');
-  var DK = window.__dk;
-  if (!root || !DK || !DK.mapGo) return;
-  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var html = document.documentElement;
-  function lenis() { return window.__lenis || null; }
-  function navH() { var n = document.querySelector('.mt-nav'); return n ? n.offsetHeight : 0; }
-
-  var N = (DK.mapCount && DK.mapCount()) || 4;
-  var armed = false, done = false, lastStep = 0;
-  var seen = {};
-  function idx() { return DK.mapIdx ? DK.mapIdx() : 0; }
-  function markSeen() { seen[idx()] = true; }
-  function allSeen() { for (var i = 0; i < N; i++) if (!seen[i]) return false; return true; }
-
-  function engage() {
-    if (armed || done) return;
-    armed = true;
-    if (DK.mapPause) DK.mapPause();
-    if (DK.mapCommit) DK.mapCommit();   // pinning the map commits the hint state and lights the first area
-    markSeen();
-    var vh = window.innerHeight, r = root.getBoundingClientRect();
-    var docTop = r.top + (window.scrollY || 0);
-    var target = Math.max(0, docTop - Math.max(0, (vh - r.height) / 2));
-    var l = lenis();
-    if (l && l.scrollTo) l.scrollTo(target, { immediate: true, force: true });
-    else window.scrollTo(0, target);
-    if (l && l.stop) l.stop();
-    html.classList.add('mt-dk-maplock');
-  }
-  function release(dir) {
-    if (!armed) return;
-    armed = false;
-    var l = lenis();
-    if (l && l.start) l.start();
-    html.classList.remove('mt-dk-maplock');
-    if (dir > 0) done = true;                 // finished going down: never re-lock
-  }
-  function step(dir) {
-    var now = Date.now();
-    if (now - lastStep < 1400) return;        // one region per gesture; long enough for the region morph to finish and be read
-    var cur = idx(), nx = cur + dir;
-    if (nx < 0) { release(-1); return; }        // up past the first -> let the page rise
-    if (nx > N - 1) { if (allSeen()) { release(1); } return; }  // down past last (all seen) -> continue
-    lastStep = now;
-    DK.mapGo(nx);
-    markSeen();
-  }
-
-  // engage when the section's top reaches the nav line while scrolling down
-  function check() {
-    if (armed || done) return;
-    var r = root.getBoundingClientRect();
-    if (r.top <= navH() + 10 && r.bottom > window.innerHeight * 0.55) engage();
-  }
-  window.addEventListener('scroll', check, { passive: true });
-
-  window.addEventListener('wheel', function (e) {
-    if (!armed) return;
-    e.preventDefault();
-    step(e.deltaY > 0 ? 1 : -1);
-  }, { passive: false });
-
-  window.addEventListener('keydown', function (e) {
-    if (!armed) return;
-    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); step(1); }
-    else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
-  }, { passive: false });
-
-  var ty = 0;
-  window.addEventListener('touchstart', function (e) { if (armed) ty = e.touches[0].clientY; }, { passive: true });
-  window.addEventListener('touchmove', function (e) {
-    if (!armed) return;
-    e.preventDefault();
-    var dy = ty - e.touches[0].clientY;
-    if (Math.abs(dy) > 26) { step(dy > 0 ? 1 : -1); ty = e.touches[0].clientY; }
-  }, { passive: false });
-
-  // clicking a region / dash while locked also counts it as seen
-  root.addEventListener('click', function () { if (armed) markSeen(); });
-})();
+// Map slides never capture page scrolling; autoplay and region buttons control the map.

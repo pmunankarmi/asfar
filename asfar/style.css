@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.4
+Version: 1.4.5
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -106,15 +106,17 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	-webkit-user-drag: none;
 }
 
-/* A quiet brand motif sits behind the compact navigation links. */
+/* Keep the brand motif anchored at the foot of the blue navigation drawer. */
 .mt-menu__links a {
 	font-size: clamp(1.15rem, 3.8vw, 1.55rem);
 	line-height: 1.3;
 }
 .mt-menu__pattern {
 	position: absolute;
-	inset-inline-start: -8%;
-	top: 0;
+	inset-inline-start: auto;
+	right: -8%;
+	top: auto;
+	bottom: 0;
 	width: 65%;
 	opacity: .16;
 	pointer-events: none;
@@ -171,4 +173,12 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	.mt-dk-news .mt-dk-newscard__date { font-size: clamp(8px, 2.16vw, 10.4px); }
 	.mt-dk-news .mt-dk-newscard__title { font-size: clamp(9.6px, 2.64vw, 12.8px); }
 	.mt-dk-news .mt-dk-pill { font-size: clamp(8px, 2.08vw, 10.4px); }
+}
+
+/* Keep investment controls above their own divider, inside the section. */
+.mt-dk-sectors > .mt-dk-arrows--sectors {
+	position: relative;
+	inset: auto;
+	justify-content: flex-end;
+	margin: 1.5rem clamp(18px, 3.67vw, 110px) 1rem;
 }

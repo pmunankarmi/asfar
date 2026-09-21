@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.4 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.5 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.4` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.5` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -60,3 +60,5 @@ Validation: `tests/home-news-selection.php` checks enabled/disabled/unset states
 Version 1.4.4 adds Tools → Content Order for dragging posts, pages, custom post types and taxonomy terms into order. Choose the content and language, reorder items within their parent group, then click Save Order. Up/down buttons also support keyboard and touch editing. Saved news order applies to the homepage’s selected posts and news archive; Team and Projects use their existing menu order. Company Profile now uses a blue outline, while Watch the Film remains filled blue. Homepage news font sizes are reduced by 20% on desktop and mobile.
 
 Native Posts, Pages, Team, Projects and taxonomy lists also have an Order drag handle. Drop a row to save automatically. Moves preserve unseen rows, language and parent groups; use Tools → Content Order for an overview of all siblings or keyboard ordering.
+
+Version 1.4.5 anchors the navigation motif at the bottom-right, keeps investment controls within their section, and removes overlapping Team/Partners section lifts. Map regions still autoplay and respond to clicks, but no longer capture page scrolling, touch gestures or navigation keys.

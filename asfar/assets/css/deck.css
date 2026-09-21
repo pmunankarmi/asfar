@@ -814,15 +814,9 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
   transition:background-color .3s var(--dk-ease),color .3s var(--dk-ease)}
 .mt-dk-pill:hover{background:var(--dk-teal);border-color:var(--dk-teal);color:#FCF7EE}
 
-/* ── SECTION COVERS (deck p:cover dir="u", 1750ms) ─────────
-   slide16.xml and slide18.xml both carry <p:cover dir="u" p14:dur="1750">, so
-   THE ASFAR TEAM covers the news section and OUR PARTNERS covers the team.
-   Each is pulled up by one lift and pushed back down by the same amount, and
-   the push unwinds as it lands — so at rest nothing has moved and there is
-   never a gap to see through. deck.js sets --dk-tlift and the transform.
-   Stacking runs forward: news 1, team 2, partners 3. */
+/* Sections stay in normal flow, with no negative margins or scroll lifts. */
 .mt-dk-team,.mt-dk-partners{position:relative;
-  margin-top:calc(-1 * var(--dk-tlift, 0px));will-change:transform}
+  margin-top:0}
 .mt-dk-team{z-index:2}
 .mt-dk-partners{z-index:3}
 
@@ -1356,7 +1350,3 @@ html.mt-dk-sliding,html.mt-dk-sliding body{overflow:hidden}
 html.mt-dk-sliding .mt-nav{opacity:0;pointer-events:none;
   transition:opacity 200ms linear}
 @media (prefers-reduced-motion:reduce){.mt-dk-slide{display:none}}
-
-/* while the portfolio map is pinned for its scroll-stepper */
-html.mt-dk-maplock{overflow:hidden}
-html.mt-dk-maplock body{overflow:hidden}

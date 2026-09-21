@@ -345,96 +345,12 @@
    which showed a lighter cream band between the two wave layers mid-scroll.
    One wave, one clean colour transition (cream -> card), no climb, no twin. */
 
-/* ---------- section covers: each new slide rises over the last ----------
-   slide16.xml and slide18.xml both carry
-     <p:transition spd="slow" p14:dur="1750"><p:cover dir="u"/>
-   so THE ASFAR TEAM covers the news section and OUR PARTNERS covers the team.
-   Each section is pulled up by one lift (a negative top margin, in CSS) and
-   pushed back down here by exactly the same amount, so at rest it sits where
-   it always did and there is never a gap to see through. Over the last 0.62
-   of a viewport before it lands, that push unwinds to zero — the leading edge
-   crosses a whole viewport while the page scrolls 0.62 of one, which is what
-   reads as a cover. Each edge carries the main menu, cloned from the real nav,
-   the same way the article page-slide brings the incoming page's nav up.
-
-   Everything is a pure function of scrollY: no sequencing, no timers, so a
-   backgrounded tab (where rAF is deferred) cannot strand a section mid-slide.
-   rAF only coalesces scroll events, and every wake re-reads. */
+/* Keep sections in document flow so controls and dividers cannot cross headings. */
 (function () {
-  var reduced = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var narrow = window.matchMedia && window.matchMedia('(max-width:960px)');
-  var lift = 0, ticking = false;
-
-  function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
-
-  /* The covers used to carry a cloned menu bar on their leading edge so the
-     slide read like the article page-slide. It duplicated the real fixed nav
-     for no gain, so the covers now come up bare. */
-  /* The cover effect is a chain: THE ASFAR TEAM covers the news section, and
-     OUR PARTNERS covers the team. With the team section hidden, that chain is
-     broken — leaving it on pulled OUR PARTNERS up over the news section with a
-     negative margin, so its straight top edge painted over the news wave. When
-     the team is not present, disable the covers entirely so every section sits
-     in normal flow and the section waves show. */
-  var teamEl = document.getElementById("dkTeam");
-  var teamOn = teamEl && !teamEl.hidden && teamEl.getClientRects().length;
-  var covers = (teamOn ? ['dkTeam', 'partners'] : []).map(function (id) {
-    var el = document.getElementById(id);
-    if (!el || el.hidden || !el.getClientRects().length) return null;
-    return { el: el, shift: 0 };
-  }).filter(Boolean);
-  if (!covers.length) return;
-
-  function measure() {
-    var off = reduced || (narrow && narrow.matches);
-    lift = off ? 0 : (window.innerHeight || 0) * 0.38;
-    covers.forEach(function (c) {
-      c.el.style.setProperty('--dk-tlift', lift.toFixed(1) + 'px');
-      if (off) {
-        c.shift = 0;
-        c.el.style.transform = '';
-      }
-    });
-  }
-
-  function tick() {
-    ticking = false;
-    var vh = window.innerHeight || 1;
-    covers.forEach(function (c) {
-      if (!lift) {
-        if (c.shift) { c.shift = 0; c.el.style.transform = ''; }
-        return;
-      }
-      var span = vh - lift;
-      /* getBoundingClientRect() reports the TRANSFORMED box, so the push we
-         applied has to come back OFF to recover the layout position */
-      var natTop = c.el.getBoundingClientRect().top - c.shift;
-      var q = clamp01(1 - natTop / span);
-      c.shift = (1 - q) * lift;
-      var moving = c.shift > 0.4;
-      c.el.style.transform = moving
-        ? 'translate3d(0,' + c.shift.toFixed(1) + 'px,0)'
-        : '';
-      /* only while the slide is travelling — once it lands the cloned bar sits
-         exactly under the real fixed nav, so dropping it cannot be seen */
-    });
-  }
-
-  /* slide 2's hairline under the hero nav belongs to a slide at rest */
   function atTop() {
-    document.documentElement.classList.toggle("mt-is-attop", (window.scrollY || 0) < 6);
+    document.documentElement.classList.toggle('mt-is-attop', (window.scrollY || 0) < 6);
   }
-
-  function onScroll() { atTop(); if (!ticking) { ticking = true; requestAnimationFrame(tick); } }
-  addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', function () { measure(); tick(); });
-  addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
-  addEventListener('pageshow', function () { measure(); atTop(); tick(); });
-  if (narrow && narrow.addEventListener) {
-    narrow.addEventListener('change', function () { measure(); tick(); });
-  }
-  measure();
+  addEventListener('scroll', atTop, { passive: true });
+  addEventListener('pageshow', atTop);
   atTop();
-  tick();
 })();
