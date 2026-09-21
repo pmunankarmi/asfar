@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.2 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.3 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.2` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.3` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -52,3 +52,7 @@ Version 1.4.2 adds Team Type display controls and the requested homepage refinem
 Both hero actions are filled blue. Strategic Investments and News support arrow navigation and mouse/touch dragging in either language; vertical touch scrolling and normal news-card clicks remain available. News arrows are centered with View All News at the side. The expanded menu has smaller text and the supplied motif over its existing blue background, using the Media Library artwork.
 
 Validation: `php tests/team-type-settings.php /path/to/marked-test-wordpress` checks ordering before admin pagination, legacy visibility and active-tab indexing. Browser previews verified English arrows and dragging, Arabic drag direction, blue buttons/menu, and the mobile Arabic menu/news layout. PHP/JavaScript syntax and package integrity checks passed.
+
+Version 1.4.3 widens the featured team member’s desktop text column to fit the name on one line, with space before the other members. Mobile layouts still wrap naturally. Posts now have a Show on Homepage ACF switch in News Article Content. Only enabled, published posts in the current language appear in homepage news; unset switches are off, and no posts are selected automatically. The full news archive is unchanged. The homepage news section is hidden until at least one post is selected. The existing homepage post-count setting still applies.
+
+Validation: `tests/home-news-selection.php` checks enabled/disabled/unset states, drafts, language separation, deselection and the full archive against isolated WordPress. Browser checks verified a single-line featured name without overlap on desktop and no horizontal overflow at 390px.

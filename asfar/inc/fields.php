@@ -230,6 +230,11 @@ add_action( 'acf/init', function () {
 		array( 'param' => 'page_template', 'operator' => '!=', 'value' => 'templates/template-faq.php' ),
 	) ) );
 	asfar_register_field_group( 'article', 'News Article Content', array(
+		asfar_field( 'show_on_homepage', 'Show on Homepage', 'true_false', array(
+			'default_value' => 0,
+			'ui' => 1,
+			'instructions' => 'Enable to include this post in the homepage news slider for its language. The post remains in the news archive when disabled.',
+		) ),
 		asfar_text( 'display_date', 'Display Date' ),
 		asfar_text( 'category_label', 'Category Label' ),
 		asfar_repeater( 'paragraphs', 'Article Paragraphs', array( asfar_text( 'text', 'Paragraph', true ) ), 'Add paragraph' ),

@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.2
+Version: 1.4.3
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -125,4 +125,26 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 @media (max-width: 480px) {
 	.mt-dk-news__foot { grid-template-columns: 1fr auto 1fr; gap: .6rem; }
 	.mt-dk-news__foot > a { max-width: 100%; padding-inline: .6rem; }
+}
+
+/* Give the featured name its own space instead of wrapping into a narrow column. */
+.mt-dk-feat__txt {
+	max-inline-size: none;
+	min-width: 0;
+}
+@media (min-width: 961px) {
+	.mt-dk-team__rail {
+		grid-template-columns: max-content minmax(0, 1fr);
+		column-gap: 2vw;
+	}
+	.mt-dk-feat {
+		grid-template-columns: 14.531vw max-content;
+		min-width: 31.641vw;
+	}
+	.mt-dk-feat__name {
+		white-space: nowrap;
+	}
+	.mt-dk-feat__role {
+		max-inline-size: 24vw;
+	}
 }

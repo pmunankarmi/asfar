@@ -1,6 +1,9 @@
 <?php
 $section = get_field( 'news_section' ) ?: array();
 $news = asfar_news_query( true );
+if ( ! $news->have_posts() ) {
+	return;
+}
 ?>
 <section class="mt-dk-news" id="dkNews">
 	<span id="news"></span>

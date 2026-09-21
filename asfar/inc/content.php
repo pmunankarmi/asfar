@@ -206,12 +206,23 @@ function asfar_faq_items( $page_id ) {
 
 function asfar_news_query( $home = false ) {
 	$section = asfar_section( 'news' );
-	return new WP_Query( array(
-		'post_type' => 'post', 'posts_per_page' => $home ? max( 1, (int) ( $section['count'] ?? 20 ) ) : 20,
-		'paged' => $home ? 1 : max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ),
-		'lang' => asfar_language(), 'ignore_sticky_posts' => true,
-		'orderby' => array( 'date' => 'DESC', 'ID' => 'ASC' ),
-	) );
+	$query = array(
+		'post_type'           => 'post',
+		'post_status'         => 'publish',
+		'posts_per_page'      => $home ? max( 1, (int) ( $section['count'] ?? 20 ) ) : 20,
+		'paged'               => $home ? 1 : max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ),
+		'lang'                => asfar_language(),
+		'ignore_sticky_posts' => true,
+		'orderby'             => array( 'date' => 'DESC', 'ID' => 'ASC' ),
+	);
+
+	// Homepage news is opt-in. The full news archive keeps every published post.
+	if ( $home ) {
+		$query['meta_key'] = 'show_on_homepage';
+		$query['meta_value'] = '1';
+	}
+
+	return new WP_Query( $query );
 }
 
 /** Current year follows the timezone configured in WordPress Settings. */
