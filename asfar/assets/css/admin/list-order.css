@@ -1,0 +1,5 @@
+.column-mt_order { width: 80px; }
+.mt-list-order-handle { cursor: move; margin-inline-end: 8px; color: #646970; }
+.mt-list-order-number { display: inline-block; min-width: 20px; }
+#the-list .ui-sortable-helper { background: #fff; }
+.mt-list-order-placeholder { height: 50px; outline: 2px dashed #2271b1; background: #f0f0f1; }
