@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.6
+Version: 1.4.7
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -57,8 +57,13 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 }
 .mt-vlb__frame { width: min(1120px, 100%, calc((100dvh - 7rem) * 16 / 9)); }
 
-/* Both hero actions use ASFAR's blue, including their rounded hover state. */
+/* Shared dimensions keep the filled and outlined hero actions aligned. */
 .mt-hero .mt-hero__cta .mt-btn {
+	box-sizing: border-box;
+	min-height: 48px;
+	line-height: 1.25;
+	border-width: 2px;
+	border-style: solid;
 	background: var(--dk-teal, #24545b);
 	border-color: var(--dk-teal, #24545b);
 	color: #fff;
@@ -154,7 +159,7 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 /* Company Profile is the outlined companion to the filled video action. */
 .mt-hero .mt-hero__cta .mt-btn--line-light {
 	background: transparent;
-	border: 2px solid var(--dk-teal, #24545b);
+	border: 2px solid #fff;
 	color: #fff;
 	box-shadow: none;
 }
@@ -181,4 +186,13 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	inset: auto;
 	justify-content: flex-end;
 	margin: 1.5rem clamp(18px, 3.67vw, 110px) 1rem;
+}
+
+/* The film title determines the button position, including wrapped Arabic text. */
+.mt-hero.mt-is-film .mt-hero__cta--fixed {
+	top: var(--hero-actions-top, 72%);
+}
+.mt-hero .mt-hero__cta .mt-btn--line-light:hover {
+	border-color: #fff;
+	color: #fff;
 }

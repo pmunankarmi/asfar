@@ -13,6 +13,25 @@
  }
  window.addEventListener('load', resolveLegacyAnchor);
  window.addEventListener('hashchange', resolveLegacyAnchor);
+ // Leave a real gap below the film caption instead of using a fixed percentage.
+ var hero = document.querySelector('.mt-hero');
+ var captionTitle = document.getElementById('heroMorphName');
+ var heroContent = hero && hero.querySelector('.mt-hero__in');
+ if (hero && captionTitle && heroContent) {
+  function positionHeroActions() {
+   var gap = Math.max(28, Math.min(44, window.innerHeight * 0.05));
+   var top = captionTitle.getBoundingClientRect().bottom - heroContent.getBoundingClientRect().top + gap;
+   hero.style.setProperty('--hero-actions-top', top + 'px');
+  }
+  positionHeroActions();
+  window.addEventListener('resize', positionHeroActions);
+  if ('ResizeObserver' in window) {
+   var captionObserver = new ResizeObserver(positionHeroActions);
+   captionObserver.observe(captionTitle);
+   captionObserver.observe(heroContent);
+  }
+  if (document.fonts) document.fonts.ready.then(positionHeroActions);
+ }
  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
  var rtl = document.documentElement.dir === 'rtl';
  var form = document.getElementById("contactForm");
