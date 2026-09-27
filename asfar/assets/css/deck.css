@@ -1350,3 +1350,6 @@ html.mt-dk-sliding,html.mt-dk-sliding body{overflow:hidden}
 html.mt-dk-sliding .mt-nav{opacity:0;pointer-events:none;
   transition:opacity 200ms linear}
 @media (prefers-reduced-motion:reduce){.mt-dk-slide{display:none}}
+
+/* Hold the page while scroll gestures advance the portfolio regions. */
+html.mt-dk-maplock, html.mt-dk-maplock body { overflow: hidden; }
