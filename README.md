@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.9 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.10 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.9` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.10` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -70,3 +70,5 @@ Version 1.4.7 positions the hero actions below the measured film title with 28â€
 Version 1.4.8 adds a Show on homepage checkbox to the Posts list with immediate saving. Homepage selection is shared across linked Polylang translations, including ACF edits; existing selected stories enable their linked translations on the first administrator visit after updating. Draft translations remain unpublished. The hero ghost button uses a blue border on hover.
 
 Version 1.4.9 restores the staging v2 map scroll walkthrough: pin at the header, step through regions with 1.4-second gesture spacing, and resume page scrolling after all regions. Reduced-motion visitors retain normal scrolling. Other sections remain in normal document flow.
+
+Version 1.4.10 gives opening banner headings and film captions the same measured gap above their buttons, in both English and Arabic.

@@ -13,21 +13,30 @@
  }
  window.addEventListener('load', resolveLegacyAnchor);
  window.addEventListener('hashchange', resolveLegacyAnchor);
- // Leave a real gap below the film caption instead of using a fixed percentage.
+ // Use the same title-to-button gap for the opening slide and film caption.
  var hero = document.querySelector('.mt-hero');
  var captionTitle = document.getElementById('heroMorphName');
  var heroContent = hero && hero.querySelector('.mt-hero__in');
- if (hero && captionTitle && heroContent) {
+ if (hero && heroContent) {
+  var slideTitles = hero.querySelectorAll('.mt-hero__slide .mt-hero__title');
   function positionHeroActions() {
    var gap = Math.max(28, Math.min(44, window.innerHeight * 0.05));
-   var top = captionTitle.getBoundingClientRect().bottom - heroContent.getBoundingClientRect().top + gap;
-   hero.style.setProperty('--hero-actions-top', top + 'px');
+   var origin = heroContent.getBoundingClientRect().top;
+   var openingTitle = hero.querySelector('.mt-hero__slide.mt-is-active .mt-hero__title') || slideTitles[0];
+   if (openingTitle) {
+    hero.style.setProperty('--hero-opening-actions-top', (openingTitle.getBoundingClientRect().bottom - origin + gap) + 'px');
+   }
+   if (captionTitle) {
+    hero.style.setProperty('--hero-actions-top', (captionTitle.getBoundingClientRect().bottom - origin + gap) + 'px');
+   }
   }
   positionHeroActions();
   window.addEventListener('resize', positionHeroActions);
+  hero.addEventListener('transitionend', positionHeroActions);
   if ('ResizeObserver' in window) {
    var captionObserver = new ResizeObserver(positionHeroActions);
-   captionObserver.observe(captionTitle);
+   slideTitles.forEach(function (title) { captionObserver.observe(title); });
+   if (captionTitle) captionObserver.observe(captionTitle);
    captionObserver.observe(heroContent);
   }
   if (document.fonts) document.fonts.ready.then(positionHeroActions);
