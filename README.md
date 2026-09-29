@@ -74,3 +74,5 @@ Version 1.4.9 restores the staging v2 map scroll walkthrough: pin at the header,
 Version 1.4.10 gives opening banner headings and film captions the same measured gap above their buttons, in both English and Arabic.
 
 Version 1.4.11 removes the hero film subtitle and rotating destination name in both languages, keeping the buttons spaced beneath the main heading. News listings now have a translated Back to Home button returning to homepage news.
+
+The 1.4.11 map also removes the yellow Taif region fill from the portfolio, including the Strategic Investments overview, while retaining other region colors and map interactions.

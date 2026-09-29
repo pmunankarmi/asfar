@@ -521,7 +521,8 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
 .mt-dk-map__stage .mt-invmap__region[data-region="baha"].mt-is-lit {fill:#C79882}
 .mt-dk-map__stage .mt-invmap__region[data-region="yanbu"].mt-is-lit{fill:#CAE6EA}
 .mt-dk-map__stage .mt-invmap__region[data-region="asir"].mt-is-lit {fill:#B1AAB6}
-.mt-dk-map__stage .mt-invmap__region[data-region="taif"].mt-is-lit {fill:#EEE6DA}
+/* Keep the Taif area unhighlighted, including the all-investments slide. */
+.mt-dk-map__stage .mt-invmap__region[data-region="taif"].mt-is-lit {fill:transparent}
 /* Clickable regions carry a faint wash of their own highlight colour by
    default, so the map reads as interactive; the selected one goes to full
    colour via .mt-is-lit. Taif has no data, so it gets no wash and no pointer. */
