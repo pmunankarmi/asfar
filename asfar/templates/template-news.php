@@ -11,6 +11,7 @@ get_header();
 		<div class="mt-wrap">
 			<?php while ( have_posts() ) : the_post(); ?>
 				<div class="mt-teampage__head">
+					<a class="mt-news-back" href="<?php echo esc_url( asfar_home_url() . '#news' ); ?>"><?php echo esc_html( asfar_amv4_label( 'Back to Home' ) ); ?></a>
 				<h1 class="mt-statement mt-reveal"><?php the_title(); ?></h1>
 				<p class="mt-news__lede mt-teampage__lede mt-reveal"><?php echo asfar_lines( get_field( 'introduction' ) ); ?></p>
 				</div>

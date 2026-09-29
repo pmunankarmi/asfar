@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function asfar_amv4_labels() {
  return array(
+  'Back to Home' => 'العودة إلى الرئيسية',
   'Overview' => 'نظرة عامة',
   'The journey' => 'الرحلة',
   'Back to Media Center' => 'العودة إلى المركز الإعلامي',

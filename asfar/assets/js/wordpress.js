@@ -15,7 +15,7 @@
  window.addEventListener('hashchange', resolveLegacyAnchor);
  // Use the same title-to-button gap for the opening slide and film caption.
  var hero = document.querySelector('.mt-hero');
- var captionTitle = document.getElementById('heroMorphName');
+ var captionTitle = hero && hero.querySelector('.mt-hero__morph-lead');
  var heroContent = hero && hero.querySelector('.mt-hero__in');
  if (hero && heroContent) {
   var slideTitles = hero.querySelectorAll('.mt-hero__slide .mt-hero__title');

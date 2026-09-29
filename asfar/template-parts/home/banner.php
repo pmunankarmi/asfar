@@ -57,8 +57,6 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
 				<div class="mt-hero__morphcap">
 					<p class="mt-hero__morph-lead"><?php echo asfar_lines( $animation['heading'] ); ?></p>
-					<p class="mt-hero__morph-over"><?php echo esc_html( $animation['subtitle'] ); ?></p>
-					<h2 class="mt-hero__title" id="heroMorphName"><?php echo esc_html( $marks[0]['name'] ); ?></h2>
 					<div class="mt-hero__cta" aria-hidden="true"></div>
 				</div>
 			<?php endif; ?>
