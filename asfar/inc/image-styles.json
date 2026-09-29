@@ -4,5 +4,6 @@
   "--asfar-image-asfar-pattern-petrol": "img/asfar-pattern-petrol.webp",
   "--asfar-image-asfar-motif-a": "img/asfar-motif-a.svg",
   "--asfar-image-asfar-motif-b": "img/asfar-motif-b.svg",
-  "--asfar-image-asfar-frond-impact": "img/asfar-frond-impact.svg"
+  "--asfar-image-asfar-frond-impact": "img/asfar-frond-impact.svg",
+  "--asfar-image-apif-logo": "img/apif-logo.png"
 }

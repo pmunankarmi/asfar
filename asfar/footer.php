@@ -1,4 +1,3 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { exit; }
-get_template_part( 'template-parts/footer-' . asfar_language() );
-wp_footer(); ?>
-</body></html>
+<?php
+/** WordPress template hierarchy entry point. */
+get_template_part( 'template-parts/layout/footer' );

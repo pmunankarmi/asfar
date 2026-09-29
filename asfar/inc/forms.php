@@ -27,7 +27,7 @@ add_action( 'after_switch_theme', 'asfar_schema' );
 add_action( 'admin_init', 'asfar_schema' );
 function asfar_form_hidden() {
  wp_nonce_field( 'asfar_contact', '_asfar_nonce', false );
- echo '<input type="hidden" name="action" value="asfar_contact"><input type="hidden" name="language" value="' . esc_attr( asfar_language() ) . '"><input type="hidden" name="request_key" value="' . esc_attr( wp_generate_uuid4() ) . '"><div class="asfar-honeypot" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-label="Website"></div>';
+ echo '<input type="hidden" name="action" value="asfar_contact"><input type="hidden" name="language" value="' . esc_attr( asfar_language() ) . '"><input type="hidden" name="request_key" value="' . esc_attr( wp_generate_uuid4() ) . '"><div class="mt-asfar-honeypot" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-label="Website"></div>';
 }
 function asfar_input( $key ) { return isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : ''; }
 function asfar_form_reply( $ok, $code, $language ) {
@@ -110,7 +110,7 @@ function asfar_submissions_admin() {
   echo '</tr>';
  }
  echo '</tbody></table>';
- echo wp_kses_post( paginate_links( array( 'base' => add_query_arg( 'paged', '%#%' ), 'format' => '', 'current' => $page, 'total' => max( 1, (int) ceil( $total / 20 ) ) ) ) );
+ echo wp_kses_post( (string) paginate_links( array( 'base' => add_query_arg( 'paged', '%#%' ), 'format' => '', 'current' => $page, 'total' => max( 1, (int) ceil( $total / 20 ) ) ) ) );
  echo '</div>';
 }
 function asfar_csv_cell( $value ) {

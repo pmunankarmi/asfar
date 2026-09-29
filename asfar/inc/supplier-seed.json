@@ -1,0 +1,62 @@
+{
+  "en": {
+    "eyebrow": "Procurement",
+    "heading": "Supplier Portal",
+    "introduction": "Register as a new supplier or sign in to manage your profile, respond to sourcing and track your invoices with ASFAR.",
+    "registration_tab": "Supplier Registration",
+    "signin_tab": "Sign In",
+    "registration_intro": "New to ASFAR? Choose the registration that matches your company's status.",
+    "signin_heading": "Already registered?",
+    "signin_description": "Sign in to the ASFAR supplier portal to manage your profile, respond to sourcing events and track your invoices and payments.",
+    "signin_label": "Sign In",
+    "inquiry_heading": "Have a question?",
+    "inquiry_description": "For any inquiries, please contact the ASFAR Procurement team.",
+    "inquiry_label": "Contact Procurement",
+    "back_label": "Back to the home page",
+    "signin_url": "https://iacukf.fa.ocs.oraclecloud.com/",
+    "registration_cards": [
+      {
+        "heading": "Prospective Supplier",
+        "description": "For companies registering to do business with ASFAR for the first time.",
+        "label": "Register",
+        "url": "https://iacukf.fa.ocs.oraclecloud.com/fscmUI/redwood/supplier-registration/register-supplier/register-supplier-verification?id=AokzoWdovV1MfXrfVPwKDJLn%2F%2BkgBPGtlUZTliMWTMQ7IfiU76NyFxCVPQ%3D%3D"
+      },
+      {
+        "heading": "Spend Authorized Supplier",
+        "description": "For suppliers already approved for transactions and payments with ASFAR.",
+        "label": "Register",
+        "url": "https://iacukf.fa.ocs.oraclecloud.com/fscmUI/redwood/supplier-registration/register-supplier/register-supplier-verification?id=AokzoWdovV1MfXrfVPwKDJHl9fQ0HvOsiFhZd4Ds577wh%2BYcxeDWKQNOrxRVGoiw"
+      }
+    ]
+  },
+  "ar": {
+    "eyebrow": "المشتريات",
+    "heading": "بوابة الموردين",
+    "introduction": "سجّل كمورد جديد، أو سجّل الدخول لإدارة ملفك والمشاركة في المنافسات ومتابعة فواتيرك مع أسفار.",
+    "registration_tab": "تسجيل مورد جديد",
+    "signin_tab": "تسجيل الدخول",
+    "registration_intro": "جديد على أسفار؟ اختر التسجيل المناسب لحالة شركتك.",
+    "signin_heading": "هل أنت مسجّل بالفعل؟",
+    "signin_description": "سجّل الدخول إلى بوابة الموردين لإدارة ملفك، والمشاركة في المنافسات، ومتابعة فواتيرك ومدفوعاتك.",
+    "signin_label": "تسجيل الدخول",
+    "inquiry_heading": "لديك استفسار؟",
+    "inquiry_description": "لأي استفسار، يرجى التواصل مع فريق المشتريات في أسفار.",
+    "inquiry_label": "التواصل مع المشتريات",
+    "back_label": "العودة إلى الصفحة الرئيسية",
+    "signin_url": "https://iacukf.fa.ocs.oraclecloud.com/",
+    "registration_cards": [
+      {
+        "heading": "مورد محتمل",
+        "description": "للشركات التي تسجّل للتعامل مع أسفار لأول مرة.",
+        "label": "التسجيل",
+        "url": "https://iacukf.fa.ocs.oraclecloud.com/fscmUI/redwood/supplier-registration/register-supplier/register-supplier-verification?id=AokzoWdovV1MfXrfVPwKDJLn%2F%2BkgBPGtlUZTliMWTMQ7IfiU76NyFxCVPQ%3D%3D"
+      },
+      {
+        "heading": "مورد معتمد للصرف",
+        "description": "للموردين المعتمدين للتعاملات والمدفوعات مع أسفار.",
+        "label": "التسجيل",
+        "url": "https://iacukf.fa.ocs.oraclecloud.com/fscmUI/redwood/supplier-registration/register-supplier/register-supplier-verification?id=AokzoWdovV1MfXrfVPwKDJHl9fQ0HvOsiFhZd4Ds577wh%2BYcxeDWKQNOrxRVGoiw"
+      }
+    ]
+  }
+}

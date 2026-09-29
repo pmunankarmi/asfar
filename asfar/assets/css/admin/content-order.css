@@ -1,0 +1,6 @@
+.mt-content-order { max-width: 850px; margin-block: 24px; }
+.mt-order-list { margin: 0 0 24px; }
+.mt-order-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #fff; border: 1px solid #c3c4c7; }
+.mt-order-title { flex: 1; }
+.mt-order-handle { cursor: grab; padding: 8px; }
+.mt-order-placeholder { min-height: 54px; border: 2px dashed #2271b1; background: #f0f6fc; }
