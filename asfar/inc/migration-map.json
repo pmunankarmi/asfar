@@ -1,0 +1,1103 @@
+{
+  "home": {
+    "en": {
+      "banner_slides": [
+        {
+          "eyebrow": "c_331",
+          "heading": "c_332",
+          "highlight": "c_333",
+          "image": "c_329",
+          "video": "c_334",
+          "video_label": "c_335",
+          "button": {
+            "link": [
+              "c_336",
+              "c_337"
+            ]
+          }
+        },
+        {
+          "eyebrow": "c_338",
+          "heading": "c_339",
+          "image": "c_329"
+        },
+        {
+          "eyebrow": "c_340",
+          "heading": "c_341",
+          "image": "c_329"
+        }
+      ],
+      "banner_animation": {
+        "enabled": 0,
+        "heading": {
+          "join": [
+            "c_342",
+            "c_343"
+          ]
+        },
+        "subtitle": "c_344"
+      },
+      "about_section": {
+        "heading": {
+          "join": [
+            "c_350",
+            "c_351"
+          ]
+        },
+        "subtitle": {
+          "join": [
+            "c_352",
+            "c_353"
+          ]
+        },
+        "card_heading": {
+          "join": [
+            "c_354",
+            "c_355"
+          ]
+        },
+        "paragraphs": [
+          {
+            "text": "c_356"
+          }
+        ],
+        "ownership": "c_357"
+      },
+      "vision_section": {
+        "heading": {
+          "join": [
+            "c_358",
+            "c_359"
+          ]
+        },
+        "cards": [
+          {
+            "heading": "c_360",
+            "description": "c_361"
+          },
+          {
+            "heading": "c_362",
+            "description": "c_363"
+          },
+          {
+            "heading": "c_364",
+            "description": "c_365"
+          }
+        ]
+      },
+      "impact_section": {
+        "heading": "c_366",
+        "statistics": [
+          {
+            "value": "c_367",
+            "label": "c_368"
+          },
+          {
+            "value": "c_369",
+            "label": {
+              "join": [
+                "c_370",
+                "c_371"
+              ]
+            }
+          },
+          {
+            "value": {
+              "join": [
+                "c_372",
+                "²"
+              ],
+              "separator": ""
+            },
+            "label": {
+              "join": [
+                "c_374",
+                "c_375"
+              ]
+            }
+          },
+          {
+            "value": "c_376",
+            "label": {
+              "join": [
+                "c_377",
+                "c_378"
+              ]
+            }
+          }
+        ]
+      },
+      "portfolio_section": {},
+      "investments_section": {
+        "heading": {
+          "join": [
+            "c_379",
+            "c_380"
+          ]
+        },
+        "description": "c_381"
+      },
+      "news_section": {
+        "heading": "c_408",
+        "button": {
+          "link": [
+            "c_506",
+            "c_507"
+          ]
+        },
+        "count": 20
+      },
+      "team_section": {
+        "heading": "c_508",
+        "description": "c_509",
+        "button": {
+          "link": [
+            "c_516",
+            "c_517"
+          ]
+        }
+      },
+      "partners_section": {
+        "heading": {
+          "join": [
+            "c_518",
+            "c_519"
+          ]
+        }
+      },
+      "faq_section": {
+        "heading": {
+          "join": [
+            "c_538",
+            "c_539",
+            "c_540"
+          ]
+        }
+      }
+    },
+    "ar": {
+      "banner_slides": [
+        {
+          "eyebrow": "c_59",
+          "heading": "c_60",
+          "highlight": "c_61",
+          "image": "c_57",
+          "video": "c_62",
+          "video_label": "c_63",
+          "button": {
+            "link": [
+              "c_64",
+              "c_65"
+            ]
+          }
+        },
+        {
+          "eyebrow": "c_66",
+          "heading": "c_67",
+          "image": "c_57"
+        },
+        {
+          "eyebrow": "c_68",
+          "heading": "c_69",
+          "image": "c_57"
+        }
+      ],
+      "banner_animation": {
+        "enabled": 0,
+        "heading": {
+          "join": [
+            "c_70",
+            "c_71"
+          ]
+        },
+        "subtitle": "c_72"
+      },
+      "about_section": {
+        "heading": {
+          "join": [
+            "c_78",
+            "c_79"
+          ]
+        },
+        "subtitle": {
+          "join": [
+            "c_80",
+            "c_81"
+          ]
+        },
+        "card_heading": "c_82",
+        "paragraphs": [
+          {
+            "text": "c_83"
+          },
+          {
+            "text": "c_84"
+          }
+        ],
+        "ownership": "c_85"
+      },
+      "vision_section": {
+        "heading": "c_86",
+        "cards": [
+          {
+            "heading": "c_87",
+            "description": "c_88"
+          },
+          {
+            "heading": "c_89",
+            "description": "c_90"
+          },
+          {
+            "heading": "c_91",
+            "description": "c_92"
+          }
+        ]
+      },
+      "impact_section": {
+        "heading": "c_93",
+        "statistics": [
+          {
+            "value": "c_94",
+            "label": "c_95"
+          },
+          {
+            "value": "c_96",
+            "label": "c_97"
+          },
+          {
+            "value": {
+              "join": [
+                "c_98",
+                "²"
+              ],
+              "separator": ""
+            },
+            "label": "c_100"
+          },
+          {
+            "value": "c_101",
+            "label": "c_102"
+          }
+        ]
+      },
+      "portfolio_section": {},
+      "investments_section": {
+        "heading": {
+          "join": [
+            "c_103",
+            "c_104"
+          ]
+        },
+        "description": "c_105"
+      },
+      "news_section": {
+        "heading": "c_132",
+        "button": {
+          "link": [
+            "c_230",
+            "c_231"
+          ]
+        },
+        "count": 20
+      },
+      "team_section": {
+        "heading": "c_232",
+        "description": "c_233",
+        "button": {
+          "link": [
+            "c_240",
+            "c_241"
+          ]
+        }
+      },
+      "partners_section": {
+        "heading": "c_242"
+      },
+      "faq_section": {
+        "heading": {
+          "join": [
+            "c_261",
+            "c_262"
+          ]
+        }
+      }
+    }
+  },
+  "pages": {
+    "team": {
+      "title": "c_1966",
+      "introduction": "c_1967"
+    },
+    "news": {
+      "title": "c_1690",
+      "introduction": "c_1691"
+    },
+    "news-asfar-signs-partnership-agreement-with-al-ojaimi-holding-to-launch-an-urban-resort-in-hail-ar": {
+      "title": "c_1108",
+      "display_date": "c_1109",
+      "category_label": "c_1107",
+      "image": "c_1110",
+      "paragraphs": [
+        {
+          "text": "c_1112"
+        },
+        {
+          "text": "c_1113"
+        },
+        {
+          "text": "c_1114"
+        },
+        {
+          "text": "c_1115"
+        }
+      ]
+    },
+    "news-asfar-announces-three-season-sponsorship-deal-with-al-hilal-club": {
+      "title": "c_805",
+      "display_date": "c_806",
+      "category_label": "c_804",
+      "image": "c_807",
+      "paragraphs": [
+        {
+          "text": "c_809"
+        }
+      ]
+    },
+    "news-asfar-eastern-province-municipality-and-the-sharqia-development-authority-ar": {
+      "title": "c_830",
+      "display_date": "c_831",
+      "category_label": "c_829",
+      "image": "c_832",
+      "paragraphs": [
+        {
+          "text": "c_834"
+        },
+        {
+          "text": "c_835"
+        },
+        {
+          "text": "c_836"
+        }
+      ]
+    },
+    "news-asfar-x-baheej-and-kerten-partnership": {
+      "title": "c_1248",
+      "display_date": "c_1249",
+      "category_label": "c_1247",
+      "image": "c_1250",
+      "paragraphs": [
+        {
+          "text": "c_1252"
+        },
+        {
+          "text": "c_1253"
+        },
+        {
+          "text": "c_1254"
+        },
+        {
+          "text": "c_1255"
+        },
+        {
+          "text": "c_1256"
+        },
+        {
+          "text": "c_1257"
+        }
+      ]
+    },
+    "news-pif-announces-establishment-of-saudi-tourism-investment-company-asfar-ar": {
+      "title": "c_1569",
+      "display_date": "c_1570",
+      "category_label": "c_1568",
+      "image": "c_1571",
+      "paragraphs": [
+        {
+          "text": "c_1573"
+        }
+      ]
+    },
+    "news-asfar-signs-landmark-mou-with-hail-region-ar": {
+      "title": "c_1052",
+      "display_date": "c_1053",
+      "category_label": "c_1051",
+      "image": "c_1054",
+      "paragraphs": [
+        {
+          "text": "c_1056"
+        },
+        {
+          "text": "c_1057"
+        },
+        {
+          "text": "c_1058"
+        },
+        {
+          "text": "c_1059"
+        }
+      ]
+    },
+    "news-asfar-x-baheej-and-kerten-partnership-ar": {
+      "title": "c_1218",
+      "display_date": "c_1219",
+      "category_label": "c_1217",
+      "image": "c_1220",
+      "paragraphs": [
+        {
+          "text": "c_1222"
+        },
+        {
+          "text": "c_1223"
+        },
+        {
+          "text": "c_1224"
+        },
+        {
+          "text": "c_1225"
+        },
+        {
+          "text": "c_1226"
+        },
+        {
+          "text": "c_1227"
+        }
+      ]
+    },
+    "news-asfar-partners-with-ihcc-to-launch-taif-botanical-retreat-destination": {
+      "title": "c_963",
+      "display_date": "c_964",
+      "category_label": "c_962",
+      "image": "c_965",
+      "paragraphs": [
+        {
+          "text": "c_967"
+        },
+        {
+          "text": "c_968"
+        },
+        {
+          "text": "c_969"
+        },
+        {
+          "text": "c_970"
+        },
+        {
+          "text": "c_971"
+        },
+        {
+          "text": "c_972"
+        },
+        {
+          "text": "c_973"
+        }
+      ]
+    },
+    "news-asfar-announces-three-season-sponsorship-deal-with-al-hilal-club-ar": {
+      "title": "c_780",
+      "display_date": "c_781",
+      "category_label": "c_779",
+      "image": "c_782",
+      "paragraphs": [
+        {
+          "text": "c_784"
+        }
+      ]
+    },
+    "news-heritage-commission-x-asfar": {
+      "title": "c_1543",
+      "display_date": "c_1544",
+      "category_label": "c_1542",
+      "image": "c_1545",
+      "paragraphs": [
+        {
+          "text": "c_1547"
+        },
+        {
+          "text": "c_1548"
+        }
+      ]
+    },
+    "news-heritage-commission-x-asfar-ar": {
+      "title": "c_1517",
+      "display_date": "c_1518",
+      "category_label": "c_1516",
+      "image": "c_1519",
+      "paragraphs": [
+        {
+          "text": "c_1521"
+        },
+        {
+          "text": "c_1522"
+        }
+      ]
+    },
+    "news-asfar-partners-with-ihcc-to-launch-taif-botanical-retreat-destination-ar": {
+      "title": "c_934",
+      "display_date": "c_935",
+      "category_label": "c_933",
+      "image": "c_936",
+      "paragraphs": [
+        {
+          "text": "c_938"
+        },
+        {
+          "text": "c_939"
+        },
+        {
+          "text": "c_940"
+        },
+        {
+          "text": "c_941"
+        },
+        {
+          "text": "c_942"
+        }
+      ]
+    },
+    "news-asfar-and-sharqia-development-authority-sign-strategic-agreement-at-cityscape-global-to-revitalize-al-khobars-tourism-with-baheej-tourism-development-company-ar": {
+      "title": "c_670",
+      "display_date": "c_671",
+      "category_label": "c_669",
+      "image": "c_672",
+      "paragraphs": [
+        {
+          "text": "c_674"
+        },
+        {
+          "text": "c_675"
+        },
+        {
+          "text": "c_676"
+        },
+        {
+          "text": "c_677"
+        },
+        {
+          "text": "c_678"
+        },
+        {
+          "text": "c_679"
+        }
+      ]
+    },
+    "news-asfar-signs-strategic-mou-with-ministry-of-municipalities": {
+      "title": "c_1191",
+      "display_date": "c_1192",
+      "category_label": "c_1190",
+      "image": "c_1193",
+      "paragraphs": [
+        {
+          "text": "c_1195"
+        },
+        {
+          "text": "c_1196"
+        },
+        {
+          "text": "c_1197"
+        }
+      ]
+    },
+    "news-asfar-municipality-of-al-baha-sign-mou-to-develop-world-class-mountain-tourism-projects-ar": {
+      "title": "c_884",
+      "display_date": "c_885",
+      "category_label": "c_883",
+      "image": "c_886",
+      "paragraphs": [
+        {
+          "text": "c_888"
+        }
+      ]
+    },
+    "news-asfar-and-tamimi-awn-alliance-inaugurate-baheej-to-contribute-in-shaping-saudi-tourism-at-future-hospitality-summit-ar": {
+      "title": "c_730",
+      "display_date": "c_731",
+      "category_label": "c_729",
+      "image": "c_732",
+      "paragraphs": [
+        {
+          "text": "c_734"
+        }
+      ]
+    },
+    "news-asfar-x-baheej-and-mantis-accor": {
+      "title": "c_1306",
+      "display_date": "c_1307",
+      "category_label": "c_1305",
+      "image": "c_1308",
+      "paragraphs": [
+        {
+          "text": "c_1310"
+        },
+        {
+          "text": "c_1311"
+        },
+        {
+          "text": "c_1312"
+        },
+        {
+          "text": "c_1313"
+        },
+        {
+          "text": "c_1314"
+        }
+      ]
+    },
+    "news-ar": {
+      "title": "c_551",
+      "introduction": "c_552"
+    },
+    "news-baheej-x-royal-commission-for-yanbu-ar": {
+      "title": "c_1335",
+      "display_date": "c_1336",
+      "category_label": "c_1334",
+      "image": "c_1337",
+      "paragraphs": [
+        {
+          "text": "c_1339"
+        },
+        {
+          "text": "c_1340"
+        },
+        {
+          "text": "c_1341"
+        },
+        {
+          "text": "c_1342"
+        },
+        {
+          "text": "c_1343"
+        },
+        {
+          "text": "c_1344"
+        },
+        {
+          "text": "c_1345"
+        },
+        {
+          "text": "c_1346"
+        },
+        {
+          "text": "c_1347"
+        },
+        {
+          "text": "c_1348"
+        }
+      ]
+    },
+    "news-asfar-municipality-of-al-baha-sign-mou-to-develop-world-class-mountain-tourism-projects": {
+      "title": "c_909",
+      "display_date": "c_910",
+      "category_label": "c_908",
+      "image": "c_911",
+      "paragraphs": [
+        {
+          "text": "c_913"
+        }
+      ]
+    },
+    "news-asfar-and-sharqia-development-authority-sign-strategic-agreement-at-cityscape-global-to-revitalize-al-khobars-tourism-with-baheej-tourism-development-company": {
+      "title": "c_700",
+      "display_date": "c_701",
+      "category_label": "c_699",
+      "image": "c_702",
+      "paragraphs": [
+        {
+          "text": "c_704"
+        },
+        {
+          "text": "c_705"
+        },
+        {
+          "text": "c_706"
+        },
+        {
+          "text": "c_707"
+        },
+        {
+          "text": "c_708"
+        },
+        {
+          "text": "c_709"
+        }
+      ]
+    },
+    "news-baheej-x-yanbu-city": {
+      "title": "c_1429",
+      "display_date": "c_1430",
+      "category_label": "c_1428",
+      "image": "c_1431",
+      "paragraphs": [
+        {
+          "text": "c_1433"
+        },
+        {
+          "text": "c_1434"
+        }
+      ]
+    },
+    "news-the-saudi-tourism-revolution": {
+      "title": "c_1655",
+      "display_date": "c_1656",
+      "category_label": "c_1654",
+      "image": "c_1657",
+      "paragraphs": [
+        {
+          "text": "c_1659"
+        },
+        {
+          "text": "c_1660"
+        },
+        {
+          "text": "c_1661"
+        },
+        {
+          "text": "c_1662"
+        },
+        {
+          "text": "c_1663"
+        },
+        {
+          "text": "c_1664"
+        },
+        {
+          "text": "c_1665"
+        },
+        {
+          "text": "c_1666"
+        },
+        {
+          "text": "c_1667"
+        },
+        {
+          "text": "c_1668"
+        },
+        {
+          "text": "c_1669"
+        },
+        {
+          "text": "c_1670"
+        }
+      ]
+    },
+    "news-asfar-x-baheej-and-mantis-accor-ar": {
+      "title": "c_1278",
+      "display_date": "c_1279",
+      "category_label": "c_1277",
+      "image": "c_1280",
+      "paragraphs": [
+        {
+          "text": "c_1282"
+        },
+        {
+          "text": "c_1283"
+        },
+        {
+          "text": "c_1284"
+        },
+        {
+          "text": "c_1285"
+        }
+      ]
+    },
+    "news-asfar-signs-strategic-mou-with-ministry-of-municipalities-ar": {
+      "title": "c_1164",
+      "display_date": "c_1165",
+      "category_label": "c_1163",
+      "image": "c_1166",
+      "paragraphs": [
+        {
+          "text": "c_1168"
+        },
+        {
+          "text": "c_1169"
+        },
+        {
+          "text": "c_1170"
+        }
+      ]
+    },
+    "news-asfar-signs-landmark-mou-with-hail-region": {
+      "title": "c_1080",
+      "display_date": "c_1081",
+      "category_label": "c_1079",
+      "image": "c_1082",
+      "paragraphs": [
+        {
+          "text": "c_1084"
+        },
+        {
+          "text": "c_1085"
+        },
+        {
+          "text": "c_1086"
+        },
+        {
+          "text": "c_1087"
+        }
+      ]
+    },
+    "news-baheej-x-yanbu-city-ar": {
+      "title": "c_1403",
+      "display_date": "c_1404",
+      "category_label": "c_1402",
+      "image": "c_1405",
+      "paragraphs": [
+        {
+          "text": "c_1407"
+        },
+        {
+          "text": "c_1408"
+        }
+      ]
+    },
+    "news-the-saudi-tourism-revolution-ar": {
+      "title": "c_1619",
+      "display_date": "c_1620",
+      "category_label": "c_1618",
+      "image": "c_1621",
+      "paragraphs": [
+        {
+          "text": "c_1623"
+        },
+        {
+          "text": "c_1624"
+        },
+        {
+          "text": "c_1625"
+        },
+        {
+          "text": "c_1626"
+        },
+        {
+          "text": "c_1627"
+        },
+        {
+          "text": "c_1628"
+        },
+        {
+          "text": "c_1629"
+        },
+        {
+          "text": "c_1630"
+        },
+        {
+          "text": "c_1631"
+        },
+        {
+          "text": "c_1632"
+        },
+        {
+          "text": "c_1633"
+        },
+        {
+          "text": "c_1634"
+        }
+      ]
+    },
+    "news-cultural-treasures-unveiled-ar": {
+      "title": "c_1455",
+      "display_date": "c_1456",
+      "category_label": "c_1454",
+      "image": "c_1457",
+      "paragraphs": [
+        {
+          "text": "c_1459"
+        },
+        {
+          "text": "c_1460"
+        },
+        {
+          "text": "c_1461"
+        },
+        {
+          "text": "c_1462"
+        },
+        {
+          "text": "c_1463"
+        },
+        {
+          "text": "c_1464"
+        },
+        {
+          "text": "c_1465"
+        }
+      ]
+    },
+    "news-pif-announces-establishment-of-saudi-tourism-investment-company-asfar": {
+      "title": "c_1594",
+      "display_date": "c_1595",
+      "category_label": "c_1593",
+      "image": "c_1596",
+      "paragraphs": [
+        {
+          "text": "c_1598"
+        }
+      ]
+    },
+    "news-cultural-treasures-unveiled": {
+      "title": "c_1486",
+      "display_date": "c_1487",
+      "category_label": "c_1485",
+      "image": "c_1488",
+      "paragraphs": [
+        {
+          "text": "c_1490"
+        },
+        {
+          "text": "c_1491"
+        },
+        {
+          "text": "c_1492"
+        },
+        {
+          "text": "c_1493"
+        },
+        {
+          "text": "c_1494"
+        },
+        {
+          "text": "c_1495"
+        },
+        {
+          "text": "c_1496"
+        }
+      ]
+    },
+    "news-asfar-eastern-province-municipality-and-the-sharqia-development-authority": {
+      "title": "c_857",
+      "display_date": "c_858",
+      "category_label": "c_856",
+      "image": "c_859",
+      "paragraphs": [
+        {
+          "text": "c_861"
+        },
+        {
+          "text": "c_862"
+        },
+        {
+          "text": "c_863"
+        }
+      ]
+    },
+    "news-asfar-signs-partnership-agreement-with-al-ojaimi-holding-to-launch-an-urban-resort-in-hail": {
+      "title": "c_1136",
+      "display_date": "c_1137",
+      "category_label": "c_1135",
+      "image": "c_1138",
+      "paragraphs": [
+        {
+          "text": "c_1140"
+        },
+        {
+          "text": "c_1141"
+        },
+        {
+          "text": "c_1142"
+        },
+        {
+          "text": "c_1143"
+        }
+      ]
+    },
+    "team-ar": {
+      "title": "c_1808",
+      "introduction": "c_1809"
+    },
+    "news-asfar-recognized-as-the-best-new-tourism-investment-company-saudi-arabia-2024-ar": {
+      "title": "c_994",
+      "display_date": "c_995",
+      "category_label": "c_993",
+      "image": "c_996",
+      "paragraphs": [
+        {
+          "text": "c_998"
+        },
+        {
+          "text": "c_999"
+        },
+        {
+          "text": "c_1000"
+        }
+      ]
+    },
+    "news-asfar-and-tamimi-awn-alliance-inaugurate-baheej-to-contribute-in-shaping-saudi-tourism-at-future-hospitality-summit": {
+      "title": "c_755",
+      "display_date": "c_756",
+      "category_label": "c_754",
+      "image": "c_757",
+      "paragraphs": [
+        {
+          "text": "c_759"
+        }
+      ]
+    },
+    "news-asfar-recognized-as-the-best-new-tourism-investment-company-saudi-arabia-2024": {
+      "title": "c_1021",
+      "display_date": "c_1022",
+      "category_label": "c_1020",
+      "image": "c_1023",
+      "paragraphs": [
+        {
+          "text": "c_1025"
+        },
+        {
+          "text": "c_1026"
+        },
+        {
+          "text": "c_1027"
+        },
+        {
+          "text": "c_1028"
+        },
+        {
+          "text": "c_1029"
+        },
+        {
+          "text": "c_1030"
+        },
+        {
+          "text": "c_1031"
+        }
+      ]
+    },
+    "news-baheej-x-royal-commission-for-yanbu": {
+      "title": "c_1369",
+      "display_date": "c_1370",
+      "category_label": "c_1368",
+      "image": "c_1371",
+      "paragraphs": [
+        {
+          "text": "c_1373"
+        },
+        {
+          "text": "c_1374"
+        },
+        {
+          "text": "c_1375"
+        },
+        {
+          "text": "c_1376"
+        },
+        {
+          "text": "c_1377"
+        },
+        {
+          "text": "c_1378"
+        },
+        {
+          "text": "c_1379"
+        },
+        {
+          "text": "c_1380"
+        },
+        {
+          "text": "c_1381"
+        },
+        {
+          "text": "c_1382"
+        }
+      ]
+    }
+  }
+}
