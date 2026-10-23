@@ -82,3 +82,5 @@ Version 1.4.12 adds English and Arabic Taif portfolio entries on the first admin
 Partners supports any number of logos: up to 10 appear in a responsive grid; 11 or more use bundled Swiper.js with swipe, keyboard navigation, arrows and pagination. Add logos under Partners → Add partner. Recommended logo upload: transparent PNG/WebP, 600 × 400 px, centered with padding, under 300 KB; JPG is also supported. No new logo artwork is included.
 
 Version 1.4.13 fixes overlapping partner logos caused by cached positional styles. Partner layout now has its own versioned stylesheet loaded after the deck, explicit positioning resets, and immediate visibility independent of entrance animations. Nine logos remain a grid; Swiper activates only above ten.
+
+Version 1.4.14 repairs Taif homepage selection on the first administrator visit. The installer now updates the parent ACF Project Portfolio group, preserving headings and selection order, instead of writing the child field in isolation. Sites marked as already set up retry once with revision 2; existing project details and Show on Homepage values remain unchanged. Verify with `php tests/taif-setup.php`.

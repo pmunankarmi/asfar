@@ -2,9 +2,9 @@
 /** Add the translated Taif portfolio entries once, preserving editor changes. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 function asfar_install_taif_project() {
- if ( get_option( 'asfar_taif_revision' ) || ! function_exists( 'update_field' ) || ! function_exists( 'pll_save_post_translations' ) || (int) get_option( 'asfar_content_schema_version' ) < 2 ) { return; }
+ if ( (int) get_option( 'asfar_taif_revision' ) >= 2 || ! function_exists( 'update_field' ) || ! function_exists( 'pll_save_post_translations' ) || (int) get_option( 'asfar_content_schema_version' ) < 2 ) { return; }
  asfar_with_content_lock( function () {
-  if ( get_option( 'asfar_taif_revision' ) ) { return; }
+  if ( (int) get_option( 'asfar_taif_revision' ) >= 2 ) { return; }
   $translations = array();
   foreach ( array( 'en' => 'Taif', 'ar' => 'الطائف' ) as $lang => $title ) {
    $existing = get_posts( array( 'post_type' => 'asfar_project', 'post_status' => array( 'publish', 'draft', 'private', 'pending', 'future' ), 'posts_per_page' => 1, 'lang' => $lang, 'meta_key' => 'map_region', 'meta_value' => 'taif', 'suppress_filters' => false ) );
@@ -22,12 +22,19 @@ function asfar_install_taif_project() {
     $ids = is_array( $ids ) ? $ids : array();
     if ( ! in_array( (int) $id, array_map( 'intval', $ids ), true ) ) {
      $ids[] = $id;
-     update_field( 'field_asfar_home_portfolio_portfolio_section_projects', $ids, $home->ID );
+     $section = get_field( 'portfolio_section', $home->ID ) ?: array();
+     $section['projects'] = $ids;
+     // ACF child keys do not include their parent group in the saved meta name.
+     update_field( 'field_asfar_home_portfolio_portfolio_section', $section, $home->ID );
+     $saved = get_post_meta( $home->ID, 'portfolio_section_projects', true );
+     if ( ! is_array( $saved ) || ! in_array( (int) $id, array_map( 'intval', $saved ), true ) ) {
+      throw new RuntimeException( 'Unable to add Taif to the homepage Project Portfolio. Please retry.' );
+     }
     }
    }
   }
   pll_save_post_translations( $translations );
-  update_option( 'asfar_taif_revision', 1, false );
+  update_option( 'asfar_taif_revision', 2, false );
  } );
 }
 add_action( 'admin_init', function () {
