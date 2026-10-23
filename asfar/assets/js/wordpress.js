@@ -93,7 +93,7 @@
    pin.style.top = ((box.height - vb.height * scale) / 2 + y * scale) + 'px';
    label.style.left = (parseFloat(pin.style.left) - 16) + 'px'; label.style.top = pin.style.top; label.textContent = pane.dataset.label;
    map.dataset.hot = pane.dataset.hot;
-   svg.querySelectorAll('[data-region]').forEach(function (region) { region.classList.toggle("mt-is-lit", !hinting && (pane.dataset.hot === 'all' || region.dataset.region === pane.dataset.hot)); });
+   svg.querySelectorAll('[data-region]').forEach(function (region) { region.classList.toggle("mt-is-lit", !hinting && ((pane.dataset.hot === 'all' && panes.some(function (p) { return p.dataset.hot === region.dataset.region; })) || region.dataset.region === pane.dataset.hot)); });
   }
   function go(i) {
    if (!panes.length) return;

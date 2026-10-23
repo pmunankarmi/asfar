@@ -1,6 +1,7 @@
 <?php
 $section = get_field( 'portfolio_section' ) ?: array();
 $projects = asfar_project_rows( $section['projects'] ?? array() );
+if ( ! $projects ) { return; }
 ?>
 <span id="projects"></span>
 <section class="mt-dk-map" id="dkMap">

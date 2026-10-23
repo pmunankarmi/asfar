@@ -9,6 +9,7 @@ function add_action( ...$args ) {}
 function add_shortcode( ...$args ) {}
 function is_singular() { return false; }
 function absint( $value ) { return abs( (int) $value ); }
+function get_post_meta( $id, $name, $single = true ) { global $projects; return 'show_on_homepage' === $name ? ( $projects[$id]['show_on_homepage'] ?? '' ) : ''; }
 function get_post_status( $id ) { return 'publish'; }
 function get_posts( $query ) { global $projects; return array_map( fn( $i ) => (object) array( 'ID' => $i ), array_keys( $projects ) ); }
 function get_the_title( $post ) { global $projects; return $projects[$post->ID]['name']; }

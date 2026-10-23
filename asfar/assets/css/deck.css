@@ -521,8 +521,8 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
 .mt-dk-map__stage .mt-invmap__region[data-region="baha"].mt-is-lit {fill:#C79882}
 .mt-dk-map__stage .mt-invmap__region[data-region="yanbu"].mt-is-lit{fill:#CAE6EA}
 .mt-dk-map__stage .mt-invmap__region[data-region="asir"].mt-is-lit {fill:#B1AAB6}
-/* Keep the Taif area unhighlighted, including the all-investments slide. */
-.mt-dk-map__stage .mt-invmap__region[data-region="taif"].mt-is-lit {fill:transparent}
+/* Taif is highlighted when its visible portfolio entry is selected. */
+.mt-dk-map__stage .mt-invmap__region[data-region="taif"].mt-is-lit {fill:#EEE6DA}
 /* Clickable regions carry a faint wash of their own highlight colour by
    default, so the map reads as interactive; the selected one goes to full
    colour via .mt-is-lit. Taif has no data, so it gets no wash and no pointer. */
@@ -1354,3 +1354,21 @@ html.mt-dk-sliding .mt-nav{opacity:0;pointer-events:none;
 
 /* Hold the page while scroll gestures advance the portfolio regions. */
 html.mt-dk-maplock, html.mt-dk-maplock body { overflow: hidden; }
+
+/* Partner slots support linked logos and any number of admin entries. */
+.mt-dk-partners__card.mt-dk-partners__flexible{display:block;aspect-ratio:auto;padding:30px;min-width:0}
+.mt-partner-grid .mt-partner-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px}
+.mt-partner-slide{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;height:120px;min-width:0}
+.mt-partner-slide a{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
+.mt-dk-partners__flexible .mt-partner-slide img{position:static;inset:auto;width:100%!important;height:100%!important;max-width:180px;max-height:110px;object-fit:contain}
+.mt-partner-swiper{overflow:hidden;min-width:0;position:relative;z-index:1;touch-action:pan-y}
+.mt-partner-swiper .mt-partner-track{display:flex;box-sizing:content-box;transition-property:transform}
+.mt-partner-swiper .mt-partner-slide{flex-shrink:0}
+.mt-partner-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:20px;position:relative;z-index:1}
+.mt-partner-controls button{background:transparent;border:1px solid currentColor;border-radius:50%;width:40px;height:40px;color:var(--dk-ink);cursor:pointer}
+.mt-partner-controls button:disabled{opacity:.35;cursor:default}
+.mt-partner-pagination{width:auto!important;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.mt-partner-pagination .swiper-pagination-bullet{background:var(--dk-ink)}
+[dir="rtl"] .mt-partner-controls button{transform:scaleX(-1)}
+@media(max-width:1023px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:639px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.mt-dk-partners__card.mt-dk-partners__flexible{padding:22px}.mt-partner-slide{height:95px}}

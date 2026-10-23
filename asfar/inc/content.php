@@ -177,12 +177,14 @@ function asfar_project_rows( $ids = null ) {
 	}
 	$rows = array();
 	foreach ( get_posts( $query ) as $project ) {
+		$visibility = get_post_meta( $project->ID, 'show_on_homepage', true );
+		if ( '0' === (string) $visibility ) { continue; }
 		$map_background = asfar_value( 'map_background', $project->ID );
 		$region = asfar_value( 'map_region', $project->ID );
 		$background_url = $map_background ? asfar_attachment_url( $map_background ) : '';
 		if ( ! $background_url ) {
 			// The AMV4 reference shows the rose landscape for Strategic Investments.
-			$background_url = 'all' === $region ? asfar_original_image_url( 'img/taif-roses.jpg' ) : asfar_attachment_url( get_post_thumbnail_id( $project ) );
+			$background_url = in_array( $region, array( 'all', 'taif' ), true ) ? asfar_original_image_url( 'img/taif-roses.jpg' ) : asfar_attachment_url( get_post_thumbnail_id( $project ) );
 		}
 		$rows[] = array(
 			'id' => $project->ID,

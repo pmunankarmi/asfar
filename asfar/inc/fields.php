@@ -206,6 +206,7 @@ add_action( 'acf/init', function () {
 		) ),
 	), array( array( array( 'param' => 'taxonomy', 'operator' => '==', 'value' => 'team_department' ) ) ) );
 	asfar_register_field_group( 'project', 'Project Details', array(
+		asfar_field( 'show_on_homepage', 'Show on Homepage', 'true_false', array( 'default_value' => 1, 'ui' => 1, 'instructions' => 'Show this project in the homepage portfolio. Hidden projects keep their detail pages. Set separately for each translation.' ) ),
 		asfar_text( 'company', 'Investment Company' ),
 		asfar_text( 'headline', 'Project Headline' ),
 		asfar_text( 'summary', 'Project Summary', true ),
@@ -245,7 +246,7 @@ add_action( 'acf/init', function () {
 		acf_add_options_page( array( 'page_title' => 'Partners', 'menu_title' => 'Partners', 'menu_slug' => 'asfar-partners', 'post_id' => 'asfar_partners', 'icon_url' => 'dashicons-groups', 'capability' => 'manage_options', 'redirect' => false ) );
 		asfar_register_field_group( 'settings', 'Branding, Footer and Form Settings', asfar_theme_fields(), array( array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'asfar-settings' ) ) ) );
 		asfar_register_field_group( 'partners', 'Partner Logos', array(
-			asfar_repeater( 'partner_logos', 'Partners', array( asfar_text( 'name', 'Partner Name' ), asfar_image_field( 'logo', 'Partner Logo' ), asfar_field( 'website', 'Partner Website', 'url' ) ), 'Add partner' ),
+			asfar_repeater( 'partner_logos', 'Partners', array( asfar_text( 'name', 'Partner Name' ), array_merge( asfar_image_field( 'logo', 'Partner Logo' ), array( 'instructions' => 'Recommended: transparent PNG or WebP, 600 × 400 px (3:2 canvas), under 300 KB. Center the logo with clear padding; avoid background colors. JPG is also supported. Add any number of logos; more than 10 automatically enables the swipe slider.', 'mime_types' => 'png,webp,jpg,jpeg' ) ), asfar_field( 'website', 'Partner Website', 'url' ) ), 'Add partner' ),
 		), array( array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'asfar-partners' ) ) ) );
 	}
 } );

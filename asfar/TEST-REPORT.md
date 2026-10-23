@@ -72,3 +72,11 @@ Organized existing fields with standard ACF tabs, retaining their names and keys
 Compared all supplied HTML and assets against the prior reference. Ported two banner modes, map pointer/hint states, language/menu alignment, article return links and the Arabic heading correction. The isolated migration test verifies exact-match correction, preservation of custom headings/other fields and repeat-run safety. PHP and JavaScript syntax and archive integrity pass.
 
 Browser verification uses a source-derived static preview with the actual theme scripts/styles, not an installed WordPress/ACF environment. Bilingual banner selection, actual map pointer clicks and keyboard selection, mobile reduced-motion navigation and viewport width pass without JavaScript errors. Staging installation and ACF Pro editor verification remain for after the administrator installs the release.
+
+## 1.4.12 — Taif, project visibility and partner Swiper
+
+- PHP syntax, JavaScript syntax and package integrity passed through `tools/package.py v1.4.12`.
+- Partner template fixtures with 0, 9, 10, 11 and 16 valid logos verified the Swiper threshold and rendered logo count.
+- Project data fixture verified legacy entries remain visible, saved `0` is hidden, and saved `1` is visible.
+- Headless Chrome verified bundled Swiper initialization, next navigation, responsive slide count and no horizontal page overflow at 390px and 1440px in LTR and RTL.
+- The Taif administrator migration requires ACF Pro, Polylang and the existing imported content. It has not been exercised against a running WordPress database in this session. New statistics are intentionally left empty for editorial entry.

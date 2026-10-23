@@ -76,3 +76,7 @@ Version 1.4.10 gives opening banner headings and film captions the same measured
 Version 1.4.11 removes the hero film subtitle and rotating destination name in both languages, keeping the buttons spaced beneath the main heading. News listings now have a translated Back to Home button returning to homepage news.
 
 The 1.4.11 map also removes the yellow Taif region fill from the portfolio, including the Strategic Investments overview, while retaining other region colors and map interactions.
+
+Version 1.4.12 adds English and Arabic Taif portfolio entries on the first administrator visit. Edit Projects → Taif to fill statistics and toggle Show on Homepage independently for each translation. Existing projects remain visible by default. Homepage → Project Portfolio controls selection and order.
+
+Partners supports any number of logos: up to 10 appear in a responsive grid; 11 or more use bundled Swiper.js with swipe, keyboard navigation, arrows and pagination. Add logos under Partners → Add partner. Recommended logo upload: transparent PNG/WebP, 600 × 400 px, centered with padding, under 300 KB; JPG is also supported. No new logo artwork is included.

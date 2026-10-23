@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASFAR_VERSION', '1.4.11' );
+define( 'ASFAR_VERSION', '1.4.12' );
 
 // Polylang is already loaded before WordPress loads the theme.
 // Avoid registering duplicate hooks if another copy or Polylang Pro is active.
@@ -21,6 +21,7 @@ $asfar_modules = array(
 	'content-order',
 	'list-order',
 	'homepage-posts',
+	'project-visibility',
 	'team-types',
 	'fields',
 	'media',
@@ -59,6 +60,11 @@ add_filter( 'use_widgets_block_editor', '__return_false' );
 
 add_action( 'wp_enqueue_scripts', function () {
 	$uri = get_template_directory_uri();
+	if ( is_page_template( 'templates/template-home.php' ) && count( array_filter( asfar_rows( 'partner_logos', 'asfar_partners' ), function ( $row ) { return ! empty( $row['logo'] ); } ) ) > 10 ) {
+		wp_enqueue_style( 'asfar-swiper', $uri . '/assets/css/swiper-bundle.min.css', array(), '11.2.10' );
+		wp_enqueue_script( 'asfar-swiper', $uri . '/assets/js/vendor/swiper-bundle.min.js', array(), '11.2.10', true );
+		wp_enqueue_script( 'asfar-partners', $uri . '/assets/js/partners.js', array( 'asfar-swiper' ), ASFAR_VERSION, true );
+	}
 	wp_enqueue_style( 'asfar-app', $uri . '/assets/css/app.css', array(), ASFAR_VERSION );
 	wp_enqueue_style( 'asfar-deck', $uri . '/assets/css/deck.css', array( 'asfar-app' ), ASFAR_VERSION );
 	if ( ! is_page_template( array( 'templates/template-home.php', 'templates/template-supplier.php' ) ) ) {
