@@ -325,19 +325,20 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
 /* r8's About body runs to two paragraphs; space them on the deck's own
    heading-to-body rhythm (11.2 deck px = 0.875vw) */
 .mt-dk-about__card p + p{margin-top:.875vw}
-/* same light display treatment as the card heading, in gold */
-.mt-dk-about__pif{grid-column:2;display:block;text-align:end;
+/* Separate the emblem from the editable, translated ownership label. */
+.mt-dk-about__pif{grid-column:2;display:flex;align-items:center;gap:.6em;
+  justify-self:end;max-width:100%;margin-top:1.234vw;
   font-family:var(--dk-readex);font-weight:500;
-  font-size:clamp(16px,1.8805vw,58px);line-height:1.2;letter-spacing:0;
-  color:var(--dk-gold);
-  margin-top:1.234vw}
-/* the real PIF lockup (apif-logo.png is white-only, so render its shape in the
-   brand gold via a mask); replaces the plain gold text */
-.mt-dk-about__pif{color:transparent;font-size:0;line-height:0;justify-self:end;
-  width:clamp(120px,13vw,184px);aspect-ratio:645/118;
-  background-color:var(--dk-gold);
-  -webkit-mask:var(--asfar-image-apif-logo) no-repeat right center/contain;
-  mask:var(--asfar-image-apif-logo) no-repeat right center/contain}
+  font-size:clamp(14px,1.6vw,26px);line-height:1.4;color:var(--dk-gold)}
+.mt-dk-about__pif-icon{position:relative;display:block;flex:0 0 2em;
+  width:2em;height:2em;overflow:hidden}
+/* The supplied lockup is 645 x 118. Clip its first 118px to retain only
+   the original emblem; the baked-in English wording stays outside the icon. */
+.mt-dk-about__pif-icon::before{content:"";position:absolute;left:0;top:0;
+  width:546.61017%;height:100%;background-color:var(--dk-gold);
+  -webkit-mask:var(--asfar-image-apif-logo) no-repeat left center/100% 100%;
+  mask:var(--asfar-image-apif-logo) no-repeat left center/100% 100%}
+.mt-dk-about__pif-label{min-width:0;overflow-wrap:break-word}
 /* the deck gives both vision columns the same width (470.5 each) — hold the
    even split so the tan card keeps the About card's proportions on any screen */
 /* ── OUR VISION — its own beige band between the cream About section
@@ -1297,7 +1298,7 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
 [dir="rtl"] .mt-dk-about__card h3,[dir="rtl"] .mt-dk-vision__tan h3{font-weight:300}
 [dir="rtl"] .mt-dk-vision__card h3{font-weight:400}
 [dir="rtl"] .mt-dk-about__pif{font-family:var(--dk-readex-ar);
-  font-weight:500;font-size:clamp(14px,1.6vw,32px)}
+  font-weight:500;font-size:clamp(14px,1.6vw,26px)}
 [dir="rtl"] .mt-dk-about__card p,[dir="rtl"] .mt-dk-vision__tan p,
 [dir="rtl"] .mt-dk-vision__card p{font-family:var(--dk-readex-ar);font-weight:300}
 [dir="rtl"] .mt-dk-map__region{letter-spacing:0}

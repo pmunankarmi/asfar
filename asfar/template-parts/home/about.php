@@ -13,7 +13,10 @@
 					<p><?php echo asfar_lines( get_sub_field( 'text' ) ); ?></p>
 				<?php endwhile; ?>
 			</div>
-			<span class="mt-dk-about__pif" role="img" aria-label="<?php echo esc_attr( get_sub_field( 'ownership' ) ); ?>"><?php echo esc_html( get_sub_field( 'ownership' ) ); ?></span>
+			<div class="mt-dk-about__pif">
+				<span class="mt-dk-about__pif-icon" aria-hidden="true"></span>
+				<span class="mt-dk-about__pif-label"><?php echo esc_html( get_sub_field( 'ownership' ) ); ?></span>
+			</div>
 		</div>
 	</div>
 </section>
