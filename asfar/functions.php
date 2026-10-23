@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASFAR_VERSION', '1.4.12' );
+define( 'ASFAR_VERSION', '1.4.13' );
 
 // Polylang is already loaded before WordPress loads the theme.
 // Avoid registering duplicate hooks if another copy or Polylang Pro is active.
@@ -67,6 +67,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	}
 	wp_enqueue_style( 'asfar-app', $uri . '/assets/css/app.css', array(), ASFAR_VERSION );
 	wp_enqueue_style( 'asfar-deck', $uri . '/assets/css/deck.css', array( 'asfar-app' ), ASFAR_VERSION );
+	if ( is_page_template( 'templates/template-home.php' ) ) {
+		wp_enqueue_style( 'asfar-partners', $uri . '/assets/css/partners.css', array( 'asfar-deck' ), ASFAR_VERSION );
+	}
 	if ( ! is_page_template( array( 'templates/template-home.php', 'templates/template-supplier.php' ) ) ) {
 		wp_enqueue_style( 'asfar-article', $uri . '/assets/css/deck-article.css', array( 'asfar-deck' ), ASFAR_VERSION );
 	}

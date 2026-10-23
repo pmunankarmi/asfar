@@ -80,3 +80,7 @@ Browser verification uses a source-derived static preview with the actual theme 
 - Project data fixture verified legacy entries remain visible, saved `0` is hidden, and saved `1` is visible.
 - Headless Chrome verified bundled Swiper initialization, next navigation, responsive slide count and no horizontal page overflow at 390px and 1440px in LTR and RTL.
 - The Taif administrator migration requires ACF Pro, Polylang and the existing imported content. It has not been exercised against a running WordPress database in this session. New statistics are intentionally left empty for editorial entry.
+
+## 1.4.13 — Partner logo overlap regression
+
+The isolated `tests/partners-preview.php` fixture deliberately inserts the legacy first-child absolute-positioning rule. Browser verification confirmed all nine images load, remain visible without entrance JavaScript, and have non-overlapping bounding boxes in a two-row desktop grid. At 390px RTL, nine images remain a grid with no overlapping boxes or page overflow. With eleven images, Swiper initializes and the Next button changes the track transform. Partner image slots alternate linked and unlinked markup. PHP/JS syntax and package integrity checks pass.

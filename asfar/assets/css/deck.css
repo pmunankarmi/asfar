@@ -1074,31 +1074,6 @@ html.mt-is-attop .mt-nav:not(.mt-is-scrolled){
   -webkit-mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%;
   mask:var(--asfar-image-asfar-frond-about) no-repeat center/100% 100%}
 [dir="rtl"] .mt-dk-partners__card::after{transform:scaleX(-1)}
-.mt-dk-partners__card img{position:absolute;z-index:1;
-  object-fit:contain;object-position:center;display:block;
-  filter:none;opacity:1;max-width:none;max-height:none}
-/* slot order follows the deck, not the DOM: p1 gold mark, p6 rikaz, p4 awn,
-   p7 husmak, p8 nmr, p3 accor/mantis, p5 tamimi, p2 kerten */
-.mt-dk-partners__card img:nth-child(1){inset-inline-start:5.832%;top:13.284%;width:7.529%;height:28.044%}
-.mt-dk-partners__card img:nth-child(6){inset-inline-start:19.724%;top:11.809%;width:14.740%;height:30.996%}
-/* AWN is a stacked lockup and the deck gives it a double-height slot, so it
-   straddled both logo rows. Brought onto the top row at the tallest single-row
-   height (38.377%, matching Al Tamimi) and centred on that row's centre line
-   at 27.31%; the width follows the artwork's own 0.6875 aspect. */
-.mt-dk-partners__card img:nth-child(4){inset-inline-start:42.483%;top:8.121%;width:7.612%;height:38.377%}
-.mt-dk-partners__card img:nth-child(7){inset-inline-start:59.703%;top:18.446%;width:13.361%;height:17.343%}
-.mt-dk-partners__card img:nth-child(8){inset-inline-start:79.745%;top:19.187%;width:16.225%;height:16.236%}
-.mt-dk-partners__card img:nth-child(3){inset-inline-start:4.348%;top:54.614%;width:10.498%;height:30.996%}
-.mt-dk-partners__card img:nth-child(5){inset-inline-start:20.573%;top:50.920%;width:13.043%;height:38.377%}
-/* Kerten slides left into the gap AWN left behind on the lower row */
-.mt-dk-partners__card img:nth-child(2){inset-inline-start:37.964%;top:61.995%;width:16.649%;height:16.236%}
-/* IHCC joins the lower row. The deck's card is 943 x 271.07, so a logo of
-   height h% is 2.283 (its own aspect) x h x 271.07/943 = 0.6563h wide. At the
-   row's 17.343 height that is 11.38 wide, centred on the row's 70.11 centre
-   line (top 61.44) and started at 59.703 so it columns with Husaak above it —
-   clear of Kerten's 54.61 edge and of the frond that begins at 78.216. */
-.mt-dk-partners__card img:nth-child(9){inset-inline-start:59.703%;top:61.440%;width:11.380%;height:17.343%}
-
 @media (max-width:960px){
   .mt-dk-partners{padding-block:clamp(40px,10vw,80px) 0;overflow:visible}
   .mt-dk-partners__grid{display:grid}
@@ -1354,21 +1329,3 @@ html.mt-dk-sliding .mt-nav{opacity:0;pointer-events:none;
 
 /* Hold the page while scroll gestures advance the portfolio regions. */
 html.mt-dk-maplock, html.mt-dk-maplock body { overflow: hidden; }
-
-/* Partner slots support linked logos and any number of admin entries. */
-.mt-dk-partners__card.mt-dk-partners__flexible{display:block;aspect-ratio:auto;padding:30px;min-width:0}
-.mt-partner-grid .mt-partner-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px}
-.mt-partner-slide{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;height:120px;min-width:0}
-.mt-partner-slide a{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
-.mt-dk-partners__flexible .mt-partner-slide img{position:static;inset:auto;width:100%!important;height:100%!important;max-width:180px;max-height:110px;object-fit:contain}
-.mt-partner-swiper{overflow:hidden;min-width:0;position:relative;z-index:1;touch-action:pan-y}
-.mt-partner-swiper .mt-partner-track{display:flex;box-sizing:content-box;transition-property:transform}
-.mt-partner-swiper .mt-partner-slide{flex-shrink:0}
-.mt-partner-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:20px;position:relative;z-index:1}
-.mt-partner-controls button{background:transparent;border:1px solid currentColor;border-radius:50%;width:40px;height:40px;color:var(--dk-ink);cursor:pointer}
-.mt-partner-controls button:disabled{opacity:.35;cursor:default}
-.mt-partner-pagination{width:auto!important;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.mt-partner-pagination .swiper-pagination-bullet{background:var(--dk-ink)}
-[dir="rtl"] .mt-partner-controls button{transform:scaleX(-1)}
-@media(max-width:1023px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:639px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.mt-dk-partners__card.mt-dk-partners__flexible{padding:22px}.mt-partner-slide{height:95px}}
