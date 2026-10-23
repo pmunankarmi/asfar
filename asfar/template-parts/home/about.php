@@ -15,7 +15,7 @@
 			</div>
 			<div class="mt-dk-about__pif">
 				<span class="mt-dk-about__pif-icon" aria-hidden="true"></span>
-				<span class="mt-dk-about__pif-label"><?php echo esc_html( get_sub_field( 'ownership' ) ); ?></span>
+				<span class="mt-dk-about__pif-label"><?php echo esc_html( 'ar' === asfar_language() ? asfar_amv4_label( 'A PIF Company' ) : get_sub_field( 'ownership' ) ); ?></span>
 			</div>
 		</div>
 	</div>

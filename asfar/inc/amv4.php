@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function asfar_amv4_labels() {
  return array(
+  'A PIF Company' => 'إحدى شركات صندوق الاستثمارات العامة',
   'Back to Home' => 'العودة إلى الرئيسية',
   'Overview' => 'نظرة عامة',
   'The journey' => 'الرحلة',

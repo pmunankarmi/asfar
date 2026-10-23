@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.15 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.16 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.15` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.16` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -86,3 +86,5 @@ Version 1.4.13 fixes overlapping partner logos caused by cached positional style
 Version 1.4.14 repairs Taif homepage selection on the first administrator visit. The installer now updates the parent ACF Project Portfolio group, preserving headings and selection order, instead of writing the child field in isolation. Sites marked as already set up retry once with revision 2; existing project details and Show on Homepage values remain unchanged. Verify with `php tests/taif-setup.php`.
 
 Version 1.4.15 separates the About section’s PIF emblem from its editable ownership label. Only the emblem from the existing Media Library artwork is shown as an icon; English and Arabic labels render as normal text without the former full-lockup mask.
+
+Version 1.4.16 uses «إحدى شركات صندوق الاستثمارات العامة» for the Arabic About-section PIF label, registered with Polylang string translations.
