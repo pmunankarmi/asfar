@@ -219,6 +219,10 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 .mt-news-back:hover { background: var(--dk-teal, #275a61); color: #fff; }
 .mt-news-back:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
+.mt-dk-team {
+	background: #fff;
+}
+
 /* Team copy sits directly on the section background, without a title card. */
 .mt-dk-team .mt-dk-team__panel {
 	background: transparent;

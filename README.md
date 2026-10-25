@@ -89,4 +89,4 @@ Version 1.4.15 separates the About section’s PIF emblem from its editable owne
 
 Version 1.4.16 uses «إحدى شركات صندوق الاستثمارات العامة» for the Arabic About-section PIF label, registered with Polylang string translations.
 
-Version 1.4.17 matches partner slider arrows to the news controls, adds the curved transition into Partners, removes the team heading card, and keeps the Arabic strategic investment map heading on one line.
+Version 1.4.17 matches partner slider arrows to the news controls, adds the curved transition into Partners, gives the team section a white background without a heading card, and keeps the Arabic strategic investment map heading on one line.
