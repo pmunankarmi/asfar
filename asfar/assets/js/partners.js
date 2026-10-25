@@ -9,7 +9,6 @@
    speed: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 400,
    watchOverflow: true, keyboard: { enabled: true, onlyInViewport: true },
    navigation: { prevEl: card.querySelector('.mt-partner-prev'), nextEl: card.querySelector('.mt-partner-next') },
-   pagination: { el: card.querySelector('.mt-partner-pagination'), clickable: true },
    a11y: { enabled: true },
    breakpoints: { 640: { slidesPerView: 3, slidesPerGroup: 3 }, 1024: { slidesPerView: 5, slidesPerGroup: 5 } }
   });

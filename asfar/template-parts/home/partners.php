@@ -28,7 +28,6 @@ if ( ! $logos ) { return; }
        <path d="M15 4 7 12l8 8" />
       </svg>
      </button>
-     <div class="mt-partner-pagination"></div>
      <button type="button" class="mt-partner-next mt-dk-arrow" aria-label="<?php echo esc_attr( asfar_language() === 'ar' ? 'الشركاء التاليون' : 'Next partners' ); ?>">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
        <path d="M9 4l8 8-8 8" />

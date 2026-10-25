@@ -11,8 +11,6 @@
 .mt-partner-swiper .mt-partner-track{display:flex;box-sizing:content-box;transition-property:transform}
 .mt-partner-swiper .mt-partner-slide{flex-shrink:0}
 .mt-partner-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:20px;position:relative;z-index:1}
-.mt-partner-pagination{width:auto!important;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.mt-partner-pagination .swiper-pagination-bullet{background:var(--dk-ink)}
 [dir="rtl"] .mt-partner-controls button{transform:scaleX(-1)}
 @media(max-width:1023px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:639px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}#partners .mt-dk-partners__card.mt-dk-partners__flexible{padding:22px}.mt-partner-slide{height:95px}}
