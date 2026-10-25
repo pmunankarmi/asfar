@@ -5,6 +5,7 @@ $slider = count( $logos ) > 10;
 if ( ! $logos ) { return; }
 
 ?>
+<?php get_template_part( 'template-parts/wave', null, array( 'color' => '#FCF7EE', 'background' => '#F2ECE3' ) ); ?>
 <section class="mt-dk-partners" id="partners">
  <div class="mt-dk-wrap mt-dk-partners__grid">
   <h2 class="mt-dk-label mt-dk-rise"><?php echo asfar_lines( $section['heading'] ?? '' ); ?></h2>
@@ -22,9 +23,17 @@ if ( ! $logos ) { return; }
    </div>
    <?php if ( $slider ) : ?>
     <div class="mt-partner-controls">
-     <button type="button" class="mt-partner-prev" aria-label="<?php echo esc_attr( asfar_language() === 'ar' ? 'الشركاء السابقون' : 'Previous partners' ); ?>">&#8592;</button>
+     <button type="button" class="mt-partner-prev mt-dk-arrow" aria-label="<?php echo esc_attr( asfar_language() === 'ar' ? 'الشركاء السابقون' : 'Previous partners' ); ?>">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+       <path d="M15 4 7 12l8 8" />
+      </svg>
+     </button>
      <div class="mt-partner-pagination"></div>
-     <button type="button" class="mt-partner-next" aria-label="<?php echo esc_attr( asfar_language() === 'ar' ? 'الشركاء التاليون' : 'Next partners' ); ?>">&#8594;</button>
+     <button type="button" class="mt-partner-next mt-dk-arrow" aria-label="<?php echo esc_attr( asfar_language() === 'ar' ? 'الشركاء التاليون' : 'Next partners' ); ?>">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+       <path d="M9 4l8 8-8 8" />
+      </svg>
+     </button>
     </div>
    <?php endif; ?>
   </div>

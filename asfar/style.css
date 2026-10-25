@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.16
+Version: 1.4.17
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -218,3 +218,21 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 [dir="rtl"] .mt-news-back::before { content: '\2192'; }
 .mt-news-back:hover { background: var(--dk-teal, #275a61); color: #fff; }
 .mt-news-back:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* Team copy sits directly on the section background, without a title card. */
+.mt-dk-team .mt-dk-team__panel {
+	background: transparent;
+	border-radius: 0;
+	padding-inline: 0;
+}
+/* Fit the Arabic overview label within its existing map information panel. */
+[dir="rtl"] .mt-asfar-portfolio-pane[data-hot="all"] .mt-dk-map__region {
+	font-size: clamp(12px, 1.55vw, 44px);
+	white-space: nowrap;
+	letter-spacing: 0;
+}
+@media (max-width: 960px) {
+	[dir="rtl"] .mt-asfar-portfolio-pane[data-hot="all"] .mt-dk-map__region {
+		font-size: clamp(12px, 3.2vw, 24px);
+	}
+}
