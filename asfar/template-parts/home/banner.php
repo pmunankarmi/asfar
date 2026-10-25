@@ -1,5 +1,7 @@
 <?php
 $animation = get_field( 'banner_animation' ) ?: array();
+$profile_id = (int) asfar_option( 'company_profile_pdf' );
+$profile_url = $profile_id && 'application/pdf' === get_post_mime_type( $profile_id ) ? wp_get_attachment_url( $profile_id ) : '';
 $marks = array();
 while ( have_rows( 'banner_animation' ) ) {
 	the_row();
@@ -50,7 +52,15 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 				<?php if ( get_sub_field( 'video' ) && get_sub_field( 'video_label' ) ) : ?>
 					<button type="button" class="mt-btn mt-btn--gold" data-video="<?php echo esc_url( asfar_attachment_url( get_sub_field( 'video' ) ) ); ?>"><?php echo esc_html( get_sub_field( 'video_label' ) ); ?></button>
 				<?php endif; ?>
-				<?php asfar_button( get_sub_field( 'button' ), 'mt-btn mt-btn--line-light' ); ?>
+				<?php
+				if ( $profile_url ) {
+					$profile_button = get_sub_field( 'button' ) ?: array();
+					$profile_button['url'] = $profile_url;
+					$profile_button['target'] = '_blank';
+					$profile_button['title'] = ( $profile_button['title'] ?? '' ) ?: ( 'ar' === asfar_language() ? 'الملف التعريفي' : 'Company profile' );
+					asfar_button( $profile_button, 'mt-btn mt-btn--line-light' );
+				}
+				?>
 				<?php endif; ?>
 				<?php endwhile; ?>
 			</div>

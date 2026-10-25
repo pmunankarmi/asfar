@@ -132,6 +132,12 @@ function asfar_home_field_groups() {
 
 function asfar_theme_fields() {
 	$fields = array(
+		asfar_field( 'company_profile_pdf', 'Company Profile PDF', 'file', array(
+			'return_format' => 'id',
+			'mime_types' => 'pdf',
+			'library' => 'all',
+			'instructions' => 'Upload or select the company profile PDF. The homepage Company Profile button opens it in a new tab in English and Arabic. The button is hidden until a PDF is selected.',
+		) ),
 		asfar_image_field( 'site_logo', 'Site Logo' ),
 		asfar_image_field( 'dark_logo', 'Dark Logo Variant' ),
 		asfar_image_field( 'footer_logo', 'Footer Logo' ),
@@ -152,6 +158,7 @@ function asfar_theme_fields() {
 	$by_name = array_column( $fields, null, 'name' );
 	$tabs = array(
 		'branding' => array( 'Branding', array( 'site_logo', 'dark_logo', 'site_name' ) ),
+		'company_profile' => array( 'Company Profile', array( 'company_profile_pdf' ) ),
 		'footer' => array( 'Footer & Contact', array( 'footer_logo', 'ownership_logo', 'ownership_label', 'contact_email', 'social_links', 'copyright', 'contact_button', 'back_top' ) ),
 		'form' => array( 'Contact Form', array( 'notification_recipients', 'form_subject', 'name_label', 'name_placeholder', 'email_label', 'email_placeholder', 'message_label', 'message_placeholder', 'send_label', 'form_success', 'form_error', 'form_invalid' ) ),
 		'interface' => array( 'Interface Labels', array( 'home_label', 'primary_label', 'open_menu', 'close_menu', 'menu_label', 'close', 'bio_empty', 'bio_label', 'not_found', 'back_home', 'archive_title', 'previous_label', 'next_label', 'banner_label' ) ),
