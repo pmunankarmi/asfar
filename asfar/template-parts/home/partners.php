@@ -7,7 +7,8 @@ if ( ! $logos ) { return; }
 ?>
 <?php get_template_part( 'template-parts/wave', null, array( 'color' => '#FCF7EE', 'background' => '#FFFFFF' ) ); ?>
 <section class="mt-dk-partners" id="partners">
- <div class="mt-dk-wrap mt-dk-partners__grid">
+ <div class="mt-dk-wrap">
+  <div class="mt-dk-partners__box mt-dk-partners__grid">
   <h2 class="mt-dk-label mt-dk-rise"><?php echo asfar_lines( $section['heading'] ?? '' ); ?></h2>
   <div class="mt-dk-partners__card mt-dk-partners__flexible mt-dk-rise">
    <div class="<?php echo $slider ? 'mt-partner-swiper' : 'mt-partner-grid'; ?>" <?php echo $slider ? 'data-partner-slider' : ''; ?>>
@@ -35,6 +36,7 @@ if ( ! $logos ) { return; }
      </button>
     </div>
    <?php endif; ?>
+  </div>
   </div>
  </div>
 </section>

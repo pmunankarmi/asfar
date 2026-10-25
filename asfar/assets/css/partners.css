@@ -14,3 +14,22 @@
 [dir="rtl"] .mt-partner-controls button{transform:scaleX(-1)}
 @media(max-width:1023px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:639px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}#partners .mt-dk-partners__card.mt-dk-partners__flexible{padding:22px}.mt-partner-slide{height:95px}}
+
+/* Keep the heading and logos together on one continuous card. */
+#partners .mt-dk-partners__box {
+ background: var(--dk-card);
+ border-radius: 10px;
+ padding: clamp(22px, 2.4vw, 40px);
+ align-items: center;
+ gap: 24px;
+}
+#partners .mt-dk-partners__box > .mt-dk-label {
+ margin: 0;
+}
+#partners .mt-dk-partners__card.mt-dk-partners__flexible {
+ background: transparent;
+ padding: 0;
+}
+.mt-dk-partners {
+ padding-bottom: clamp(32px, 4vw, 64px);
+}
