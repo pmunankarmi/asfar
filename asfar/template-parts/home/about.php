@@ -9,9 +9,7 @@
 			<div class="mt-dk-card mt-dk-about__card mt-dk-rise">
 				<span class="mt-dk-about__frond" aria-hidden="true"></span>
 				<h3><?php echo asfar_lines( get_sub_field( 'card_heading' ) ); ?></h3>
-				<?php while ( have_rows( 'paragraphs' ) ) : the_row(); ?>
-					<p><?php echo asfar_lines( get_sub_field( 'text' ) ); ?></p>
-				<?php endwhile; ?>
+				<?php echo wp_kses_post( get_sub_field( 'body_content' ) ); ?>
 			</div>
 			<div class="mt-dk-about__pif">
 				<span class="mt-dk-about__pif-icon" aria-hidden="true"></span>

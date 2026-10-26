@@ -5,7 +5,7 @@ $slider = count( $logos ) > 10;
 if ( ! $logos ) { return; }
 
 ?>
-<?php get_template_part( 'template-parts/wave', null, array( 'color' => '#FCF7EE', 'background' => '#FFFFFF' ) ); ?>
+<?php get_template_part( 'template-parts/wave', null, array( 'color' => '#FCF7EE', 'background' => '#FCF7EE' ) ); ?>
 <section class="mt-dk-partners" id="partners">
  <div class="mt-dk-wrap">
   <div class="mt-dk-partners__box mt-dk-partners__grid">

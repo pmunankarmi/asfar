@@ -70,7 +70,7 @@ function asfar_home_field_groups() {
 				asfar_text( 'heading', 'Section Heading', true ),
 				asfar_text( 'subtitle', 'Company Description', true ),
 				asfar_text( 'card_heading', 'Card Heading', true ),
-				asfar_repeater( 'paragraphs', 'About Paragraphs', array( asfar_text( 'text', 'Paragraph', true ) ), 'Add paragraph' ),
+				asfar_field( 'body_content', 'About Content', 'wysiwyg', array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 1 ) ),
 				asfar_text( 'ownership', 'Ownership Label' ),
 			) ),
 		) ),
@@ -231,7 +231,7 @@ add_action( 'acf/init', function () {
 	), array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'templates/template-faq.php' ) ) ) );
 	asfar_register_field_group( 'page', 'Page Content', array(
 		asfar_text( 'introduction', 'Page Introduction', true ),
-		asfar_repeater( 'paragraphs', 'Page Paragraphs', array( asfar_text( 'text', 'Paragraph', true ) ), 'Add paragraph' ),
+		asfar_field( 'body_content', 'Page Content', 'wysiwyg', array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 1 ) ),
 	), array( array(
 		array( 'param' => 'post_type', 'operator' => '==', 'value' => 'page' ),
 		array( 'param' => 'page_template', 'operator' => '!=', 'value' => 'templates/template-home.php' ),
@@ -245,7 +245,7 @@ add_action( 'acf/init', function () {
 		) ),
 		asfar_text( 'display_date', 'Display Date' ),
 		asfar_text( 'category_label', 'Category Label' ),
-		asfar_repeater( 'paragraphs', 'Article Paragraphs', array( asfar_text( 'text', 'Paragraph', true ) ), 'Add paragraph' ),
+		asfar_field( 'body_content', 'Article Content', 'wysiwyg', array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 1 ) ),
 		asfar_field( 'external_url', 'External Article URL', 'url' ),
 	), array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'post' ) ) ) );
 	if ( function_exists( 'acf_add_options_page' ) ) {

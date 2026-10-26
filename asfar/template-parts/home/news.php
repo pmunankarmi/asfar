@@ -23,5 +23,5 @@ if ( ! $news->have_posts() ) {
 			<?php asfar_button( $section['button'] ?? array() ); ?>
 		</div>
 	</div>
-	<?php get_template_part( 'template-parts/wave', null, array( 'color' => '#FFFFFF' ) ); ?>
+	<?php get_template_part( 'template-parts/wave', null, array( 'color' => '#FCF7EE' ) ); ?>
 </section>

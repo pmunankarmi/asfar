@@ -18,9 +18,7 @@ get_header();
 						<p class="mt-article__date"><?php echo esc_html( get_field( 'display_date' ) ?: get_the_date() ); ?></p>
 					</header>
 					<figure class="mt-article__figure"><?php the_post_thumbnail( 'large' ); ?></figure>
-					<?php while ( have_rows( 'paragraphs' ) ) : the_row(); ?>
-						<p class="<?php echo 1 === get_row_index() ? 'mt-article__lede' : ''; ?>"><?php echo asfar_lines( get_sub_field( 'text' ) ); ?></p>
-					<?php endwhile; ?>
+					<?php echo wp_kses_post( get_field( 'body_content' ) ); ?>
 					<?php the_content(); ?>
 					<?php if ( get_field( 'external_url' ) ) : ?>
 						<a href="<?php echo esc_url( get_field( 'external_url' ) ); ?>"><?php the_title(); ?></a>

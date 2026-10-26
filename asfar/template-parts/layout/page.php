@@ -10,9 +10,7 @@ get_header();
 	<?php while ( have_posts() ) : the_post(); ?>
 		<h1><?php the_title(); ?></h1>
 		<p><?php echo asfar_lines( get_field( 'introduction' ) ); ?></p>
-		<?php while ( have_rows( 'paragraphs' ) ) : the_row(); ?>
-			<p><?php echo asfar_lines( get_sub_field( 'text' ) ); ?></p>
-		<?php endwhile; ?>
+		<?php echo wp_kses_post( get_field( 'body_content' ) ); ?>
 		<?php the_content(); ?>
 	<?php endwhile; ?>
 </main>
