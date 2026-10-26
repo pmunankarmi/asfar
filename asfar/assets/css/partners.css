@@ -17,7 +17,7 @@
 
 /* Keep the heading and logos together on one continuous card. */
 #partners .mt-dk-partners__box {
- background: var(--dk-card);
+ background: var(--dk-cream);
  border-radius: 10px;
  padding: clamp(22px, 2.4vw, 40px);
  align-items: center;
@@ -31,5 +31,6 @@
  padding: 0;
 }
 .mt-dk-partners {
+ background: var(--dk-card);
  padding-bottom: clamp(32px, 4vw, 64px);
 }

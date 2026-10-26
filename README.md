@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.21 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.22 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.21` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.22` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -98,3 +98,5 @@ Version 1.4.19 removes the partner slider pagination dots, keeping the previous/
 Version 1.4.20 puts the Partners heading and logos inside one shared card and adds a curved transition into a contrasting FAQ background.
 
 Version 1.4.21 uses cream for Team and its curves. About, page and article paragraph repeaters are replaced by rich-text editors that load legacy paragraphs until saved. Classic and ACF editors include justify, font size, text color and background color controls.
+
+Version 1.4.22 alternates section backgrounds: cream Team, card-colored Partners with a cream inner box, and cream FAQ. Curved transitions use the same CSS variables.
