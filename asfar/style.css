@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.22
+Version: 1.4.23
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -249,3 +249,6 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 .mt-dk-faq .mt-dk-faq__item.mt-is-open {
  background: var(--dk-card);
 }
+
+/* Preserve editor alignment without nesting paragraphs inside headings. */
+.mt-editor-line { display: block; }

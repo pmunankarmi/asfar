@@ -33,6 +33,12 @@ add_filter( 'mce_buttons_2', 'asfar_editor_buttons' );
 
 add_filter( 'acf/fields/wysiwyg/toolbars', function ( $toolbars ) {
 	foreach ( $toolbars as &$toolbar ) {
+		// Keep these controls visible in the first row without duplicating them.
+		$controls = array( 'alignjustify', 'fontsizeselect', 'forecolor', 'backcolor' );
+		foreach ( $toolbar as &$row ) {
+			$row = array_values( array_diff( $row, $controls ) );
+		}
+		unset( $row );
 		$toolbar[1] = asfar_editor_buttons( $toolbar[1] ?? array() );
 	}
 	return $toolbars;

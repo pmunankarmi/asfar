@@ -51,14 +51,14 @@
    var note = form.querySelector(".mt-footer__form-note");
    var button = form.querySelector('[type="submit"]');
    if (button.disabled) return;
-   if (!form.checkValidity()) { note.textContent = asfarSettings.invalid; form.reportValidity(); return; }
+   if (!form.checkValidity()) { note.innerHTML = asfarSettings.invalid; form.reportValidity(); return; }
    button.disabled = true;
    try {
     var response = await fetch(asfarSettings.endpoint, { method: 'POST', body: new FormData(form), credentials: 'same-origin' });
     var result = await response.json();
-    note.textContent = result.data && result.data.message || asfarSettings.error;
+    note.innerHTML = result.data && result.data.message || asfarSettings.error;
     if (result.success) { form.reset(); form.elements.request_key.value = crypto.randomUUID(); }
-   } catch (error) { note.textContent = asfarSettings.error; }
+   } catch (error) { note.innerHTML = asfarSettings.error; }
    finally { button.disabled = false; }
   });
  }

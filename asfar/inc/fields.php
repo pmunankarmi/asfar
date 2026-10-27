@@ -12,7 +12,7 @@ function asfar_field( $name, $label, $type = 'text', $settings = array() ) {
 }
 
 function asfar_text( $name, $label, $multiline = false ) {
-	return asfar_field( $name, $label, $multiline ? 'textarea' : 'text', $multiline ? array( 'rows' => 3, 'new_lines' => '' ) : array() );
+	return asfar_field( $name, $label, $multiline ? 'wysiwyg' : 'text', $multiline ? array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 0 ) : array() );
 }
 
 function asfar_repeater( $name, $label, $fields, $button = 'Add item' ) {

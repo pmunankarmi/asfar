@@ -77,7 +77,7 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 				<button class="mt-hero__dot" type="button" data-i="1" aria-label="<?php echo esc_attr( asfar_amv4_label( 'The journey' ) ); ?>" aria-pressed="false"></button>
 			<?php else : ?>
 				<?php while ( have_rows( 'banner_slides' ) ) : the_row(); ?>
-					<button class="mt-hero__dot <?php echo 1 === get_row_index() ? 'mt-is-active' : ''; ?>" type="button" data-i="<?php echo esc_attr( get_row_index() - 1 ); ?>" aria-label="<?php echo esc_attr( get_sub_field( 'heading' ) ); ?>" aria-pressed="<?php echo 1 === get_row_index() ? 'true' : 'false'; ?>"></button>
+					<button class="mt-hero__dot <?php echo 1 === get_row_index() ? 'mt-is-active' : ''; ?>" type="button" data-i="<?php echo esc_attr( get_row_index() - 1 ); ?>" aria-label="<?php echo esc_attr( wp_strip_all_tags( get_sub_field( 'heading' ) ) ); ?>" aria-pressed="<?php echo 1 === get_row_index() ? 'true' : 'false'; ?>"></button>
 				<?php endwhile; ?>
 			<?php endif; ?>
 		</div>

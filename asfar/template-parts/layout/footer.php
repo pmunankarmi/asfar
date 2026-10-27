@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 			<div class="mt-dk-footer__legal">
 				<?php echo wp_get_attachment_image( asfar_option( 'ownership_logo' ), 'full', false, array( 'alt' => asfar_option( 'ownership_label' ), 'loading' => 'lazy' ) ); ?>
-				<span><?php echo esc_html( asfar_copyright() ); ?></span>
+				<span><?php echo asfar_lines( asfar_copyright() ); ?></span>
 				<a class="mt-dk-footer__top" href="#top" id="dkTop">
 					<?php echo esc_html( asfar_option( 'back_top' ) ); ?>
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

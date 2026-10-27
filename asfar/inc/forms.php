@@ -31,13 +31,13 @@ function asfar_form_hidden() {
 }
 function asfar_input( $key ) { return isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : ''; }
 function asfar_form_reply( $ok, $code, $language ) {
- $text = asfar_option( $code, $language );
+ $text = asfar_lines( asfar_option( $code, $language ) );
  if ( wp_doing_ajax() ) {
   if ( $ok ) { wp_send_json_success( array( 'message' => $text ) ); }
   wp_send_json_error( array( 'message' => $text ), 400 );
  }
  // A readable response also works without JavaScript; no submitted PII enters a URL.
- wp_die( esc_html( $text ), '', array( 'response' => $ok ? 200 : 400, 'back_link' => true ) );
+ wp_die( $text, '', array( 'response' => $ok ? 200 : 400, 'back_link' => true ) );
 }
 function asfar_contact() {
  $language = 'ar' === asfar_input( 'language' ) ? 'ar' : 'en';

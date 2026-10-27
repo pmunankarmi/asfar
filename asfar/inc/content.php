@@ -56,7 +56,20 @@ function asfar_translate( $text, $language = null ) {
 }
 
 function asfar_lines( $text ) {
-	return nl2br( esc_html( (string) $text ) );
+	$text = (string) $text;
+	if ( ! preg_match( '/<\/?[a-z][^>]*>/i', $text ) ) {
+		return nl2br( esc_html( $text ) );
+	}
+	// These fields also appear inside headings and paragraphs. Use styled spans
+	// for editor paragraphs to keep the surrounding HTML valid.
+	$text = preg_replace( '/<p\b([^>]*)>/i', '<span class="mt-editor-line"$1>', $text );
+	$text = preg_replace( '/<\/p>/i', '</span>', $text );
+	return wp_kses( $text, array(
+		'span' => array( 'class' => true, 'style' => true ),
+		'br' => array(), 'strong' => array(), 'b' => array(),
+		'em' => array(), 'i' => array(), 'u' => array(), 's' => array(),
+		'a' => array( 'href' => true, 'title' => true, 'target' => true, 'rel' => true ),
+	) );
 }
 
 /** Preserve the source title's line breaks and emphasis, including older imports. */

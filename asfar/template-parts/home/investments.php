@@ -4,11 +4,7 @@
 	<div class="mt-dk-wrap mt-dk-sectors__grid">
 		<div class="mt-dk-rise">
 			<h2 class="mt-dk-label"><?php
-				$heading_lines = preg_split( '/\R/u', (string) get_sub_field( 'heading' ) );
-				echo esc_html( array_shift( $heading_lines ) );
-				if ( $heading_lines ) {
-					echo '<br><span class="mt-dk-sectors__ln2">' . asfar_lines( implode( "\n", $heading_lines ) ) . '</span>';
-				}
+				echo asfar_lines( get_sub_field( 'heading' ) );
 				?></h2>
 			<p class="mt-dk-sub mt-dk-sectors__intro"><?php echo asfar_lines( get_sub_field( 'description' ) ); ?></p>
 		</div>

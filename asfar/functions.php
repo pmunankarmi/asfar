@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASFAR_VERSION', '1.4.22' );
+define( 'ASFAR_VERSION', '1.4.23' );
 
 // Polylang is already loaded before WordPress loads the theme.
 // Avoid registering duplicate hooks if another copy or Polylang Pro is active.
@@ -91,8 +91,8 @@ add_action( 'wp_enqueue_scripts', function () {
 		'empty'    => asfar_option( 'bio_empty' ),
 		'label'    => asfar_option( 'bio_label' ),
 		'endpoint' => admin_url( 'admin-ajax.php' ),
-		'error'    => asfar_option( 'form_error' ),
-		'invalid'  => asfar_option( 'form_invalid' ),
+		'error'    => asfar_lines( asfar_option( 'form_error' ) ),
+		'invalid'  => asfar_lines( asfar_option( 'form_invalid' ) ),
 	) );
 	wp_enqueue_script( 'asfar-deck', $uri . '/assets/js/deck.js', array( 'asfar-app' ), ASFAR_VERSION, true );
 	wp_enqueue_script( 'asfar-wordpress', $uri . '/assets/js/wordpress.js', array( 'asfar-deck' ), ASFAR_VERSION, true );

@@ -1542,7 +1542,8 @@
       panel.querySelector(".mt-mexp__name").textContent = name;
       panel.querySelector(".mt-mexp__role").textContent = role;
       var txt = panel.querySelector(".mt-mexp__text");
-      txt.textContent = bio || COPY.empty;
+      // Biography markup is sanitized by the PHP template.
+      if (bio) { txt.innerHTML = bio; } else { txt.textContent = COPY.empty; }
       txt.className = bio ? "mt-mexp__text" : "mt-mexp__text mt-mexp__text--empty";
     }
 
