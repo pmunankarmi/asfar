@@ -12,7 +12,12 @@ function asfar_field( $name, $label, $type = 'text', $settings = array() ) {
 }
 
 function asfar_text( $name, $label, $multiline = false ) {
-	return asfar_field( $name, $label, $multiline ? 'wysiwyg' : 'text', $multiline ? array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 0 ) : array() );
+	return asfar_field( $name, $label, $multiline ? 'textarea' : 'text', $multiline ? array( 'rows' => 3, 'new_lines' => '' ) : array() );
+}
+
+/** Use the full editor only for paragraph content. */
+function asfar_long_text( $name, $label ) {
+	return asfar_field( $name, $label, 'wysiwyg', array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 0 ) );
 }
 
 function asfar_repeater( $name, $label, $fields, $button = 'Add item' ) {
@@ -68,7 +73,7 @@ function asfar_home_field_groups() {
 		'about' => array( '02 — About ASFAR', array(
 			asfar_group_field( 'about_section', 'About ASFAR', array(
 				asfar_text( 'heading', 'Section Heading', true ),
-				asfar_text( 'subtitle', 'Company Description', true ),
+				asfar_long_text( 'subtitle', 'Company Description' ),
 				asfar_text( 'card_heading', 'Card Heading', true ),
 				asfar_field( 'body_content', 'About Content', 'wysiwyg', array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 1 ) ),
 				asfar_text( 'ownership', 'Ownership Label' ),
@@ -77,7 +82,7 @@ function asfar_home_field_groups() {
 		'vision' => array( '03 — Vision and Mission', array(
 			asfar_group_field( 'vision_section', 'Vision and Mission', array(
 				asfar_text( 'heading', 'Section Heading', true ),
-				asfar_repeater( 'cards', 'Vision Cards', array( asfar_text( 'heading', 'Card Heading' ), asfar_text( 'description', 'Card Description', true ) ), 'Add vision card' ),
+				asfar_repeater( 'cards', 'Vision Cards', array( asfar_text( 'heading', 'Card Heading' ), asfar_long_text( 'description', 'Card Description' ) ), 'Add vision card' ),
 			) ),
 		) ),
 		'impact' => array( '04 — Investment Impact', array(
@@ -95,7 +100,7 @@ function asfar_home_field_groups() {
 		'investments' => array( '06 — Strategic Investments', array(
 			asfar_group_field( 'investments_section', 'Strategic Investments', array(
 				asfar_text( 'heading', 'Section Heading', true ),
-				asfar_text( 'description', 'Introduction', true ),
+				asfar_long_text( 'description', 'Introduction' ),
 				asfar_repeater( 'sectors', 'Investment Sectors', array( asfar_text( 'label', 'Sector Name' ), asfar_image_field( 'image', 'Sector Image' ) ), 'Add sector' ),
 			) ),
 		) ),
@@ -110,7 +115,7 @@ function asfar_home_field_groups() {
 			asfar_group_field( 'team_section', 'Team', array(
 				asfar_field( 'enabled', 'Show Team Section', 'true_false', array( 'ui' => 1, 'default_value' => 1 ) ),
 				asfar_text( 'heading', 'Section Heading' ),
-				asfar_text( 'description', 'Introduction', true ),
+				asfar_long_text( 'description', 'Introduction' ),
 				asfar_link_field( 'button', 'View All Team Link' ),
 			) ),
 		) ),
@@ -199,7 +204,7 @@ add_action( 'acf/init', function () {
 	}
 	asfar_register_field_group( 'team', 'Team Member Details', array(
 		asfar_text( 'job_title', 'Job Title / Position' ),
-		asfar_text( 'biography', 'Biography', true ),
+		asfar_long_text( 'biography', 'Biography' ),
 	), array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'asfar_team' ) ) ) );
 	asfar_register_field_group( 'department', 'Team Type Display Settings', array(
 		asfar_field( 'display_order', 'Menu Order', 'number', array(
@@ -216,7 +221,7 @@ add_action( 'acf/init', function () {
 		asfar_field( 'show_on_homepage', 'Show on Homepage', 'true_false', array( 'default_value' => 1, 'ui' => 1, 'instructions' => 'Show this project in the homepage portfolio. Hidden projects keep their detail pages. Set separately for each translation.' ) ),
 		asfar_text( 'company', 'Investment Company' ),
 		asfar_text( 'headline', 'Project Headline' ),
-		asfar_text( 'summary', 'Project Summary', true ),
+		asfar_long_text( 'summary', 'Project Summary' ),
 		asfar_text( 'map_label', 'Map Label' ),
 		asfar_image_field( 'map_background', 'Homepage Map Background' ),
 		asfar_field( 'map_region', 'Map Region', 'select', array( 'choices' => array( 'baha' => 'Al-Baha', 'yanbu' => 'Yanbu', 'asir' => 'Aseer', 'taif' => 'Taif', 'all' => 'Strategic Investments' ) ) ),
@@ -226,11 +231,11 @@ add_action( 'acf/init', function () {
 		asfar_image_field( 'detail_image', 'Detail Image' ),
 	), array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'asfar_project' ) ) ) );
 	asfar_register_field_group( 'faq', 'Frequently Asked Questions', array(
-		asfar_text( 'introduction', 'Page Introduction', true ),
-		asfar_repeater( 'faq_items', 'Questions and Answers', array( asfar_text( 'question', 'Question' ), asfar_text( 'answer', 'Answer', true ) ), 'Add question' ),
+		asfar_long_text( 'introduction', 'Page Introduction' ),
+		asfar_repeater( 'faq_items', 'Questions and Answers', array( asfar_text( 'question', 'Question' ), asfar_long_text( 'answer', 'Answer' ) ), 'Add question' ),
 	), array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'templates/template-faq.php' ) ) ) );
 	asfar_register_field_group( 'page', 'Page Content', array(
-		asfar_text( 'introduction', 'Page Introduction', true ),
+		asfar_long_text( 'introduction', 'Page Introduction' ),
 		asfar_field( 'body_content', 'Page Content', 'wysiwyg', array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 1 ) ),
 	), array( array(
 		array( 'param' => 'post_type', 'operator' => '==', 'value' => 'page' ),

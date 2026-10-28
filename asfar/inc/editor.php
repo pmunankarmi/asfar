@@ -48,3 +48,12 @@ add_filter( 'tiny_mce_before_init', function ( $settings ) {
 	$settings['fontsize_formats'] = '12px 14px 16px 18px 20px 24px 28px 32px 36px 48px';
 	return $settings;
 } );
+
+/** Restore readable plain values if a short field was saved with the previous editor. */
+add_filter( 'acf/load_value/type=textarea', function ( $value, $post_id, $field ) {
+ if ( ! str_starts_with( $field['key'] ?? '', 'field_asfar_' ) || ! is_string( $value ) || ! preg_match( '/<\/?[a-z][^>]*>/i', $value ) ) {
+  return $value;
+ }
+ $value = preg_replace( '/<br\s*\/?\s*>|<\/p>/i', "\n", $value );
+ return trim( html_entity_decode( wp_strip_all_tags( $value ), ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+}, 10, 3 );

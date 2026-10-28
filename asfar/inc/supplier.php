@@ -12,10 +12,10 @@ add_action( 'acf/init', function () {
  foreach ( $sections as $title => $names ) {
   $fields[] = asfar_field( 'tab_' . sanitize_key( $title ), $title, 'tab' );
   foreach ( $names as $name => $label ) {
-   $fields[] = str_ends_with( $name, '_url' ) ? asfar_field( $name, $label, 'url' ) : asfar_text( $name, $label, str_contains( $name, 'description' ) || str_contains( $name, 'intro' ) );
+   $fields[] = str_ends_with( $name, '_url' ) ? asfar_field( $name, $label, 'url' ) : ( str_contains( $name, 'description' ) || str_contains( $name, 'intro' ) ? asfar_long_text( $name, $label ) : asfar_text( $name, $label ) );
   }
   if ( 'Registration' === $title ) {
-   $fields[] = asfar_repeater( 'registration_cards', 'Registration Options', array( asfar_text( 'heading', 'Heading' ), asfar_text( 'description', 'Description', true ), asfar_text( 'label', 'Button Label' ), asfar_field( 'url', 'Registration URL', 'url' ) ), 'Add registration option' );
+   $fields[] = asfar_repeater( 'registration_cards', 'Registration Options', array( asfar_text( 'heading', 'Heading' ), asfar_long_text( 'description', 'Description' ), asfar_text( 'label', 'Button Label' ), asfar_field( 'url', 'Registration URL', 'url' ) ), 'Add registration option' );
   }
  }
  asfar_register_field_group( 'supplier', 'Supplier Portal', $fields, array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'templates/template-supplier.php' ) ) ) );
