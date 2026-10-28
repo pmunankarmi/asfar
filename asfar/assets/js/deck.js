@@ -31,6 +31,74 @@
   function reflow(el) { void el.offsetHeight; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
+  // Share mouse/touch dragging between the investment and news rails.
+  // A click still opens a news card; only a horizontal drag cancels the click.
+  function enableRailDragging(track, getIndex, go, getPitch, getMaxShift) {
+    var gesture = null;
+    var suppressClick = false;
+
+    track.addEventListener('dragstart', function (event) { event.preventDefault(); });
+    track.addEventListener('pointerdown', function (event) {
+      if (!event.isPrimary || event.button !== 0) return;
+      suppressClick = false;
+      gesture = {
+        pointer: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        index: getIndex(),
+        shift: Math.min(getIndex() * getPitch(), getMaxShift()),
+        distance: 0,
+        dragging: false
+      };
+    });
+
+    track.addEventListener('pointermove', function (event) {
+      if (!gesture || gesture.pointer !== event.pointerId) return;
+      var distanceX = event.clientX - gesture.x;
+      var distanceY = event.clientY - gesture.y;
+      if (!gesture.dragging) {
+        if (Math.abs(distanceY) > Math.abs(distanceX) && Math.abs(distanceY) > 8) {
+          gesture = null;
+          return;
+        }
+        if (Math.abs(distanceX) < 8) return;
+        gesture.dragging = true;
+        track.setPointerCapture(event.pointerId);
+        track.classList.add('mt-is-dragging');
+        track.style.transition = 'none';
+      }
+      event.preventDefault();
+      gesture.distance = distanceX * (rtl ? 1 : -1);
+      var shift = clamp(gesture.shift + gesture.distance, 0, getMaxShift());
+      track.style.transform = 'translateX(' + (rtl ? shift : -shift) + 'px)';
+    });
+
+    function finish(event) {
+      if (!gesture || gesture.pointer !== event.pointerId) return;
+      var completed = gesture;
+      gesture = null;
+      track.classList.remove('mt-is-dragging');
+      track.style.transition = '';
+      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+      if (!completed.dragging) return;
+      suppressClick = true;
+      var steps = Math.round(completed.distance / getPitch());
+      if (!steps && Math.abs(completed.distance) > 30) steps = Math.sign(completed.distance);
+      go(completed.index + (event.type === 'pointercancel' ? 0 : steps));
+    }
+
+    track.addEventListener('pointerup', finish);
+    track.addEventListener('pointercancel', finish);
+    track.addEventListener('lostpointercapture', finish);
+    track.addEventListener('click', function (event) {
+      if (!suppressClick) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      suppressClick = false;
+    }, true);
+  }
+
+
   /* the morph's cubic-bezier(.45,.05,.25,1), solved for JS scroll animation */
   function bez(p1x, p1y, p2x, p2y) {
     function f(t, a, b) { var u = 1 - t; return 3 * u * u * t * a + 3 * u * t * t * b + t * t * t; }
@@ -49,15 +117,15 @@
 
   /* ---------- scroll entrances ---------- */
   (function () {
-    var els = document.querySelectorAll('.dk-rise');
+    var els = document.querySelectorAll(".mt-dk-rise");
     if (!els.length) return;
     if (!('IntersectionObserver' in window) || reduced) {
-      els.forEach(function (e) { e.classList.add('is-in'); });
+      els.forEach(function (e) { e.classList.add("mt-is-in"); });
       return;
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+        if (en.isIntersecting) { en.target.classList.add("mt-is-in"); io.unobserve(en.target); }
       });
     }, { rootMargin: '0px 0px -12% 0px' });
     els.forEach(function (e) { io.observe(e); });
@@ -73,36 +141,26 @@
        driven by the .is-film class at the morph's own 2000ms,
      - the five dash indicators (statement + four destinations). */
   (function () {
-    var hero = document.getElementById('heroSlider');
-    if (!hero) return;
-    var dashes = Array.prototype.slice.call(hero.querySelectorAll('.dk-dashes span, .dk-dashes button'));
-    function paint(i) {
-      dashes.forEach(function (d, n) { d.classList.toggle('is-active', n === i); });
-    }
-    var nav = document.querySelector('header.nav');
-    paint(0);
+    var hero = document.getElementById("heroSlider");
+    if (!hero || !hero.querySelector("#heroMorphCanvas")) return;
+    /* The hero dashes are the SLIDE navigation, owned entirely by app.js
+       (3 statement slides, clickable). This layer used to repaint them as
+       film-progress every 300ms, which fought the click navigation and left
+       the wrong dash lit. It now only manages the nav band behind the film. */
+    var nav = document.querySelector("header.mt-nav");
     setInterval(function () {
-      var f = window.__heroFilm;
-      var filmOn = hero.classList.contains('is-film');
-      /* slide 3: a solid #154751 band sits behind the nav while the film runs.
-         The film LOOPS (leave() re-enters after INTRO_MS), so keying the band
-         on it alone leaves the bar solid at the very top of the page once the
-         first cycle has run — scroll down, come back, and the menu never goes
-         away again. The top of the page is slide 2, whose nav is transparent
-         with the hairline, so the band is held off there. */
+      var filmOn = hero.classList.contains("mt-is-film");
       var atPageTop = (window.scrollY || 0) < 6;
-      if (nav) nav.classList.toggle('is-band',
+      if (nav) nav.classList.toggle("mt-is-band",
         !atPageTop && filmOn && window.scrollY < hero.offsetHeight * .5);
-      if (!filmOn || !f || !f.playing) { paint(0); return; }
-      paint(1 + Math.min(3, Math.round((f.p || 0) * 3)));
     }, 300);
   })();
 
   /* ---------- sector strip (morph 2000ms) ---------- */
   (function () {
-    var root = document.getElementById('dkSectors');
+    var root = document.getElementById("dkSectors");
     if (!root) return;
-    var track = root.querySelector('.dk-sectors__track');
+    var track = root.querySelector(".mt-dk-sectors__track");
     var cards = Array.prototype.slice.call(track.children);
     if (!cards.length) return;
     var prev = root.querySelector('[data-dir="-1"]');
@@ -119,7 +177,7 @@
        screen and the rail stopped early, clipping the final card. */
     function maxShift() {
       var rail = track.parentElement.getBoundingClientRect();
-      var gutter = parseFloat(getComputedStyle(root.querySelector('.dk-wrap') || root).paddingInlineStart) || 0;
+      var gutter = parseFloat(getComputedStyle(root.querySelector(".mt-dk-wrap") || root).paddingInlineStart) || 0;
       var avail = rtl ? (rail.right - gutter) : (window.innerWidth - gutter - rail.left);
       var trackW = cards.length * step() - (step() - cards[0].getBoundingClientRect().width);
       return Math.max(0, trackW - avail);
@@ -131,7 +189,7 @@
     function perView() {
       var s = step(), w = cards[0].getBoundingClientRect().width;
       var rail = track.parentElement.getBoundingClientRect();
-      var gutter = parseFloat(getComputedStyle(root.querySelector('.dk-wrap') || root).paddingInlineStart) || 0;
+      var gutter = parseFloat(getComputedStyle(root.querySelector(".mt-dk-wrap") || root).paddingInlineStart) || 0;
       var avail = rtl ? (rail.right - gutter) : (window.innerWidth - gutter - rail.left);
       return Math.max(1, Math.floor((avail - w) / s) + 1);
     }
@@ -143,7 +201,7 @@
     function paint() {
       var shift = Math.min(current * step(), maxShift());
       track.style.transform = 'translateX(' + ((rtl ? 1 : -1) * shift) + 'px)';
-      cards.forEach(function (c, n) { c.classList.toggle('is-label', n === lit); });
+      cards.forEach(function (c, n) { c.classList.toggle("mt-is-label", n === lit); });
       if (prev) prev.disabled = current <= 0;
       if (next) next.disabled = current >= maxIndex();
     }
@@ -154,7 +212,8 @@
     }
     if (prev) prev.addEventListener('click', function () { go(current - 1); });
     if (next) next.addEventListener('click', function () { go(current + 1); });
-    window.addEventListener('resize', paint, { passive: true });
+    enableRailDragging(track, function () { return current; }, go, step, maxShift);
+    window.addEventListener('resize', function () { go(current); }, { passive: true });
 
     paint();
     DK.secGo = go;
@@ -167,9 +226,9 @@
      two cards per click reads the same). The 1250ms cover-up belongs to
      the View All News page change, not to in-section paging. */
   (function () {
-    var root = document.getElementById('dkNews');
+    var root = document.getElementById("dkNews");
     if (!root) return;
-    var strip = root.querySelector('.dk-news__strip');
+    var strip = root.querySelector(".mt-dk-news__strip");
     if (!strip) return;
     var cards = Array.prototype.slice.call(strip.children);
     if (!cards.length) return;
@@ -198,16 +257,17 @@
     /* the rail now holds exactly one view of cards, so a click is a page */
     if (prev) prev.addEventListener('click', function () { go(current - perView()); });
     if (next) next.addEventListener('click', function () { go(current + perView()); });
-    window.addEventListener('resize', paint, { passive: true });
+    enableRailDragging(strip, function () { return current; }, go, pitch, function () { return maxIndex() * pitch(); });
+    window.addEventListener('resize', function () { go(current); }, { passive: true });
     paint();
     DK.newsGo = go;
   })();
 
   /* ---------- FAQ accordion (morph 2000ms) ---------- */
   (function () {
-    var list = document.getElementById('dkFaq');
+    var list = document.getElementById("dkFaq");
     if (!list) return;
-    var items = Array.prototype.slice.call(list.querySelectorAll('.dk-faq__item'));
+    var items = Array.prototype.slice.call(list.querySelectorAll(".mt-dk-faq__item"));
     function setH(wrap, h) { wrap.style.height = h + 'px'; }
     /* ⚠ the opening listener MUST be dropped when the row is closed again
        before its own transition finishes. Opening #1 and then #3 300ms later
@@ -219,29 +279,29 @@
       if (w._faqTimer) { clearTimeout(w._faqTimer); w._faqTimer = null; }
     }
     function closeItem(o) {
-      var w = o.querySelector('.dk-faq__awrap');
+      var w = o.querySelector(".mt-dk-faq__awrap");
       clearPending(w);
       setH(w, w.scrollHeight); reflow(w);
-      o.classList.remove('is-open');
+      o.classList.remove("mt-is-open");
       setH(w, 0);
-      o.querySelector('.dk-faq__btn').setAttribute('aria-expanded', 'false');
+      o.querySelector(".mt-dk-faq__btn").setAttribute('aria-expanded', 'false');
     }
     function toggle(item) {
-      var btn = item.querySelector('.dk-faq__btn');
-      var wrap = item.querySelector('.dk-faq__awrap');
-      var open = item.classList.contains('is-open');
+      var btn = item.querySelector(".mt-dk-faq__btn");
+      var wrap = item.querySelector(".mt-dk-faq__awrap");
+      var open = item.classList.contains("mt-is-open");
       items.forEach(function (o) {
-        if (o !== item && o.classList.contains('is-open')) closeItem(o);
+        if (o !== item && o.classList.contains("mt-is-open")) closeItem(o);
       });
       if (open) { closeItem(item); return; }
       clearPending(wrap);
-      item.classList.add('is-open');
+      item.classList.add("mt-is-open");
       setH(wrap, wrap.scrollHeight);
       btn.setAttribute('aria-expanded', 'true');
       /* settle to auto so the answer reflows with the viewport instead of
          holding the pixel height it opened at */
       var settle = function () {
-        if (!item.classList.contains('is-open')) return;
+        if (!item.classList.contains("mt-is-open")) return;
         wrap.style.height = 'auto';
         clearPending(wrap);
       };
@@ -255,19 +315,19 @@
       wrap.addEventListener('transitionend', done);
     }
     items.forEach(function (item) {
-      item.querySelector('.dk-faq__btn').addEventListener('click', function () { toggle(item); });
+      item.querySelector(".mt-dk-faq__btn").addEventListener('click', function () { toggle(item); });
     });
     DK.faqOpen = function (i) {
       var it = items[i];
-      if (it && !it.classList.contains('is-open')) toggle(it);
+      if (it && !it.classList.contains("mt-is-open")) toggle(it);
     };
-    DK.faqIsOpen = function (i) { return items[i] && items[i].classList.contains('is-open'); };
-    DK.faqCloseAll = function () { items.forEach(function (o) { if (o.classList.contains('is-open')) closeItem(o); }); };
+    DK.faqIsOpen = function (i) { return items[i] && items[i].classList.contains("mt-is-open"); };
+    DK.faqCloseAll = function () { items.forEach(function (o) { if (o.classList.contains("mt-is-open")) closeItem(o); }); };
   })();
 
   /* ---------- back to top ---------- */
   (function () {
-    var t = document.getElementById('dkTop');
+    var t = document.getElementById("dkTop");
     if (!t) return;
     t.addEventListener('click', function (e) {
       e.preventDefault();
@@ -285,96 +345,12 @@
    which showed a lighter cream band between the two wave layers mid-scroll.
    One wave, one clean colour transition (cream -> card), no climb, no twin. */
 
-/* ---------- section covers: each new slide rises over the last ----------
-   slide16.xml and slide18.xml both carry
-     <p:transition spd="slow" p14:dur="1750"><p:cover dir="u"/>
-   so THE ASFAR TEAM covers the news section and OUR PARTNERS covers the team.
-   Each section is pulled up by one lift (a negative top margin, in CSS) and
-   pushed back down here by exactly the same amount, so at rest it sits where
-   it always did and there is never a gap to see through. Over the last 0.62
-   of a viewport before it lands, that push unwinds to zero — the leading edge
-   crosses a whole viewport while the page scrolls 0.62 of one, which is what
-   reads as a cover. Each edge carries the main menu, cloned from the real nav,
-   the same way the article page-slide brings the incoming page's nav up.
-
-   Everything is a pure function of scrollY: no sequencing, no timers, so a
-   backgrounded tab (where rAF is deferred) cannot strand a section mid-slide.
-   rAF only coalesces scroll events, and every wake re-reads. */
+/* Keep sections in document flow so controls and dividers cannot cross headings. */
 (function () {
-  var reduced = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var narrow = window.matchMedia && window.matchMedia('(max-width:960px)');
-  var lift = 0, ticking = false;
-
-  function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
-
-  /* The covers used to carry a cloned menu bar on their leading edge so the
-     slide read like the article page-slide. It duplicated the real fixed nav
-     for no gain, so the covers now come up bare. */
-  /* The cover effect is a chain: THE ASFAR TEAM covers the news section, and
-     OUR PARTNERS covers the team. With the team section hidden, that chain is
-     broken — leaving it on pulled OUR PARTNERS up over the news section with a
-     negative margin, so its straight top edge painted over the news wave. When
-     the team is not present, disable the covers entirely so every section sits
-     in normal flow and the section waves show. */
-  var teamEl = document.getElementById('dkTeam');
-  var teamOn = teamEl && !teamEl.hidden && teamEl.getClientRects().length;
-  var covers = (teamOn ? ['dkTeam', 'partners'] : []).map(function (id) {
-    var el = document.getElementById(id);
-    if (!el || el.hidden || !el.getClientRects().length) return null;
-    return { el: el, shift: 0 };
-  }).filter(Boolean);
-  if (!covers.length) return;
-
-  function measure() {
-    var off = reduced || (narrow && narrow.matches);
-    lift = off ? 0 : (window.innerHeight || 0) * 0.38;
-    covers.forEach(function (c) {
-      c.el.style.setProperty('--dk-tlift', lift.toFixed(1) + 'px');
-      if (off) {
-        c.shift = 0;
-        c.el.style.transform = '';
-      }
-    });
-  }
-
-  function tick() {
-    ticking = false;
-    var vh = window.innerHeight || 1;
-    covers.forEach(function (c) {
-      if (!lift) {
-        if (c.shift) { c.shift = 0; c.el.style.transform = ''; }
-        return;
-      }
-      var span = vh - lift;
-      /* getBoundingClientRect() reports the TRANSFORMED box, so the push we
-         applied has to come back OFF to recover the layout position */
-      var natTop = c.el.getBoundingClientRect().top - c.shift;
-      var q = clamp01(1 - natTop / span);
-      c.shift = (1 - q) * lift;
-      var moving = c.shift > 0.4;
-      c.el.style.transform = moving
-        ? 'translate3d(0,' + c.shift.toFixed(1) + 'px,0)'
-        : '';
-      /* only while the slide is travelling — once it lands the cloned bar sits
-         exactly under the real fixed nav, so dropping it cannot be seen */
-    });
-  }
-
-  /* slide 2's hairline under the hero nav belongs to a slide at rest */
   function atTop() {
-    document.documentElement.classList.toggle('is-attop', (window.scrollY || 0) < 6);
+    document.documentElement.classList.toggle('mt-is-attop', (window.scrollY || 0) < 6);
   }
-
-  function onScroll() { atTop(); if (!ticking) { ticking = true; requestAnimationFrame(tick); } }
-  addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', function () { measure(); tick(); });
-  addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
-  addEventListener('pageshow', function () { measure(); atTop(); tick(); });
-  if (narrow && narrow.addEventListener) {
-    narrow.addEventListener('change', function () { measure(); tick(); });
-  }
-  measure();
+  addEventListener('scroll', atTop, { passive: true });
+  addEventListener('pageshow', atTop);
   atTop();
-  tick();
 })();
