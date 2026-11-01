@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.24
+Version: 1.4.25
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -252,3 +252,45 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 
 /* Preserve editor alignment without nesting paragraphs inside headings. */
 .mt-editor-line { display: block; }
+
+/* Stack the whole section, including children with desktop column placement. */
+@media (max-width: 960px) {
+	.mt-dk-about__row,
+	.mt-dk-vision__row {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 20px;
+	}
+	.mt-dk-about__row > *,
+	.mt-dk-vision__row > * {
+		min-width: 0;
+	}
+	.mt-dk-about__pif {
+		grid-column: 1;
+		margin-top: 0;
+	}
+	.mt-dk-about__card p,
+	.mt-dk-vision__tan p,
+	.mt-dk-vision__card p {
+		max-width: 100%;
+		font-size: clamp(14px, 1.8vw, 17px);
+		line-height: 1.65;
+	}
+	.mt-dk-about__card p + p { margin-top: 1em; }
+	.mt-dk-vision__card h3 { font-size: clamp(18px, 2.4vw, 24px); }
+	.mt-dk-vision__tan,
+	.mt-dk-vision__card { min-height: 0; padding: 24px; }
+	.mt-hero .mt-hero__slides,
+	.mt-hero .mt-hero__morphcap,
+	.mt-hero .mt-hero__cta--fixed {
+		left: max(18px, env(safe-area-inset-left));
+		right: max(18px, env(safe-area-inset-right));
+	}
+	.mt-hero .mt-hero__cta { gap: 12px; }
+	.mt-hero .mt-hero__cta .mt-btn {
+		flex: 1 1 140px;
+		min-width: 0;
+		max-width: 220px;
+		padding-inline: 14px;
+		white-space: normal;
+	}
+}

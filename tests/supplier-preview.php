@@ -8,6 +8,7 @@ function the_row() { global $index; ++$index; }
 function get_row_index() { global $index; return $index + 1; }
 function get_sub_field( $name ) { global $data, $index; return $data['registration_cards'][$index][$name]; }
 function esc_html( $value ) { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
+function asfar_lines( $value ) { return nl2br( esc_html( $value ) ); }
 function esc_attr( $value ) { return esc_html( $value ); }
 function esc_url( $value ) { return esc_attr( $value ); }
 function asfar_home_url() { return '/'; }

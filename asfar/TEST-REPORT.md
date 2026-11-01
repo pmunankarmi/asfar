@@ -88,3 +88,10 @@ The isolated `tests/partners-preview.php` fixture deliberately inserts the legac
 ## 1.4.14 — Repair Taif homepage selection
 
 `php tests/taif-setup.php` passes the nested ACF field naming regression: English and Arabic homepage selections are repaired from revision 1, selection order and edited headings are retained, hidden flags and project content are preserved, and a second run makes no duplicates or changes. The installer verifies the saved relationship before marking completion. PHP/JS syntax and theme packaging pass. This contract test does not replace a live WordPress database check.
+
+
+## 1.4.25 — Responsive layout corrections
+
+Headless Chrome checked English and Arabic homepage, team listing, news listing, article and supplier previews at 320, 390, 600, 768, 960, 1024 and 1440px. No horizontal page overflow or escaped section/text/button bounds were found outside intentional carousel tracks. The homepage regression test additionally checks that About/Vision cards fill their mobile rows, hero actions retain at least 18px side gutters, and action heights remain at least 48px. Mobile Arabic hero and About screenshots were inspected.
+
+These checks use source-derived static previews with current theme CSS and homepage scripts, plus the native supplier fixture; they do not verify a live WordPress database or customized editor content. `tests/responsive.cjs` runs against the output of `tests/amv4-preview.py` served locally, with optional `ASFAR_TEST_URL`, `PLAYWRIGHT_MODULE` and `CHROME_PATH` overrides. The supplier fixture's missing text helper was restored. Packaging validates PHP/JavaScript syntax and ZIP integrity.
