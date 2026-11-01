@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.25 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.26 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.25` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.26` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -106,3 +106,5 @@ Version 1.4.23 converts all theme ACF textarea fields to full rich-text editors 
 Version 1.4.24 limits rich-text editors to paragraph content, descriptions, biographies and FAQ answers. Headings, statistical labels and short option messages use plain fields again, retaining readable text from the previous editor.
 
 Version 1.4.25 fixes mobile About and Vision widths by removing the implicit ownership-label column and stacking the Vision heading with its cards below 960px. Hero headings and actions have safe side gutters; buttons can wrap on narrow phones. Mobile card text uses readable sizing and spacing, and cards grow with content. Desktop layouts are retained. The version bump refreshes cached theme assets.
+
+Version 1.4.26 removes decorative diamonds from mobile Vision cards, places clickable portfolio pagination in normal flow above the wave, adds News/Team separation, and shows regular team members in two mobile columns with names and job titles below their portraits. The featured member retains its separate layout. Desktop layouts and editable content remain unchanged.

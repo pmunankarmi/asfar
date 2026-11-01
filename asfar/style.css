@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.25
+Version: 1.4.26
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -279,6 +279,54 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	.mt-dk-vision__card h3 { font-size: clamp(18px, 2.4vw, 24px); }
 	.mt-dk-vision__tan,
 	.mt-dk-vision__card { min-height: 0; padding: 24px; }
+	/* Decorative diamonds must not compete with the full-width mobile copy. */
+	.mt-dk-vision__motif,
+	.mt-dk-vision__dia { display: none; }
+
+	/* Keep pagination in flow below every panel and above the bottom wave. */
+	.mt-dk-map { flex-direction: column; }
+	.mt-dk-map__in { padding-bottom: 24px; }
+	.mt-dk-map__dashes {
+		position: relative;
+		inset: auto;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin: 0 clamp(18px, 3.67vw, 110px) 40px;
+		z-index: 6;
+	}
+	.mt-dk-map__dashes button {
+		box-sizing: border-box;
+		flex: 0 0 32px;
+		width: 32px;
+		height: 28px;
+		padding-block: 12px;
+		background-clip: content-box;
+		background-color: rgba(252, 247, 238, .6);
+	}
+	.mt-dk-map__dashes button.mt-is-active { background-color: #FCF7EE; background-clip: content-box; }
+	.mt-dk-map__dashes button:focus-visible { outline: 2px solid #FCF7EE; outline-offset: 2px; }
+
+	.mt-dk-news { padding-bottom: 64px; }
+	.mt-dk-team { padding-top: 56px; }
+	.mt-dk-team__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 24px 16px;
+	}
+	.mt-dk-mem {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 12px;
+		min-width: 0;
+		text-align: center;
+	}
+	.mt-dk-mem__ph { border-radius: 6px; }
+	.mt-dk-mem__txt { padding-top: 0; }
+	.mt-dk-mem__name {
+		font-size: clamp(14px, 2.5vw, 18px);
+		line-height: 1.5;
+		text-align: center;
+	}
+	.mt-dk-mem__role { margin-top: 4px; font-size: 12px; line-height: 1.5; }
 	.mt-hero .mt-hero__slides,
 	.mt-hero .mt-hero__morphcap,
 	.mt-hero .mt-hero__cta--fixed {

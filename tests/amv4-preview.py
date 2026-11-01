@@ -27,6 +27,8 @@ for lang,file in [('en','index-en.html'),('ar','index.html')]:
  native=subprocess.run(['php',str(root/'tests/section-preview.php')],input=json.dumps({'lang':lang,'section':{'heading':title,'description':html.unescape(intro),'sectors':cards}}),text=True,capture_output=True,check=True).stdout
  s=re.sub(r'<span id="sectors"[^>]*></span>.*?<section class="mt-dk-sectors".*?</section>',lambda m:native,s,flags=re.S)
  s=s.replace('id="contactForm"', 'id="sourceContactForm"')
+ # Exercise the optional Team section, disabled in the supplied source export.
+ s=s.replace('id="dkTeam" hidden style="display:none"', 'id="dkTeam"')
  s+='''<script>var asfarSettings={assets:'/media/',close:'Close',empty:'',label:'Biography',endpoint:'',error:'',invalid:''};</script><script src="/theme/assets/js/vendor/lenis.min.js"></script><script src="/theme/assets/js/app.js"></script><script src="/theme/assets/js/deck.js"></script><script src="/theme/assets/js/wordpress.js"></script>'''
  (dest/(lang+'.html')).write_text(s)
 print(dest)
