@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.26
+Version: 1.4.27
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -31,6 +31,29 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 }
 /* The desktop text mask must not cover the stacked mobile sector carousel. */
 @media (max-width: 960px) {
+	.mt-dk-sectors__rail,
+	.mt-dk-news__rail {
+		overflow-x: auto;
+		overflow-y: hidden;
+		overscroll-behavior-x: contain;
+		scroll-snap-type: x proximity;
+		-webkit-overflow-scrolling: touch;
+	}
+	.mt-dk-sectors .mt-dk-sectors__track,
+	.mt-dk-news .mt-dk-news__strip { touch-action: pan-x pan-y pinch-zoom; cursor: auto; }
+	.mt-dk-sector,
+	.mt-dk-newscard { scroll-snap-align: start; }
+	.mt-dk-team > .mt-dk-wrap > .mt-dk-tabs {
+		position: sticky;
+		top: var(--team-tabs-top, 72px);
+		z-index: 10;
+		background: var(--dk-cream);
+		padding-block: 12px;
+		margin-top: 16px;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+	.mt-dk-team > .mt-dk-wrap > .mt-dk-tabs .mt-dk-tab { min-height: 40px; }
  .mt-dk-sectors__grid { grid-template-columns: minmax(0, 1fr); }
  .mt-dk-sectors__rail { min-width: 0; }
  .mt-dk-sectors__grid > .mt-dk-rise:first-child::before { display: none; }

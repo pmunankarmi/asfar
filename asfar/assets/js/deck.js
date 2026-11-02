@@ -30,6 +30,11 @@
 
   function reflow(el) { void el.offsetHeight; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function nativeRail() { return window.matchMedia('(max-width: 960px)').matches; }
+  function scrollRail(track, shift) {
+    track.style.transform = '';
+    track.parentElement.scrollTo({ left: (rtl ? -1 : 1) * shift, behavior: reduced ? 'instant' : 'smooth' });
+  }
 
   // Share mouse/touch dragging between the investment and news rails.
   // A click still opens a news card; only a horizontal drag cancels the click.
@@ -39,8 +44,9 @@
 
     track.addEventListener('dragstart', function (event) { event.preventDefault(); });
     track.addEventListener('pointerdown', function (event) {
-      if (!event.isPrimary || event.button !== 0) return;
       suppressClick = false;
+      if (nativeRail()) return;
+      if (!event.isPrimary || event.button !== 0) return;
       gesture = {
         pointer: event.pointerId,
         x: event.clientX,
@@ -200,7 +206,11 @@
 
     function paint() {
       var shift = Math.min(current * step(), maxShift());
-      track.style.transform = 'translateX(' + ((rtl ? 1 : -1) * shift) + 'px)';
+      if (nativeRail()) scrollRail(track, shift);
+      else {
+        track.parentElement.scrollLeft = 0;
+        track.style.transform = 'translateX(' + ((rtl ? 1 : -1) * shift) + 'px)';
+      }
       cards.forEach(function (c, n) { c.classList.toggle("mt-is-label", n === lit); });
       if (prev) prev.disabled = current <= 0;
       if (next) next.disabled = current >= maxIndex();
@@ -213,6 +223,15 @@
     if (prev) prev.addEventListener('click', function () { go(current - 1); });
     if (next) next.addEventListener('click', function () { go(current + 1); });
     enableRailDragging(track, function () { return current; }, go, step, maxShift);
+    track.parentElement.addEventListener('scroll', function () {
+      if (!nativeRail()) return;
+      var offset = Math.abs(track.parentElement.scrollLeft);
+      current = clamp(Math.round(offset / step()), 0, maxIndex());
+      lit = current;
+      cards.forEach(function (c, n) { c.classList.toggle('mt-is-label', n === lit); });
+      if (prev) prev.disabled = offset < 2;
+      if (next) next.disabled = offset >= track.parentElement.scrollWidth - track.parentElement.clientWidth - 2;
+    }, { passive: true });
     window.addEventListener('resize', function () { go(current); }, { passive: true });
 
     paint();
@@ -249,7 +268,11 @@
     }
     function maxIndex() { return Math.max(0, cards.length - perView()); }
     function paint() {
-      strip.style.transform = 'translateX(' + ((rtl ? 1 : -1) * current * pitch()) + 'px)';
+      if (nativeRail()) scrollRail(strip, current * pitch());
+      else {
+        strip.parentElement.scrollLeft = 0;
+        strip.style.transform = 'translateX(' + ((rtl ? 1 : -1) * current * pitch()) + 'px)';
+      }
       if (prev) prev.disabled = current <= 0;
       if (next) next.disabled = current >= maxIndex();
     }
@@ -258,6 +281,13 @@
     if (prev) prev.addEventListener('click', function () { go(current - perView()); });
     if (next) next.addEventListener('click', function () { go(current + perView()); });
     enableRailDragging(strip, function () { return current; }, go, pitch, function () { return maxIndex() * pitch(); });
+    strip.parentElement.addEventListener('scroll', function () {
+      if (!nativeRail()) return;
+      var rail = strip.parentElement, offset = Math.abs(rail.scrollLeft);
+      current = clamp(Math.round(offset / pitch()), 0, maxIndex());
+      if (prev) prev.disabled = offset < 2;
+      if (next) next.disabled = offset >= rail.scrollWidth - rail.clientWidth - 2;
+    }, { passive: true });
     window.addEventListener('resize', function () { go(current); }, { passive: true });
     paint();
     DK.newsGo = go;

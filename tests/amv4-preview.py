@@ -27,8 +27,13 @@ for lang,file in [('en','index-en.html'),('ar','index.html')]:
  native=subprocess.run(['php',str(root/'tests/section-preview.php')],input=json.dumps({'lang':lang,'section':{'heading':title,'description':html.unescape(intro),'sectors':cards}}),text=True,capture_output=True,check=True).stdout
  s=re.sub(r'<span id="sectors"[^>]*></span>.*?<section class="mt-dk-sectors".*?</section>',lambda m:native,s,flags=re.S)
  s=s.replace('id="contactForm"', 'id="sourceContactForm"')
- # Exercise the optional Team section, disabled in the supplied source export.
- s=s.replace('id="dkTeam" hidden style="display:none"', 'id="dkTeam"')
+ # Render all native team groups so tab navigation matches WordPress.
+ team=re.search(r'<section class="mt-dk-team".*?</section>',s,re.S)[0]
+ members=json.loads(re.search(r'<script[^>]*id="dkTeamData"[^>]*>(.*?)</script>',team,re.S)[1])
+ groups=[{'id':m[1],'name':html.unescape(m[2])} for m in re.findall(r'<button class="mt-dk-tab([^"]*)"[^>]*data-group="([^"]+)"[^>]*>(.*?)</button>',team,re.S)]
+ heading=re.search(r'<h2 class="mt-dk-label">(.*?)</h2>',team,re.S)[1]
+ rendered_team=subprocess.run(['php',str(root/'tests/team-preview.php')],input=json.dumps({'lang':lang,'heading':heading,'groups':groups,'members':members}),text=True,capture_output=True,check=True).stdout
+ s=re.sub(r'<section class="mt-dk-team".*?</section>',lambda m:rendered_team,s,flags=re.S)
  s+='''<script>var asfarSettings={assets:'/media/',close:'Close',empty:'',label:'Biography',endpoint:'',error:'',invalid:''};</script><script src="/theme/assets/js/vendor/lenis.min.js"></script><script src="/theme/assets/js/app.js"></script><script src="/theme/assets/js/deck.js"></script><script src="/theme/assets/js/wordpress.js"></script>'''
  (dest/(lang+'.html')).write_text(s)
 print(dest)

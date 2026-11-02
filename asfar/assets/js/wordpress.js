@@ -67,12 +67,32 @@
   var tabs = [...team.querySelectorAll(".mt-dk-tab")];
   var groups = [...team.querySelectorAll('[data-team-group]')];
   var rail = team.querySelector(".mt-dk-team__rail"), shift = 0;
+  var tablist = team.querySelector('.mt-dk-tabs'), stage = team.querySelector('.mt-dk-team__stage');
+  var tabHome = document.createComment('Team tabs desktop position');
+  if (tablist) tablist.before(tabHome);
+  function mobileTeam() { return matchMedia('(max-width: 960px)').matches; }
+  function positionTeamTabs() {
+   if (!tablist || !stage) return;
+   var nav = document.querySelector('.mt-nav');
+   var top = nav ? nav.getBoundingClientRect().bottom : 0;
+   team.style.setProperty('--team-tabs-top', Math.max(0, top) + 'px');
+   if (mobileTeam()) stage.before(tablist);
+   else tabHome.after(tablist);
+  }
+  function showTeamStart() {
+   if (!mobileTeam() || !tablist) return;
+   positionTeamTabs();
+   var top = parseFloat(team.style.getPropertyValue('--team-tabs-top')) || 0;
+   window.scrollTo({ top: Math.max(0, window.scrollY + stage.getBoundingClientRect().top - top - tablist.offsetHeight - 12), behavior: reduced ? 'instant' : 'smooth' });
+  }
+  positionTeamTabs();
+  addEventListener('resize', positionTeamTabs);
   function grid() { return team.querySelector("[data-team-group]:not([hidden]) .mt-dk-team__grid"); }
   function paint() { var g = grid(); if (!g) return; shift = Math.max(0, Math.min(shift, g.scrollWidth - g.parentElement.clientWidth)); g.style.transform = 'translateX(' + (rtl ? shift : -shift) + 'px)'; }
   tabs.forEach(function (tab) { tab.addEventListener('click', function () {
    tabs.forEach(function (t) { t.classList.toggle("mt-is-active", t === tab); t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
    rail.classList.add("mt-is-out");
-   setTimeout(function () { groups.forEach(function (g) { g.hidden = g.dataset.teamGroup !== tab.dataset.group; }); shift = 0; paint(); rail.classList.remove("mt-is-out"); }, reduced ? 0 : 600);
+   setTimeout(function () { groups.forEach(function (g) { g.hidden = g.dataset.teamGroup !== tab.dataset.group; }); shift = 0; paint(); rail.classList.remove("mt-is-out"); showTeamStart(); }, reduced ? 0 : 600);
   }); });
   team.querySelectorAll('[data-dir]').forEach(function (button) { button.addEventListener('click', function () { var g = grid(); if (!g || !g.children.length) return; shift += Number(button.dataset.dir) * (g.children[0].clientWidth + (parseFloat(getComputedStyle(g).columnGap) || 0)); paint(); }); });
   addEventListener('resize', paint);

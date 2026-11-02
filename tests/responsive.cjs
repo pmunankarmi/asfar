@@ -5,6 +5,7 @@ const assert = require('node:assert/strict');
  const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
  try {
   const page = await browser.newPage();
+  await page.addInitScript(() => sessionStorage.setItem('asfar:intro', '1'));
   page.on('pageerror', error => console.error('Browser:', error.message));
   await page.emulateMedia({ reducedMotion: 'reduce' });
   const base = process.env.ASFAR_TEST_URL || 'http://127.0.0.1:8878/';
@@ -51,7 +52,7 @@ const assert = require('node:assert/strict');
      assert.equal(await tabs.nth(1).evaluate(e => getComputedStyle(e).backgroundClip), 'content-box', 'Active pagination keeps its dash shape');
      if (width === 390 && lang === 'ar') {
       for (const [selector, name] of [['.mt-dk-vision-band', 'vision'], ['#dkMap', 'portfolio'], ['.mt-dk-team__grid', 'team']]) {
-       await page.locator(selector).screenshot({ path: `/private/tmp/asfar-1.4.26-${name}.png` });
+       await page.locator(selector + ':visible').screenshot({ path: `/private/tmp/asfar-responsive-${name}.png` });
       }
      }
     }
