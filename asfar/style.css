@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.27
+Version: 1.4.28
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -278,6 +278,21 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 
 /* Stack the whole section, including children with desktop column placement. */
 @media (max-width: 960px) {
+	.mt-dk-about .mt-dk-label,
+	.mt-dk-vision-band .mt-dk-label,
+	.mt-dk-impact .mt-dk-label,
+	.mt-dk-sectors .mt-dk-label,
+	.mt-dk-news .mt-dk-label,
+	.mt-dk-team .mt-dk-label,
+	.mt-dk-partners .mt-dk-label,
+	.mt-dk-faq .mt-dk-label { font-size: clamp(26px, 3.6vw, 34px); line-height: 1.3; }
+	.mt-dk-sectors__intro { font-size: 16px; line-height: 1.6; margin-top: 16px; }
+	.mt-dk-sector__name { font-size: 16px; line-height: 1.4; }
+	.mt-dk-faq__btn { font-size: 16px; line-height: 1.5; }
+	.mt-dk-faq__a { font-size: 15px; line-height: 1.7; }
+	.mt-dk-footer__item { font-size: 14px; }
+	.mt-dk-footer__legal,
+	.mt-dk-footer__top { font-size: 12px; line-height: 1.5; }
 	.mt-dk-about__row,
 	.mt-dk-vision__row {
 		grid-template-columns: minmax(0, 1fr);
@@ -295,10 +310,13 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	.mt-dk-vision__tan p,
 	.mt-dk-vision__card p {
 		max-width: 100%;
-		font-size: clamp(14px, 1.8vw, 17px);
+		font-size: clamp(16px, 1.8vw, 18px);
 		line-height: 1.65;
 	}
 	.mt-dk-about__card p + p { margin-top: 1em; }
+	.mt-dk-about__card h3 { font-size: clamp(24px, 3.2vw, 32px); line-height: 1.35; margin-bottom: 16px; }
+	.mt-dk-about__row .mt-dk-sub { font-size: 15px; line-height: 1.6; }
+	.mt-dk-vision__tan h3 { font-size: clamp(24px, 3.2vw, 30px); line-height: 1.35; }
 	.mt-dk-vision__card h3 { font-size: clamp(18px, 2.4vw, 24px); }
 	.mt-dk-vision__tan,
 	.mt-dk-vision__card { min-height: 0; padding: 24px; }
@@ -331,7 +349,25 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	.mt-dk-map__dashes button:focus-visible { outline: 2px solid #FCF7EE; outline-offset: 2px; }
 
 	.mt-dk-news { padding-bottom: 64px; }
+	/* Retain the desktop card and photo proportions at mobile widths. */
+	.mt-dk-newscard { aspect-ratio: 311 / 313.1; }
+	.mt-dk-news .mt-dk-newscard__date { font-size: 12px; line-height: 1.4; }
+	.mt-dk-news .mt-dk-newscard__title {
+		font-size: clamp(14px, 2vw, 17px);
+		line-height: 1.4;
+		height: calc(3 * 1.4em);
+	}
+	.mt-dk-news .mt-dk-pill { font-size: 12px; min-height: 36px; }
+	.mt-dk-map__lab { font-size: 12px; line-height: 1.5; }
+	.mt-dk-map__val { font-size: clamp(18px, 3.4vw, 24px); line-height: 1.4; }
+	.mt-dk-impact__lbl { font-size: 14px; line-height: 1.6; }
 	.mt-dk-team { padding-top: 56px; }
+	/* The featured member remains the largest portrait in every group. */
+	.mt-dk-feat { grid-template-columns: minmax(0, 1fr); gap: 16px; text-align: center; }
+	.mt-dk-feat__ph { width: 100%; max-width: none; aspect-ratio: 186 / 231.05; border-radius: 6px; }
+	.mt-dk-feat__txt { padding-top: 0; max-inline-size: none; }
+	.mt-dk-feat__name { font-size: clamp(20px, 3vw, 26px); line-height: 1.4; text-align: center; }
+	.mt-dk-feat__role { font-size: 16px; line-height: 1.5; margin-top: 6px; }
 	.mt-dk-team__grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 24px 16px;

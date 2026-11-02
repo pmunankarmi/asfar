@@ -43,6 +43,24 @@ const assert = require('node:assert/strict');
      assert.ok(layout.clear, `${lang} ${width}: pagination must clear panel and wave`);
      assert.ok(layout.columns && layout.captionBelow, `${lang} ${width}: two team columns with captions below portraits`);
      assert.ok(layout.newsPadding >= 64 && layout.teamPadding >= 56, 'News/Team spacing');
+     const proportions = await page.evaluate(() => {
+      const dimensions = selector => { const r = document.querySelector(selector).getBoundingClientRect(); return {width:r.width,height:r.height,ratio:r.width/r.height}; };
+      return {
+       featured: dimensions('.mt-dk-feat__ph'), featuredCard:dimensions('.mt-dk-feat'),
+       member: dimensions('.mt-dk-mem__ph'), sector:dimensions('.mt-dk-sector'),
+       news: dimensions('.mt-dk-newscard'), newsPhoto:dimensions('.mt-dk-newscard__ph'),
+       featuredCaption:document.querySelector('.mt-dk-feat__txt').getBoundingClientRect().top >= document.querySelector('.mt-dk-feat__ph').getBoundingClientRect().bottom,
+       about:parseFloat(getComputedStyle(document.querySelector('.mt-dk-about__card p')).fontSize),
+       newsTitle:parseFloat(getComputedStyle(document.querySelector('.mt-dk-newscard__title')).fontSize)
+      };
+     });
+     assert.ok(Math.abs(proportions.featured.width-proportions.featuredCard.width)<2, 'Featured portrait fills mobile card');
+     assert.ok(proportions.featured.width>proportions.member.width*1.8 && proportions.featuredCaption,'Featured portrait is larger with caption below');
+     for(const [key,ratio] of [['featured',186/231.05],['member',114/113],['sector',307/394.1],['news',311/313.1],['newsPhoto',311/270.1]]) {
+      assert.ok(Math.abs(proportions[key].ratio-ratio)<.015, `${lang} ${width}: ${key} retains desktop proportions`);
+     }
+     assert.ok(proportions.about>=16 && proportions.newsTitle>=14,'Readable mobile About and News text');
+
      const tabs = page.locator('.mt-dk-map__dashes button');
      await tabs.nth(1).scrollIntoViewIfNeeded();
      await page.waitForTimeout(100);
@@ -51,7 +69,7 @@ const assert = require('node:assert/strict');
      await page.waitForFunction(() => !document.querySelectorAll('.mt-asfar-portfolio-pane')[1].hidden);
      assert.equal(await tabs.nth(1).evaluate(e => getComputedStyle(e).backgroundClip), 'content-box', 'Active pagination keeps its dash shape');
      if (width === 390 && lang === 'ar') {
-      for (const [selector, name] of [['.mt-dk-vision-band', 'vision'], ['#dkMap', 'portfolio'], ['.mt-dk-team__grid', 'team']]) {
+      for (const [selector, name] of [['.mt-dk-vision-band', 'vision'], ['#dkMap', 'portfolio'], ['#dkTeam', 'team'], ['#about', 'about'], ['#dkNews', 'news'], ['#dkSectors', 'sectors'], ['#impact', 'impact'], ['#faq', 'faq'], ['#contact', 'footer']]) {
        await page.locator(selector + ':visible').screenshot({ path: `/private/tmp/asfar-responsive-${name}.png` });
       }
      }

@@ -107,3 +107,10 @@ Chrome checks passed in English and Arabic at 320, 390, 600, 768, 960, 1024 and 
 `tests/mobile-interactions.cjs` uses Chrome DevTools touch input with a 390px mobile viewport. English and Arabic pass real horizontal swipes on Strategic Investments and News, vertical page scrolling across each rail, synchronized previous/next arrows, sticky Team group tabs, return to the new group's first portrait, and restoration of desktop tab placement on resize. Checks pass with normal and reduced motion. Desktop mouse dragging also passes in both languages. `tests/responsive.cjs` passes at 320, 390, 600, 768, 960, 1024 and 1440px. No browser JavaScript errors were recorded.
 
 The preview now renders the actual PHP Team template and all group tabs from source fixture data through `tests/team-preview.php`. Fixture photographs and copy are not live WordPress content. Tests bypass the introductory curtain using its ordinary session-storage flag. PHP/JavaScript syntax and package integrity are checked by `tools/package.py v1.4.27`. Physical iPhone/Safari testing remains outside these local Chrome checks.
+
+
+## 1.4.28 — Featured portrait, image proportions and mobile type
+
+The bilingual responsive suite passes at 320, 390, 600, 768, 960, 1024 and 1440px. Added mobile assertions verify a full-width featured portrait, a portrait width over 1.8 times the regular portrait width, caption placement below the first portrait, and desktop-matching aspect ratios for featured/regular team portraits, Strategic Investments cards, News cards and News photographs. About paragraphs have a 16px minimum and News titles a 14px minimum.
+
+Arabic mobile captures were visually reviewed for About, Vision, Impact, portfolio, Strategic Investments, News, Team, FAQ and footer. The interaction suite passes actual Chrome touch input in both languages with normal/reduced motion, including swiping, page scrolling, arrows, sticky team tabs and return to the first member. Desktop mouse dragging is retained. Fixtures use current theme assets; live WordPress content and physical Safari devices were not exercised. Packaging validates PHP/JavaScript syntax and ZIP integrity.
