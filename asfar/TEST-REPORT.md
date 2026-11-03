@@ -114,3 +114,10 @@ The preview now renders the actual PHP Team template and all group tabs from sou
 The bilingual responsive suite passes at 320, 390, 600, 768, 960, 1024 and 1440px. Added mobile assertions verify a full-width featured portrait, a portrait width over 1.8 times the regular portrait width, caption placement below the first portrait, and desktop-matching aspect ratios for featured/regular team portraits, Strategic Investments cards, News cards and News photographs. About paragraphs have a 16px minimum and News titles a 14px minimum.
 
 Arabic mobile captures were visually reviewed for About, Vision, Impact, portfolio, Strategic Investments, News, Team, FAQ and footer. The interaction suite passes actual Chrome touch input in both languages with normal/reduced motion, including swiping, page scrolling, arrows, sticky team tabs and return to the first member. Desktop mouse dragging is retained. Fixtures use current theme assets; live WordPress content and physical Safari devices were not exercised. Packaging validates PHP/JavaScript syntax and ZIP integrity.
+
+
+## 1.4.29 — Team page columns and Partners carousel
+
+`tests/team-partners.cjs` checks the real PHP Team page template and all groups in English and Arabic at 320, 390, 600, 768, 960 and 1440px. Mobile checks verify two columns, full card-width portraits at the homepage 114:113 ratio, captions below images and no page overflow. Supplied fixture portraits load successfully.
+
+The native Partners PHP fixture passes with 0, 1, 2, 9 and 11 logos in LTR/RTL at 390, 768 and 1440px. Swiper initializes for every multi-logo list, uses 2/3/5 visible slides at the corresponding breakpoints, and arrows move one slide. Real Chrome touch gestures advance the nine-logo carousel in both directions/languages. Single-logo and empty fallbacks pass; no JavaScript errors were recorded. Team and Partners captures were visually inspected. These local fixtures do not exercise a live WordPress database or physical iPhone. Packaging checks PHP/JavaScript syntax and ZIP integrity.

@@ -1,7 +1,7 @@
 <?php
 $section = get_field( 'partners_section' ) ?: array();
 $logos = array_values( array_filter( asfar_rows( 'partner_logos', 'asfar_partners' ), function ( $row ) { return ! empty( $row['logo'] ); } ) );
-$slider = count( $logos ) > 10;
+$slider = count( $logos ) > 1;
 if ( ! $logos ) { return; }
 
 ?>

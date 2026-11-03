@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.28 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.29 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.28` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.29` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -112,3 +112,5 @@ Version 1.4.26 removes decorative diamonds from mobile Vision cards, places clic
 Version 1.4.27 uses native horizontal touch scrolling for mobile Strategic Investments and News, with scroll snapping and synchronized arrow navigation. Mobile Team group tabs sit above the portraits and remain sticky beneath the header; selecting a group returns to its first member. Desktop tab placement and mouse dragging are retained.
 
 Version 1.4.28 makes each featured team portrait full width on mobile, retaining the desktop 186:231.05 portrait ratio with name and role below. Other members remain in two columns at their desktop 114:113 ratio. Mobile News cards restore the desktop 311:313.1 ratio; News photographs and investment cards retain their desktop proportions. Mobile section headings, About/Vision copy, News captions, portfolio labels, FAQ text and footer details have readable size floors and consistent leading. Desktop layouts remain unchanged.
+
+Version 1.4.29 gives the full Team page two columns on mobile/tablet, matching homepage regular portrait proportions, clean frames, names and roles below each photo. Partners uses Swiper for every collection with more than one logo, including existing nine-logo lists. The carousel shows two logos on phones, three on tablets and five on desktop; arrows advance one logo and finger/keyboard navigation remain available. A single logo stays static and an empty section stays hidden.

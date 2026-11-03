@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.28
+Version: 1.4.29
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -278,6 +278,27 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 
 /* Stack the whole section, including children with desktop column placement. */
 @media (max-width: 960px) {
+	/* Match the homepage's regular member cards on the full Team page. */
+	.mt-teampage__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+	.mt-teampage__grid .mt-member__ph {
+		max-width: none;
+		width: 100%;
+		aspect-ratio: 114 / 113;
+		padding: 0;
+		border: 0;
+		border-radius: 6px;
+		margin-bottom: 12px;
+		overflow: hidden;
+	}
+	.mt-teampage__grid .mt-member__ph::after { content: none; }
+	.mt-teampage__grid .mt-member__ph img { border-radius: inherit; }
+	.mt-teampage__grid .mt-member__txt h3 { margin: 0; line-height: 1.5; }
+	.mt-teampage__grid .mt-member__name {
+		font-size: clamp(14px, 2.5vw, 18px);
+		line-height: 1.5;
+		color: #334345;
+	}
+	.mt-teampage__grid .mt-member__role { margin: 4px 0 0; font-size: 12px; line-height: 1.5; color: var(--dk-terra); }
 	.mt-dk-about .mt-dk-label,
 	.mt-dk-vision-band .mt-dk-label,
 	.mt-dk-impact .mt-dk-label,

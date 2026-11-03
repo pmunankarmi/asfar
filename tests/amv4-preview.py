@@ -34,6 +34,11 @@ for lang,file in [('en','index-en.html'),('ar','index.html')]:
  heading=re.search(r'<h2 class="mt-dk-label">(.*?)</h2>',team,re.S)[1]
  rendered_team=subprocess.run(['php',str(root/'tests/team-preview.php')],input=json.dumps({'lang':lang,'heading':heading,'groups':groups,'members':members}),text=True,capture_output=True,check=True).stdout
  s=re.sub(r'<section class="mt-dk-team".*?</section>',lambda m:rendered_team,s,flags=re.S)
+ # The full Team page uses the same native card template with its own classes.
+ team_page=subprocess.run(['php',str(root/'tests/team-preview.php'),'page'],input=json.dumps({'lang':lang,'heading':heading,'groups':groups,'members':members}),text=True,capture_output=True,check=True).stdout
+ styles=['assets/css/app.css','assets/css/deck.css','assets/css/deck-article.css']+(['assets/css/app-rtl.css'] if lang=='ar' else [])+['style.css']
+ head=f'<!doctype html><html lang="{lang}" dir="'+('rtl' if lang=='ar' else 'ltr')+'"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'+''.join(f'<link rel="stylesheet" href="/theme/{css}">' for css in styles)
+ (dest/('team-'+lang+'.html')).write_text(head+team_page+'</html>')
  s+='''<script>var asfarSettings={assets:'/media/',close:'Close',empty:'',label:'Biography',endpoint:'',error:'',invalid:''};</script><script src="/theme/assets/js/vendor/lenis.min.js"></script><script src="/theme/assets/js/app.js"></script><script src="/theme/assets/js/deck.js"></script><script src="/theme/assets/js/wordpress.js"></script>'''
  (dest/(lang+'.html')).write_text(s)
 print(dest)
