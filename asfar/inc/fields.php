@@ -53,12 +53,17 @@ function asfar_field_keys( $fields, $prefix ) {
 function asfar_home_field_groups() {
 	return array(
 		'banner' => array( '01 — Homepage Banner', array(
+			asfar_field( 'hero_background_video', 'Hero Background Video', 'file', array(
+				'return_format' => 'id',
+				'mime_types' => 'mp4,webm',
+				'instructions' => 'Upload or select an MP4 or WebM for the hero background. It plays muted and loops, replacing the landscape animation. Leave empty to keep the existing animation. Banner images remain the fallback. Set this on each translated homepage.',
+			) ),
 			asfar_repeater( 'banner_slides', 'Banner Slides', array(
 				asfar_text( 'eyebrow', 'Small Heading' ),
 				asfar_text( 'heading', 'Main Heading', true ),
 				asfar_text( 'highlight', 'Highlighted Heading', true ),
 				asfar_image_field( 'image', 'Background Image' ),
-				asfar_field( 'video', 'Film File', 'file', array( 'return_format' => 'id', 'mime_types' => 'mp4,webm' ) ),
+				asfar_field( 'video', 'Watch Film Button Video', 'file', array( 'return_format' => 'id', 'mime_types' => 'mp4,webm' ) ),
 				asfar_text( 'video_label', 'Watch Film Button Text' ),
 				asfar_link_field( 'button', 'Page / Website Button' ),
 			), 'Add banner slide' ),

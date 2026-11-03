@@ -1,5 +1,10 @@
 <?php
 $animation = get_field( 'banner_animation' ) ?: array();
+$background_video_id = (int) get_field( 'hero_background_video' );
+$background_video_url = $background_video_id && in_array( get_post_mime_type( $background_video_id ), array( 'video/mp4', 'video/webm' ), true ) ? wp_get_attachment_url( $background_video_id ) : '';
+if ( $background_video_url ) {
+	$animation['enabled'] = false;
+}
 $profile_id = (int) asfar_option( 'company_profile_pdf' );
 $profile_url = $profile_id && 'application/pdf' === get_post_mime_type( $profile_id ) ? wp_get_attachment_url( $profile_id ) : '';
 $marks = array();
@@ -23,6 +28,9 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 					</div>
 				<?php endwhile; ?>
 			</div>
+			<?php if ( $background_video_url ) : ?>
+				<video id="heroVid" class="mt-hero__vid" src="<?php echo esc_url( $background_video_url ); ?>" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+			<?php endif; ?>
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
 				<canvas class="mt-hero__morph-canvas" id="heroMorphCanvas" data-frames="273" aria-hidden="true"></canvas>
 			<?php endif; ?>

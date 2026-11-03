@@ -855,7 +855,8 @@
     v.addEventListener('loadeddata', tryPlay);
     v.addEventListener('canplay', tryPlay);
     v.addEventListener('playing', ready);
-    if (v.readyState >= 2) { tryPlay(); if (v.readyState >= 3) ready(); }
+    // Start loading even when the video initially preloads metadata only.
+    tryPlay();
   })();
 
   /* ---------- hero: rotating 3-scene banner (each scene has its own CTA) ---------- */
