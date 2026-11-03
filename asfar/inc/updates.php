@@ -65,3 +65,35 @@ add_action( 'admin_post_asfar_check_updates', function () {
  wp_update_themes();
  wp_safe_redirect( admin_url( 'update-core.php' ) ); exit;
 } );
+
+/** Refresh native update notices during admin visits, at most once per two minutes. */
+function asfar_refresh_admin_theme_update( $heartbeat = false ) {
+ if ( ! current_user_can( 'update_themes' ) || ( wp_doing_ajax() && ! $heartbeat ) || get_transient( 'asfar_admin_update_check' ) ) { return; }
+ set_transient( 'asfar_admin_update_check', 1, 2 * MINUTE_IN_SECONDS );
+ delete_transient( 'asfar_github_release' );
+ $updates = get_site_transient( 'update_themes' );
+ if ( ! is_object( $updates ) ) { $updates = new stdClass(); }
+ $slug = get_template();
+ $updates->checked[ $slug ] = wp_get_theme( $slug )->get( 'Version' );
+ // The existing native update filter adds ASFAR without discarding other themes.
+ set_site_transient( 'update_themes', $updates );
+}
+add_action( 'admin_init', 'asfar_refresh_admin_theme_update' );
+
+// WordPress Heartbeat also discovers updates while an admin page remains open.
+add_filter( 'heartbeat_received', function ( $response ) {
+ if ( ! current_user_can( 'update_themes' ) ) { return $response; }
+ asfar_refresh_admin_theme_update( true );
+ $updates = get_site_transient( 'update_themes' );
+ $item = is_object( $updates ) ? ( $updates->response[ get_template() ] ?? array() ) : array();
+ $response['asfar_theme_update'] = empty( $item['new_version'] ) ? false : array(
+  'message' => sprintf( 'ASFAR %s is available.', $item['new_version'] ),
+  'url' => admin_url( 'update-core.php' ),
+ );
+ return $response;
+} );
+add_action( 'admin_enqueue_scripts', function () {
+ if ( current_user_can( 'update_themes' ) ) {
+  wp_enqueue_script( 'asfar-admin-updates', get_template_directory_uri() . '/assets/js/admin-updates.js', array( 'heartbeat' ), ASFAR_VERSION, true );
+ }
+} );

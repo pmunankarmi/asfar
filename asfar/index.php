@@ -1,3 +1,3 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) { exit; }
-require get_template_directory() . '/archive.php';
+/** WordPress template hierarchy entry point. */
+get_template_part( 'template-parts/layout/index' );
