@@ -100,9 +100,17 @@
  var map = document.getElementById("dkMap");
  if (map) {
   var panes = [...map.querySelectorAll(".mt-asfar-portfolio-pane")], backgrounds = [...map.querySelectorAll(".mt-dk-map__bg")], buttons = [...map.querySelectorAll(".mt-dk-map__dashes button")];
-  var hinting = true;
-  map.classList.add("mt-dk-map--hint");
-  var current = 0, swap;
+  var hinting = false;
+  var current = 0;
+  // Keep all panes in the grid so changing projects never changes section height.
+  function showPane(index) {
+   panes.forEach(function (pane, n) {
+    pane.hidden = false;
+    pane.inert = n !== index;
+    pane.setAttribute("aria-hidden", n === index ? "false" : "true");
+    pane.classList.toggle("mt-is-active", n === index);
+   });
+  }
   function place() {
    var pane = panes[current], svg = map.querySelector('.mt-dk-map__stage svg'), pin = map.querySelector(".mt-dk-map__pin"), label = map.querySelector(".mt-dk-map__pinlab");
    if (!pane || !svg) return;
@@ -122,10 +130,10 @@
    hinting = false; map.classList.remove("mt-dk-map--hint");
    current = (i + panes.length) % panes.length;
    place();
-   clearTimeout(swap); map.classList.add("mt-is-swapping");
+   showPane(current);
    backgrounds.forEach(function (b, n) { b.classList.toggle("mt-is-active", n === current); });
    buttons.forEach(function (b, n) { b.classList.toggle("mt-is-active", n === current); b.setAttribute('aria-selected', n === current ? 'true' : 'false'); });
-   swap = setTimeout(function () { panes.forEach(function (p, n) { p.hidden = n !== current; }); place(); map.classList.remove("mt-is-swapping"); }, reduced ? 0 : 1000);
+
   }
   // Projects change only when the visitor selects a pagination button or region.
   buttons.forEach(function (b, n) { b.addEventListener('click', function () { go(n); }); });
@@ -139,6 +147,8 @@
    region.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); select(); } });
   });
   if (panes.length) {
+   map.classList.add("mt-map-ready");
+   showPane(current);
    place(); addEventListener('resize', place);
   }
  }
