@@ -16,6 +16,14 @@ const assert = require('node:assert/strict');
     await page.evaluate(() => document.fonts.ready);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${lang} ${width}: page overflow`);
     if (width <= 960) {
+     const headings = await page.locator('.mt-dk-label').evaluateAll(elements => elements.filter(e => e.getBoundingClientRect().width).map(e => getComputedStyle(e).fontSize));
+     assert.ok(headings.every(size => size === headings[0]), 'Mobile section heading font sizes are consistent');
+     const headingLines = await page.locator('.mt-mobile-heading-line').evaluateAll(elements => elements.map(e => {
+      const r = document.createRange(); r.selectNodeContents(e);
+      return new Set([...r.getClientRects()].filter(b => b.width > 1).map(b => Math.round(b.top))).size;
+     }));
+     if (lang === 'ar' || width >= 390) assert.ok(headingLines.every(count => count === 1), 'Investments/FAQ headings occupy one line');
+
      for (const [parent, child] of [['.mt-dk-about__row', '.mt-dk-about__card'], ['.mt-dk-vision__row', '.mt-dk-vision'], ['.mt-dk-vision', '.mt-dk-vision__tan']]) {
       const sizes = await page.evaluate(([parent, child]) => [document.querySelector(parent).getBoundingClientRect().width, document.querySelector(child).getBoundingClientRect().width], [parent, child]);
       assert.ok(Math.abs(sizes[0] - sizes[1]) < 2, `${lang} ${width}: ${child} must fill its row`);

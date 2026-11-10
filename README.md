@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.31 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.32 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.31` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.32` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -118,3 +118,5 @@ Version 1.4.29 gives the full Team page two columns on mobile/tablet, matching h
 Version 1.4.30 removes map scroll capture and automatic project cycling. Visitors scroll freely past the map and select projects using pagination or clickable regions.
 
 Version 1.4.31 adds Homepage Banner → Hero Background Video. Choose an MP4/WebM to replace the landscape animation with a muted looping video. Banner images remain the fallback, including reduced-motion visitors. The Watch Film button has its own video field.
+
+Version 1.4.32 removes forced mobile line breaks from Strategic Investments and FAQ headings while retaining desktop line breaks. All mobile homepage section headings share a consistent 20–28px responsive size and 1.3 line height. Longer English headings can wrap naturally on the narrowest phones to prevent overflow. Editable heading content is preserved.

@@ -121,3 +121,8 @@ Arabic mobile captures were visually reviewed for About, Vision, Impact, portfol
 `tests/team-partners.cjs` checks the real PHP Team page template and all groups in English and Arabic at 320, 390, 600, 768, 960 and 1440px. Mobile checks verify two columns, full card-width portraits at the homepage 114:113 ratio, captions below images and no page overflow. Supplied fixture portraits load successfully.
 
 The native Partners PHP fixture passes with 0, 1, 2, 9 and 11 logos in LTR/RTL at 390, 768 and 1440px. Swiper initializes for every multi-logo list, uses 2/3/5 visible slides at the corresponding breakpoints, and arrows move one slide. Real Chrome touch gestures advance the nine-logo carousel in both directions/languages. Single-logo and empty fallbacks pass; no JavaScript errors were recorded. Team and Partners captures were visually inspected. These local fixtures do not exercise a live WordPress database or physical iPhone. Packaging checks PHP/JavaScript syntax and ZIP integrity.
+
+
+## 1.4.32 — Single-line mobile headings and consistent type
+
+The bilingual responsive suite passes at 320, 390, 600, 768, 960, 1024 and 1440px. Added checks verify equal computed font sizes across visible mobile section headings and one-line Investments/FAQ headings in Arabic at every mobile size and in English from 390px. English FAQ text can wrap naturally at 320px. Desktop line breaks remain block-level. Mobile Arabic section captures were inspected. PHP/JavaScript syntax and ZIP integrity are checked by packaging; fixtures do not exercise live WordPress content.

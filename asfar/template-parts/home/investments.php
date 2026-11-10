@@ -3,8 +3,8 @@
 <section class="mt-dk-sectors" id="dkSectors">
 	<div class="mt-dk-wrap mt-dk-sectors__grid">
 		<div class="mt-dk-rise">
-			<h2 class="mt-dk-label"><?php
-				echo asfar_lines( get_sub_field( 'heading' ) );
+			<h2 class="mt-dk-label mt-mobile-heading-line"><?php
+				echo str_replace( array( '<br>', '<br/>', '<br />' ), '<span class="mt-heading-break"> </span>', asfar_lines( get_sub_field( 'heading' ) ) );
 				?></h2>
 			<p class="mt-dk-sub mt-dk-sectors__intro"><?php echo asfar_lines( get_sub_field( 'description' ) ); ?></p>
 		</div>

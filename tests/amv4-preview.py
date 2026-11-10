@@ -27,6 +27,8 @@ for lang,file in [('en','index-en.html'),('ar','index.html')]:
  native=subprocess.run(['php',str(root/'tests/section-preview.php')],input=json.dumps({'lang':lang,'section':{'heading':title,'description':html.unescape(intro),'sectors':cards}}),text=True,capture_output=True,check=True).stdout
  s=re.sub(r'<span id="sectors"[^>]*></span>.*?<section class="mt-dk-sectors".*?</section>',lambda m:native,s,flags=re.S)
  s=s.replace('id="contactForm"', 'id="sourceContactForm"')
+ # Mirror the FAQ template's responsive line-break spans.
+ s=re.sub(r'(<section class="mt-dk-faq".*?<h2 class=")([^"]+)(">)(.*?)(</h2>)',lambda m:m[1]+m[2]+' mt-mobile-heading-line'+m[3]+re.sub(r'<br\s*/?>','<span class="mt-heading-break"> </span>',m[4])+m[5],s,count=1,flags=re.S)
  # Render all native team groups so tab navigation matches WordPress.
  team=re.search(r'<section class="mt-dk-team".*?</section>',s,re.S)[0]
  members=json.loads(re.search(r'<script[^>]*id="dkTeamData"[^>]*>(.*?)</script>',team,re.S)[1])

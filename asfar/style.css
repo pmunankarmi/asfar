@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.31
+Version: 1.4.32
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -306,7 +306,7 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	.mt-dk-news .mt-dk-label,
 	.mt-dk-team .mt-dk-label,
 	.mt-dk-partners .mt-dk-label,
-	.mt-dk-faq .mt-dk-label { font-size: clamp(26px, 3.6vw, 34px); line-height: 1.3; }
+	.mt-dk-faq .mt-dk-label { font-size: clamp(20px, 5vw, 28px); line-height: 1.3; }
 	.mt-dk-sectors__intro { font-size: 16px; line-height: 1.6; margin-top: 16px; }
 	.mt-dk-sector__name { font-size: 16px; line-height: 1.4; }
 	.mt-dk-faq__btn { font-size: 16px; line-height: 1.5; }
@@ -421,4 +421,11 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 		padding-inline: 14px;
 		white-space: normal;
 	}
+}
+
+/* Editor line breaks stay on desktop; mobile section headings read across. */
+.mt-heading-break { display: block; }
+@media (max-width: 960px) {
+ .mt-mobile-heading-line .mt-heading-break,
+ .mt-mobile-heading-line .mt-editor-line { display: inline; }
 }
