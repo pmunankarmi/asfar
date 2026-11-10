@@ -126,3 +126,8 @@ The native Partners PHP fixture passes with 0, 1, 2, 9 and 11 logos in LTR/RTL a
 ## 1.4.32 — Single-line mobile headings and consistent type
 
 The bilingual responsive suite passes at 320, 390, 600, 768, 960, 1024 and 1440px. Added checks verify equal computed font sizes across visible mobile section headings and one-line Investments/FAQ headings in Arabic at every mobile size and in English from 390px. English FAQ text can wrap naturally at 320px. Desktop line breaks remain block-level. Mobile Arabic section captures were inspected. PHP/JavaScript syntax and ZIP integrity are checked by packaging; fixtures do not exercise live WordPress content.
+
+
+## 1.4.34 — About heading and subtitle
+
+The bilingual responsive suite passes at 320, 390, 600, 768, 960, 1024 and 1440px. Its mobile single-line checks now include the About title and company subtitle, with Arabic passing at every mobile size and English from 390px. Shared section heading size checks pass. Arabic About capture was visually inspected; desktop break spans remain block-level. PHP/JavaScript syntax and package integrity are checked by packaging.

@@ -1,6 +1,6 @@
 # ASFAR WordPress theme
 
-ASFAR 1.4.33 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
+ASFAR 1.4.34 uses native WordPress pages, menus, posts and featured images, with named ACF Pro fields and Polylang translations.
 
 - Each of the ten homepage sections has its own readable template in `asfar/template-parts/home/` and its own clearly named ACF field group.
 - Banner slides use an ACF repeater; Projects and Team have dedicated post types. Team Types is a translatable taxonomy.
@@ -13,7 +13,7 @@ Installable theme: `dist/asfar.zip`. Separate image package: `dist/asfar-media.z
 
 Read [setup and editing instructions](asfar/SETUP.md) and [verification report](asfar/TEST-REPORT.md).
 
-Build with `python3 tools/package.py v1.4.33` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
+Build with `python3 tools/package.py v1.4.34` (PHP and Node.js required). The release workflow packages tagged versions for native WordPress updates from GitHub.
 
 `inc/seed.json` and `inc/migration-map.json` are import/migration reference data, never frontend content sources. The one-time migration preserves existing page IDs, images, translations and edited fields. Existing legacy metadata stays in the database; the old generated templates and numbered field editor have been removed.
 
@@ -122,3 +122,5 @@ Version 1.4.31 adds Homepage Banner → Hero Background Video. Choose an MP4/Web
 Version 1.4.32 removes forced mobile line breaks from Strategic Investments and FAQ headings while retaining desktop line breaks. All mobile homepage section headings share a consistent 20–28px responsive size and 1.3 line height. Longer English headings can wrap naturally on the narrowest phones to prevent overflow. Editable heading content is preserved.
 
 Version 1.4.33 synchronizes map details and pagination immediately, replaces zoom/slide effects with short fades, and keeps the project panel height stable. Hidden panes are inert and excluded from accessibility navigation.
+
+Version 1.4.34 removes forced mobile line breaks from the About heading and company subtitle, using the same responsive line-break spans as Investments and FAQ. Desktop line breaks, saved content and shared heading font sizes are preserved.

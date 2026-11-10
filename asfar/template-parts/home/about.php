@@ -3,8 +3,8 @@
 	<div class="mt-dk-wrap">
 		<div class="mt-dk-about__row">
 			<div class="mt-dk-rise">
-				<h2 class="mt-dk-label"><?php echo asfar_lines( get_sub_field( 'heading' ) ); ?></h2>
-				<p class="mt-dk-sub mt-asfar-about-subtitle"><?php echo asfar_lines( get_sub_field( 'subtitle' ) ); ?></p>
+				<h2 class="mt-dk-label mt-mobile-heading-line"><?php echo str_replace( array( '<br>', '<br/>', '<br />' ), '<span class="mt-heading-break"> </span>', asfar_lines( get_sub_field( 'heading' ) ) ); ?></h2>
+				<p class="mt-dk-sub mt-asfar-about-subtitle mt-mobile-heading-line"><?php echo str_replace( array( '<br>', '<br/>', '<br />' ), '<span class="mt-heading-break"> </span>', asfar_lines( get_sub_field( 'subtitle' ) ) ); ?></p>
 			</div>
 			<div class="mt-dk-card mt-dk-about__card mt-dk-rise">
 				<span class="mt-dk-about__frond" aria-hidden="true"></span>

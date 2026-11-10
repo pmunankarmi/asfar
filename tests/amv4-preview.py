@@ -19,6 +19,9 @@ for lang,file in [('en','index-en.html'),('ar','index.html')]:
  rendered=rendered.replace('/asfar-media/','/media/')
  s=re.sub(r'<span id="projects"[^>]*></span>.*?<section class="mt-dk-map".*?</section>',lambda m:rendered,s,flags=re.S)
  s=s.replace('class="mt-dk-sub" style="margin-top:.836em"','class="mt-dk-sub mt-asfar-about-subtitle"')
+ about=re.search(r'<section class="mt-dk-about".*?</section>',s,re.S)[0]
+ about_inline=re.sub(r'(<(?:h2|p) class=")([^"]*(?:mt-dk-label|mt-asfar-about-subtitle)[^"]*)(">)(.*?)(</(?:h2|p)>)',lambda m:m[1]+m[2]+' mt-mobile-heading-line'+m[3]+re.sub(r'<br\s*/?>','<span class="mt-heading-break"> </span>',m[4])+m[5],about,flags=re.S)
+ s=s.replace(about,about_inline)
  assert s.count('class="mt-asfar-portfolio-pane"') == len(data), 'Native map template was not rendered'
  sectors=re.search(r'<section class="mt-dk-sectors".*?</section>',s,re.S)[0]
  cards=[{'image':m[0],'label':html.unescape(m[1])} for m in re.findall(r'<div class="mt-dk-sector"><img src="([^"]+)".*?<span class="mt-dk-sector__name">(.*?)</span>',sectors,re.S)]
