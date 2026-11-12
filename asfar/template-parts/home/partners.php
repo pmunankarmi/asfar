@@ -16,7 +16,7 @@ if ( ! $logos ) { return; }
      <?php foreach ( $logos as $logo ) : ?>
       <div class="mt-partner-slide">
        <?php if ( ! empty( $logo['website'] ) ) : ?><a href="<?php echo esc_url( $logo['website'] ); ?>"><?php endif; ?>
-       <?php echo wp_get_attachment_image( $logo['logo'], 'full', false, array( 'alt' => asfar_translate( $logo['name'] ?? '' ), 'loading' => 'lazy' ) ); ?>
+       <?php echo wp_get_attachment_image( $logo['logo'], 'full', false, array( 'alt' => asfar_translate( $logo['name'] ?? '' ), 'loading' => 'eager', 'sizes' => '180px' ) ); ?>
        <?php if ( ! empty( $logo['website'] ) ) : ?></a><?php endif; ?>
       </div>
      <?php endforeach; ?>

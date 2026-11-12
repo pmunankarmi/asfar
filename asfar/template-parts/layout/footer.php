@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="mt-dk-wrap">
 			<div class="mt-dk-footer__in">
-				<?php echo wp_get_attachment_image( asfar_option( 'footer_logo' ), 'full', false, array( 'class' => 'mt-dk-footer__logo', 'alt' => asfar_option( 'site_name' ) ) ); ?>
+				<?php echo wp_get_attachment_image( asfar_option( 'footer_logo' ), 'full', false, array( 'class' => 'mt-dk-footer__logo', 'loading' => 'eager', 'alt' => asfar_option( 'site_name' ) ) ); ?>
 				<a class="mt-dk-footer__item" href="<?php echo esc_url( 'mailto:' . asfar_option( 'contact_email' ) ); ?>">
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
 						<rect x="2" y="4" width="20" height="16" rx="2" />
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 			<div class="mt-dk-footer__legal">
-				<?php echo wp_get_attachment_image( asfar_option( 'ownership_logo' ), 'full', false, array( 'alt' => asfar_option( 'ownership_label' ), 'loading' => 'lazy' ) ); ?>
+				<?php echo wp_get_attachment_image( asfar_option( 'ownership_logo' ), 'full', false, array( 'alt' => asfar_option( 'ownership_label' ), 'loading' => 'eager' ) ); ?>
 				<span><?php echo asfar_lines( asfar_copyright() ); ?></span>
 				<a class="mt-dk-footer__top" href="#top" id="dkTop">
 					<?php echo esc_html( asfar_option( 'back_top' ) ); ?>
