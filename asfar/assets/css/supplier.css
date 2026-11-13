@@ -1,0 +1,103 @@
+/* ASFAR deck skin — Supplier Portal page. Loads after app.css + deck.css on
+   supplier-portal.html / supplier-portal-ar.html only. Self-contained: adds no
+   rules that touch any other page. Logical properties throughout so the Arabic
+   RTL twin mirrors with no extra CSS. */
+body{background:var(--dk-card)}
+.mt-sp{background:var(--dk-card);color:var(--dk-ink);
+  padding-block:calc(clamp(62px,6.953vw,150px) + clamp(28px,3vw,64px)) clamp(48px,5vw,110px)}
+.mt-sp .mt-wrap{max-width:1180px}
+
+/* ── header ── */
+.mt-sp__head{max-width:56rem;margin-block-end:clamp(28px,3vw,58px)}
+.mt-sp__eyebrow{font-family:var(--dk-readex);font-weight:300;letter-spacing:.14em;
+  text-transform:uppercase;font-size:clamp(11px,.86vw,16px);color:var(--dk-gold);
+  margin:0 0 .7em}
+.mt-sp__title{font-family:var(--dk-readex);font-weight:500;color:var(--dk-terra);
+  font-size:clamp(30px,3.6vw,66px);line-height:1.12;letter-spacing:0;margin:0 0 .35em}
+.mt-sp__lede{font-family:var(--dk-sans);font-weight:400;color:var(--dk-ink-soft);
+  font-size:clamp(15px,1.25vw,23px);line-height:1.55;margin:0;max-width:44rem}
+
+/* ── tabs ── */
+.mt-sp-tabs{margin-block-start:clamp(20px,2vw,36px)}
+.mt-sp-tablist{display:flex;gap:clamp(6px,.9vw,14px);border-bottom:1px solid rgba(46,67,69,.18);
+  margin-block-end:clamp(24px,2.6vw,50px)}
+.mt-sp-tab{appearance:none;border:0;background:transparent;cursor:pointer;
+  font-family:var(--dk-readex);font-weight:400;color:var(--dk-ink-soft);
+  font-size:clamp(14px,1.15vw,22px);padding:.8em 1.15em;position:relative;
+  border-radius:10px 10px 0 0;transition:color .3s var(--dk-ease),background .3s var(--dk-ease)}
+.mt-sp-tab::after{content:"";position:absolute;inset-inline:0;bottom:-1px;height:2px;
+  background:var(--dk-terra);transform:scaleX(0);transform-origin:center;
+  transition:transform .3s var(--dk-ease)}
+.mt-sp-tab:hover{color:var(--dk-ink)}
+.mt-sp-tab[aria-selected="true"]{color:var(--dk-terra)}
+.mt-sp-tab[aria-selected="true"]::after{transform:scaleX(1)}
+.mt-sp-tab:focus-visible{outline:2px solid var(--dk-gold);outline-offset:3px}
+
+.mt-sp-panel[hidden]{display:none}
+.mt-sp-panel{animation:spFade .4s var(--dk-ease) both}
+@keyframes spFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mt-sp-panel{animation:none}}
+
+/* ── cards ── */
+.mt-sp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(16px,1.8vw,32px)}
+.mt-sp-card{background:var(--dk-cream);border:1px solid rgba(46,67,69,.10);
+  border-radius:clamp(14px,1.1vw,22px);padding:clamp(22px,2.2vw,44px);
+  display:flex;flex-direction:column;align-items:flex-start;
+  box-shadow:0 1px 0 rgba(46,67,69,.04)}
+.mt-sp-card--wide{max-width:34rem}
+.mt-sp-card__ico{inline-size:clamp(40px,3.4vw,58px);block-size:clamp(40px,3.4vw,58px);
+  display:grid;place-items:center;border-radius:50%;
+  background:rgba(166,130,74,.12);color:var(--dk-gold);margin-block-end:clamp(14px,1.3vw,22px)}
+.mt-sp-card__ico svg{width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:1.7}
+.mt-sp-card__title{font-family:var(--dk-readex);font-weight:500;color:var(--dk-teal-deep);
+  font-size:clamp(18px,1.55vw,30px);line-height:1.2;margin:0 0 .5em}
+.mt-sp-card__desc{font-family:var(--dk-sans);font-weight:400;color:var(--dk-ink-soft);
+  font-size:clamp(13px,1.02vw,19px);line-height:1.5;margin:0 0 clamp(18px,1.8vw,32px)}
+.mt-sp-card__cta{margin-block-start:auto}
+
+/* ── buttons (self-contained so the page never depends on a base .btn variant) ── */
+.mt-sp-btn{display:inline-flex;align-items:center;gap:.55em;cursor:pointer;
+  font-family:var(--dk-sans);font-weight:500;font-size:clamp(13px,1vw,19px);
+  padding:.85em 1.5em;border-radius:999px;text-decoration:none;border:1px solid transparent;
+  transition:background .3s var(--dk-ease),color .3s var(--dk-ease),
+             border-color .3s var(--dk-ease),transform .3s var(--dk-ease)}
+.mt-sp-btn__arrow{transition:transform .3s var(--dk-ease)}
+.mt-sp-btn:hover .mt-sp-btn__arrow{transform:translateX(.18em)}
+[dir="rtl"] .mt-sp-btn__arrow{transform:scaleX(-1)}
+[dir="rtl"] .mt-sp-btn:hover .mt-sp-btn__arrow{transform:scaleX(-1) translateX(.18em)}
+.mt-sp-btn--solid{background:var(--dk-terra);color:var(--dk-cream);border-color:var(--dk-terra)}
+.mt-sp-btn--solid:hover{background:#8f4d31;border-color:#8f4d31}
+.mt-sp-btn--line{background:transparent;color:var(--dk-terra);border-color:#CDB58F}
+.mt-sp-btn--line:hover{background:var(--dk-terra);color:var(--dk-cream);border-color:var(--dk-terra)}
+.mt-sp-btn:focus-visible{outline:2px solid var(--dk-gold);outline-offset:3px}
+
+/* ── sign-in panel ── */
+.mt-sp-signin{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(6px,.6vw,12px)}
+
+/* ── inquiry strip ── */
+.mt-sp-inquiry{margin-block-start:clamp(34px,3.4vw,64px);
+  background:var(--dk-teal-deep);color:var(--dk-cream);
+  border-radius:clamp(14px,1.1vw,22px);padding:clamp(22px,2.4vw,44px);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:clamp(14px,1.6vw,30px)}
+.mt-sp-inquiry__txt{margin:0;max-width:40rem}
+.mt-sp-inquiry__txt strong{font-family:var(--dk-readex);font-weight:500;
+  display:block;font-size:clamp(17px,1.4vw,27px);margin-block-end:.28em}
+.mt-sp-inquiry__txt span{font-family:var(--dk-sans);font-weight:400;
+  font-size:clamp(13px,1.02vw,19px);line-height:1.5;color:rgba(252,247,238,.82)}
+.mt-sp-inquiry .mt-sp-btn--solid{background:var(--dk-gold);border-color:var(--dk-gold);color:#20323a}
+.mt-sp-inquiry .mt-sp-btn--solid:hover{background:#b8935a;border-color:#b8935a}
+
+/* ── back link ── */
+.mt-sp-back{display:inline-flex;align-items:center;gap:.5em;margin-block-start:clamp(28px,3vw,54px);
+  font-family:var(--dk-sans);color:var(--dk-gold);text-decoration:none;
+  font-size:clamp(13px,1vw,19px)}
+.mt-sp-back::before{content:"\2190"}
+[dir="rtl"] .mt-sp-back::before{content:"\2192"}
+.mt-sp-back:hover{color:var(--dk-terra)}
+
+@media (max-width:760px){
+  .mt-sp-grid{grid-template-columns:1fr}
+  .mt-sp-inquiry{flex-direction:column;align-items:flex-start}
+}
