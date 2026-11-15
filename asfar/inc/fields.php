@@ -56,7 +56,7 @@ function asfar_home_field_groups() {
 			asfar_field( 'hero_background_video', 'Hero Background Video', 'file', array(
 				'return_format' => 'id',
 				'mime_types' => 'mp4,webm',
-				'instructions' => 'Upload or select an MP4 or WebM for the hero background. It plays muted and loops, replacing the landscape animation. Leave empty to keep the existing animation. Banner images remain the fallback. Set this on each translated homepage.',
+				'instructions' => 'Upload or select an MP4 or WebM for the hero background. It plays muted and loops, replacing the landscape animation. Leave empty to keep the existing animation, with the default background video on phones. Banner images remain the fallback. Set this on each translated homepage.',
 			) ),
 			asfar_repeater( 'banner_slides', 'Banner Slides', array(
 				asfar_text( 'eyebrow', 'Small Heading' ),

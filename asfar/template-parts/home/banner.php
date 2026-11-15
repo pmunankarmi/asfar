@@ -17,6 +17,8 @@ while ( have_rows( 'banner_animation' ) ) {
 	}
 }
 if ( ! have_rows( 'banner_slides' ) ) { return; }
+$has_landscape_animation = ! empty( $animation['enabled'] ) && $marks;
+$mobile_video_url = $has_landscape_animation ? get_theme_file_uri( 'assets/video/hero.mp4' ) : '';
 ?>
 <section class="mt-hero" id="heroSlider" data-morphmarks="<?php echo esc_attr( wp_json_encode( $marks ) ); ?>">
 	<div class="mt-hero__pin">
@@ -38,8 +40,8 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 					</div>
 				<?php endwhile; ?>
 			</div>
-			<?php if ( $background_video_url ) : ?>
-				<video id="heroVid" class="mt-hero__vid" src="<?php echo esc_url( $background_video_url ); ?>" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+			<?php if ( $background_video_url || $mobile_video_url ) : ?>
+				<video id="heroVid" class="mt-hero__vid"<?php if ( $background_video_url ) : ?> data-src="<?php echo esc_url( $background_video_url ); ?>"<?php else : ?> data-mobile-src="<?php echo esc_url( $mobile_video_url ); ?>"<?php endif; ?> muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
 			<?php endif; ?>
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
 				<canvas class="mt-hero__morph-canvas" id="heroMorphCanvas" data-frames="273" aria-hidden="true"></canvas>

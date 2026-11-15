@@ -850,12 +850,19 @@
   (function () {
     var v = document.getElementById("heroVid");
     if (!v || reduced) return;
-    function ready() { v.classList.add("mt-is-ready"); }
-    function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-    v.addEventListener('loadeddata', tryPlay);
-    v.addEventListener('canplay', tryPlay);
-    v.addEventListener('playing', ready);
-    // Start loading even when the video initially preloads metadata only.
+    var src = v.getAttribute('data-src') || (mqMobile.matches && v.getAttribute('data-mobile-src'));
+    if (!src) return;
+
+    function tryPlay() {
+      if (document.hidden || v.closest('.mt-is-film') || !v.paused) return;
+      var playback = v.play();
+      if (playback && playback.catch) playback.catch(function () {});
+    }
+    v.muted = true;
+    v.addEventListener('playing', function () { v.classList.add('mt-is-ready'); });
+    v.addEventListener('error', function () { v.classList.remove('mt-is-ready'); });
+    document.addEventListener('visibilitychange', tryPlay);
+    v.src = src;
     tryPlay();
   })();
 
@@ -1042,7 +1049,7 @@
         hero.classList.remove("mt-is-film");          // the statement slide is back
         syncDash(0);
         var v = document.getElementById('heroVid');
-        if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
+        if (v && v.getAttribute('src')) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
         if (window.__heroFilm) window.__heroFilm.cycles = (window.__heroFilm.cycles || 0) + 1;
         filmTimer = setTimeout(enter, INTRO_MS);   // and the journey comes round again
       }
@@ -1057,7 +1064,7 @@
         hero.classList.remove("mt-is-film");
         if (window.__heroFilm) window.__heroFilm.playing = false;
         var v = document.getElementById('heroVid');
-        if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
+        if (v && v.getAttribute('src')) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
       };
       /* Two dashes: [0] the still hero image, [1] the full destination
          morph. Click 0 to hold the still, click 1 to play the whole morph. */
@@ -1065,7 +1072,7 @@
         stopped = true; manualMorph = false; clearTimeout(filmTimer); cancelAnimationFrame(filmRAF);
         if (playing) { playing = false; if (window.__heroFilm) window.__heroFilm.playing = false; }
         hero.classList.remove("mt-is-film");
-        var v = document.getElementById('heroVid'); if (v) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
+        var v = document.getElementById('heroVid'); if (v && v.getAttribute('src')) { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {} }
         if (window.__heroSlideGo) window.__heroSlideGo(0);
         syncDash(0);
       }
