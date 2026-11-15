@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.38
+Version: 1.4.39
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -83,27 +83,25 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 .mt-vlb__frame video { object-fit: contain; }
 .mt-vlb__frame { width: min(1120px, 100%, calc((100dvh - 7rem) * 16 / 9)); }
 
-/* Shared dimensions keep the filled and outlined hero actions aligned. */
+/* Give both banner actions the same outline and interaction states. */
 .mt-hero .mt-hero__cta .mt-btn {
 	box-sizing: border-box;
 	min-height: 48px;
 	line-height: 1.25;
 	text-align: center;
-	border-width: 2px;
-	border-style: solid;
-	background: var(--dk-teal, #24545b);
-	border-color: var(--dk-teal, #24545b);
+	border: 2px solid #fff;
+	background: transparent;
 	color: #fff;
 	box-shadow: none;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
 }
-.mt-hero .mt-hero__cta .mt-btn:hover {
-	background: #163c43;
-	border-color: #163c43;
+.mt-hero .mt-hero__cta .mt-btn:hover,
+.mt-hero .mt-hero__cta .mt-btn:focus-visible {
+	background: var(--dk-teal, #24545b);
+	border-color: var(--dk-teal, #24545b);
 	box-shadow: none;
-}
-.mt-hero .mt-hero__cta .mt-btn::after {
-	background: #163c43;
-	border-radius: inherit;
+	transform: none;
 }
 
 [dir="rtl"] .mt-hero .mt-hero__cta .mt-btn { font-family: var(--sans); }
@@ -185,18 +183,6 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	}
 }
 
-/* Company Profile is the outlined companion to the filled video action. */
-.mt-hero .mt-hero__cta .mt-btn--line-light {
-	background: transparent;
-	border: 2px solid #fff;
-	color: #fff;
-	box-shadow: none;
-}
-.mt-hero .mt-hero__cta .mt-btn--line-light:hover {
-	background: var(--dk-teal, #24545b);
-	border-color: var(--dk-teal, #24545b);
-}
-
 /* Reduce homepage news typography to 80% of the previous sizes. */
 .mt-dk-news .mt-dk-label { font-size: clamp(16px, 2.3168vw, 72px); }
 .mt-dk-news .mt-dk-newscard__date { font-size: clamp(8px, .8128vw, 25.6px); }
@@ -217,17 +203,11 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	margin: 1.5rem clamp(18px, 3.67vw, 110px) 1rem;
 }
 
-/* Equal clearance below opening and film headings, including wrapped Arabic. */
-.mt-hero .mt-hero__cta--fixed {
-	top: var(--hero-opening-actions-top, 63%);
-}
-.mt-hero.mt-is-film .mt-hero__cta--fixed {
-	top: var(--hero-actions-top, 72%);
-}
-.mt-hero .mt-hero__cta .mt-btn--line-light:hover {
-	border-color: var(--dk-teal, #24545b);
-	color: #fff;
-}
+/* Center both caption states together with the shared actions. */
+.mt-hero .mt-hero__slides { top: var(--hero-opening-caption-top, 35.9%); }
+.mt-hero .mt-hero__morphcap { top: var(--hero-film-caption-top, 28.5%); }
+.mt-hero .mt-hero__cta--fixed { top: var(--hero-opening-actions-top, 63%); }
+.mt-hero.mt-is-film .mt-hero__cta--fixed { top: var(--hero-film-actions-top, 72%); }
 
 /* A predictable return path from the news listing to homepage news. */
 .mt-news-back {

@@ -13,33 +13,39 @@
  }
  window.addEventListener('load', resolveLegacyAnchor);
  window.addEventListener('hashchange', resolveLegacyAnchor);
- // Use the same title-to-button gap for the opening slide and film caption.
+ // Center each caption and the persistent actions as one group.
  var hero = document.querySelector('.mt-hero');
- var captionTitle = hero && hero.querySelector('.mt-hero__morph-lead');
  var heroContent = hero && hero.querySelector('.mt-hero__in');
- if (hero && heroContent) {
-  var slideTitles = hero.querySelectorAll('.mt-hero__slide .mt-hero__title');
-  function positionHeroActions() {
-   var gap = Math.max(28, Math.min(44, window.innerHeight * 0.05));
-   var origin = heroContent.getBoundingClientRect().top;
-   var openingTitle = hero.querySelector('.mt-hero__slide.mt-is-active .mt-hero__title') || slideTitles[0];
-   if (openingTitle) {
-    hero.style.setProperty('--hero-opening-actions-top', (openingTitle.getBoundingClientRect().bottom - origin + gap) + 'px');
-   }
-   if (captionTitle) {
-    hero.style.setProperty('--hero-actions-top', (captionTitle.getBoundingClientRect().bottom - origin + gap) + 'px');
-   }
+ var actions = heroContent && heroContent.querySelector('.mt-hero__cta--fixed');
+ if (actions) {
+  var slides = heroContent.querySelectorAll('.mt-hero__slide');
+  var filmCaption = heroContent.querySelector('.mt-hero__morphcap');
+  function centerCaption(caption, state) {
+   if (!caption || !caption.offsetHeight) return;
+   var gap = actions.offsetHeight ? Math.max(28, Math.min(44, window.innerHeight * 0.05)) : 0;
+   var groupHeight = caption.offsetHeight + gap + actions.offsetHeight;
+   var captionTop = (heroContent.clientHeight - groupHeight) / 2;
+   hero.style.setProperty('--hero-' + state + '-caption-top', captionTop + 'px');
+   hero.style.setProperty('--hero-' + state + '-actions-top', (captionTop + caption.offsetHeight + gap) + 'px');
   }
-  positionHeroActions();
-  window.addEventListener('resize', positionHeroActions);
-  hero.addEventListener('transitionend', positionHeroActions);
+  function positionHeroCaption() {
+   centerCaption(heroContent.querySelector('.mt-hero__slide.mt-is-active'), 'opening');
+   centerCaption(filmCaption, 'film');
+  }
+  positionHeroCaption();
+  window.addEventListener('resize', positionHeroCaption);
+  var slideObserver = new MutationObserver(positionHeroCaption);
+  slides.forEach(function (slide) {
+   slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] });
+  });
   if ('ResizeObserver' in window) {
-   var captionObserver = new ResizeObserver(positionHeroActions);
-   slideTitles.forEach(function (title) { captionObserver.observe(title); });
-   if (captionTitle) captionObserver.observe(captionTitle);
+   var captionObserver = new ResizeObserver(positionHeroCaption);
+   slides.forEach(function (slide) { captionObserver.observe(slide); });
+   if (filmCaption) captionObserver.observe(filmCaption);
    captionObserver.observe(heroContent);
+   captionObserver.observe(actions);
   }
-  if (document.fonts) document.fonts.ready.then(positionHeroActions);
+  if (document.fonts) document.fonts.ready.then(positionHeroCaption);
  }
  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
  var rtl = document.documentElement.dir === 'rtl';
