@@ -1281,8 +1281,8 @@
   (function () {
     var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-video]'));
     if (!triggers.length) return;
-    var box = null, vid = null;
-    function build(src) {
+    var box = null, vid = null, fallback = null, opener = null, previousOverflow = "";
+    function build() {
       box = document.createElement('div');
       box.className = "mt-vlb";
       box.setAttribute('role', 'dialog');
@@ -1299,33 +1299,53 @@
       vid = document.createElement('video');
       vid.setAttribute('controls', '');
       vid.setAttribute('playsinline', '');
-      vid.src = src;
+      vid.preload = 'metadata';
+      fallback = document.createElement('a');
+      fallback.className = 'mt-vlb__fallback';
+      fallback.textContent = asfarSettings.filmFallback || 'Open the video directly';
+      fallback.hidden = true;
+      vid.addEventListener('error', function () { fallback.hidden = false; });
+      vid.addEventListener('playing', function () { fallback.hidden = true; });
       box.appendChild(btn);
       frame.appendChild(vid);
       box.appendChild(frame);
+      box.appendChild(fallback);
       document.body.appendChild(box);
       box.addEventListener('click', function (e) {
         if (e.target === box || e.target === btn) close();
       });
     }
-    function open(src) {
-      if (!box) build(src);
-      else if (vid.src !== src) vid.src = src;
+    function open(src, trigger) {
+      if (!box) build();
+      opener = trigger;
+      box.setAttribute('aria-label', trigger.textContent.trim());
+      fallback.href = src;
+      fallback.hidden = true;
+      previousOverflow = document.body.style.overflow;
       box.classList.add("mt-is-open");
       document.body.style.overflow = 'hidden';
-      try { vid.currentTime = 0; } catch (e) {}
-      var p = vid.play(); if (p && p.catch) p.catch(function () {});
+      if (vid.getAttribute('src') !== src || vid.error) vid.src = src;
+      else if (vid.readyState) vid.currentTime = 0;
+      // Stay within the tap gesture on mobile; native controls remain available.
+      var p = vid.play();
+      if (p && p.catch) p.catch(function () {
+        if (box.classList.contains("mt-is-open")) fallback.hidden = false;
+      });
+      box.querySelector('button').focus({ preventScroll: true });
     }
     function close() {
       if (!box) return;
       box.classList.remove("mt-is-open");
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
       vid.pause();
+      if (opener) opener.focus({ preventScroll: true });
     }
     triggers.forEach(function (t) {
       t.addEventListener('click', function (e) {
+        var src = t.getAttribute('data-video') || t.getAttribute('href');
+        if (!src || typeof HTMLMediaElement === 'undefined' || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         e.preventDefault();
-        open(t.getAttribute('data-video') || t.getAttribute('href'));
+        open(src, t);
       });
     });
     document.addEventListener('keydown', function (e) {

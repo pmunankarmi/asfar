@@ -24,7 +24,17 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 			<div class="mt-hero__scenes" aria-hidden="true">
 				<?php while ( have_rows( 'banner_slides' ) ) : the_row(); ?>
 					<div class="mt-hero__scene <?php echo 1 === get_row_index() ? 'mt-is-active' : ''; ?>">
-						<?php echo wp_get_attachment_image( get_sub_field( 'image' ), 'full', false, array( 'class' => 'mt-hero__img', 'alt' => '', 'loading' => 'eager' ) ); ?>
+						<?php
+						$image_id = (int) get_sub_field( 'image' );
+						$image_meta = wp_get_attachment_metadata( $image_id );
+						$image_attrs = array( 'class' => 'mt-hero__img', 'alt' => '', 'loading' => 'eager' );
+						if ( ! empty( $image_meta['width'] ) && ! empty( $image_meta['height'] ) ) {
+							// A portrait cover crop scales a landscape source by its height.
+							$cover_width = (int) ceil( 100 * $image_meta['width'] / $image_meta['height'] );
+							$image_attrs['sizes'] = 'max(100vw, ' . $cover_width . 'vh)';
+						}
+						echo wp_get_attachment_image( $image_id, 'full', false, $image_attrs );
+						?>
 					</div>
 				<?php endwhile; ?>
 			</div>
@@ -57,8 +67,9 @@ if ( ! have_rows( 'banner_slides' ) ) { return; }
 			<div class="mt-hero__cta mt-hero__cta--fixed">
 				<?php while ( have_rows( 'banner_slides' ) ) : the_row(); ?>
 				<?php if ( 1 === get_row_index() ) : ?>
-				<?php if ( get_sub_field( 'video' ) && get_sub_field( 'video_label' ) ) : ?>
-					<button type="button" class="mt-btn mt-btn--gold" data-video="<?php echo esc_url( asfar_attachment_url( get_sub_field( 'video' ) ) ); ?>"><?php echo esc_html( get_sub_field( 'video_label' ) ); ?></button>
+				<?php $film_url = asfar_attachment_url( get_sub_field( 'video' ) ); ?>
+				<?php if ( $film_url && get_sub_field( 'video_label' ) ) : ?>
+					<a class="mt-btn mt-btn--gold" href="<?php echo esc_url( $film_url ); ?>" data-video="<?php echo esc_url( $film_url ); ?>" aria-haspopup="dialog"><?php echo esc_html( get_sub_field( 'video_label' ) ); ?></a>
 				<?php endif; ?>
 				<?php
 				if ( $profile_url ) {

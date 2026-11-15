@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.35
+Version: 1.4.36
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -78,6 +78,9 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	inset-inline-end: max(1rem, env(safe-area-inset-right));
 	z-index: 1;
 }
+.mt-vlb { flex-direction: column; gap: 1rem; }
+.mt-vlb__fallback { color: #fff; text-decoration: underline; text-align: center; }
+.mt-vlb__frame video { object-fit: contain; }
 .mt-vlb__frame { width: min(1120px, 100%, calc((100dvh - 7rem) * 16 / 9)); }
 
 /* Shared dimensions keep the filled and outlined hero actions aligned. */
@@ -85,6 +88,7 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	box-sizing: border-box;
 	min-height: 48px;
 	line-height: 1.25;
+	text-align: center;
 	border-width: 2px;
 	border-style: solid;
 	background: var(--dk-teal, #24545b);
@@ -101,6 +105,8 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	background: #163c43;
 	border-radius: inherit;
 }
+
+[dir="rtl"] .mt-hero .mt-hero__cta .mt-btn { font-family: var(--sans); }
 
 /* Keep arrows centered independently of the View More link's width. */
 .mt-dk-news__foot {
@@ -416,7 +422,7 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	}
 	.mt-hero .mt-hero__cta { gap: 12px; }
 	.mt-hero .mt-hero__cta .mt-btn {
-		flex: 1 1 140px;
+		flex: 1 1 0;
 		min-width: 0;
 		max-width: 220px;
 		padding-inline: 14px;
