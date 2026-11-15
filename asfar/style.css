@@ -3,7 +3,7 @@ Theme Name: ASFAR
 Theme URI: https://github.com/pmunankarmi/asfar
 Author: ASFAR
 Description: Bilingual tourism investment theme with ACF Pro and Polylang.
-Version: 1.4.41
+Version: 1.4.42
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -208,21 +208,23 @@ html,body{overflow-x:clip}.mt-asfar-honeypot{left:auto;inset-inline-start:0;top:
 	display: grid;
 	grid-template: minmax(0, 1fr) auto minmax(0, 1fr) / minmax(0, 1fr);
 }
-.mt-hero .mt-hero__slides,
-.mt-hero .mt-hero__morphcap {
+.mt-hero .mt-hero__in > .mt-hero__slides,
+.mt-hero .mt-hero__in > .mt-hero__morphcap {
 	grid-area: 2 / 1;
+	align-self: end;
 	position: relative;
 	inset: auto;
 }
 .mt-hero .mt-hero__slide { justify-content: flex-start; }
 .mt-hero .mt-hero__slide:not(.mt-is-active),
-.mt-hero:not(.mt-is-film):not(.mt-is-morph) .mt-hero__morphcap,
-.mt-hero.mt-is-film .mt-hero__slides {
+.mt-hero:not(.mt-is-film):not(.mt-is-morph) .mt-hero__morphcap {
 	position: absolute;
 	inset: 0 0 auto;
 }
 .mt-hero .mt-hero__morph-lead { margin-bottom: 0; }
-.mt-hero .mt-hero__cta--fixed {
+/* Keep the grid position even when WordPress Additional CSS sets a film top. */
+.mt-hero .mt-hero__in > .mt-hero__cta--fixed,
+.mt-hero.mt-is-film .mt-hero__in > .mt-hero__cta--fixed {
 	grid-area: 3 / 1;
 	align-self: start;
 	position: relative;
