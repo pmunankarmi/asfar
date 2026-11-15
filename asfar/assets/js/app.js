@@ -957,16 +957,30 @@
       if (cb) hCallbacks.push(cb);
       if (hstarted) return;
       hstarted = true; hResize();
-      for (var k = 0; k < HTOTAL; k++) {
-        (function (k) {
-          var img = new Image();
-          img.onload = img.onerror = function () {
-            if (img.naturalWidth) hframes[k] = img;
-            if (++hloaded >= HTOTAL) { hready = true; hDraw(0); hUpdate(); hCallbacks.splice(0).forEach(function (ready) { ready(); }); }
-          };
-          img.src = asfarSettings.assets + 'img/morph/f_' + ('00' + (k + 1)).slice(-3) + '.jpg';
-        })(k);
+      var nextFrame = 0;
+      function loadNextFrame() {
+        if (nextFrame >= HTOTAL) return;
+        var index = nextFrame++;
+        var img = new Image();
+        img.onload = img.onerror = function () {
+          if (img.naturalWidth) hframes[index] = img;
+          if (++hloaded === HTOTAL) {
+            hready = Boolean(hframes[0]);
+            if (hready) {
+              hDraw(0);
+              hUpdate();
+              hCallbacks.splice(0).forEach(function (ready) { ready(); });
+            } else {
+              hCallbacks.length = 0;
+            }
+          }
+          loadNextFrame();
+        };
+        img.src = asfarSettings.assets + 'img/morph/f_' + ('00' + (index + 1)).slice(-3) + '.jpg';
       }
+      // Limit parallel image requests on phones so the opening video can buffer.
+      var parallel = mqMobile.matches ? Math.min(6, HTOTAL) : HTOTAL;
+      for (var k = 0; k < parallel; k++) loadNextFrame();
       window.addEventListener('resize', hResize);
     }
     function toTop() {
@@ -990,10 +1004,10 @@
        into the journey and the captions track the landmarks (deck p8).
        Plays FORWARD ONLY, mountain to coast; at the end the hero returns
        to the statement slide and the cycle repeats — never in reverse.
-       Skipped under prefers-reduced-motion and on mobile
-       (the frames are 1200px desktop assets); those keep the video hero. ---- */
+       Reduced motion keeps the still. Data Saver keeps the opening hero. ---- */
     (function () {
-      if (!hcanvas || !hctx || HTOTAL <= 0 || !hmarks.length || reduced || mqMobile.matches) return;
+      if (!hcanvas || !hctx || HTOTAL <= 0 || !hmarks.length || reduced) return;
+      if (mqMobile.matches && navigator.connection && navigator.connection.saveData) return;
       var FILM_MS = 17000;          // one mountain-to-coast pass
       var INTRO_MS = 5000;          // one statement beat before the film takes over
       var playing = false, p = 0, lastTs = null, filmInView = true;
@@ -1078,7 +1092,6 @@
       }
       function goMorph() {
         stopped = false; manualMorph = true; clearTimeout(filmTimer);
-        syncDash(1);
         if (hready) { if (!playing) enter(); else hResize(); }
         else hPreload(function () { if (!stopped) enter(); });
       }
@@ -1098,8 +1111,7 @@
       else window.addEventListener('load', arm);
       setTimeout(arm, 3000);        // belt: never wait forever on a stalled load event
     })();
-    /* mobile / reduced motion: the film never runs, so the dashes step the
-       statement slides instead of the destination film. */
+    /* When the journey is unavailable, dashes step the statement slides. */
     if (!window.__heroMorph) {
       var fbDashes = Array.prototype.slice.call(hero.querySelectorAll(".mt-hero__dot"));
       fbDashes.forEach(function (d, k) {
