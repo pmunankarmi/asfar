@@ -13,39 +13,6 @@
  }
  window.addEventListener('load', resolveLegacyAnchor);
  window.addEventListener('hashchange', resolveLegacyAnchor);
- // Center the caption text vertically and place the actions directly below.
- var hero = document.querySelector('.mt-hero');
- var heroContent = hero && hero.querySelector('.mt-hero__in');
- var actions = heroContent && heroContent.querySelector('.mt-hero__cta--fixed');
- if (actions) {
-  var slides = heroContent.querySelectorAll('.mt-hero__slide');
-  var filmCaption = heroContent.querySelector('.mt-hero__morphcap');
-  function centerCaption(caption, state) {
-   if (!caption || !caption.offsetHeight) return;
-   var gap = actions.offsetHeight ? Math.max(20, Math.min(32, heroContent.clientHeight * 0.04)) : 0;
-   var captionTop = (heroContent.clientHeight - caption.offsetHeight) / 2;
-   hero.style.setProperty('--hero-' + state + '-caption-top', captionTop + 'px');
-   hero.style.setProperty('--hero-' + state + '-actions-top', (captionTop + caption.offsetHeight + gap) + 'px');
-  }
-  function positionHeroCaption() {
-   centerCaption(heroContent.querySelector('.mt-hero__slide.mt-is-active'), 'opening');
-   centerCaption(filmCaption, 'film');
-  }
-  positionHeroCaption();
-  window.addEventListener('resize', positionHeroCaption);
-  var slideObserver = new MutationObserver(positionHeroCaption);
-  slides.forEach(function (slide) {
-   slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] });
-  });
-  if ('ResizeObserver' in window) {
-   var captionObserver = new ResizeObserver(positionHeroCaption);
-   slides.forEach(function (slide) { captionObserver.observe(slide); });
-   if (filmCaption) captionObserver.observe(filmCaption);
-   captionObserver.observe(heroContent);
-   captionObserver.observe(actions);
-  }
-  if (document.fonts) document.fonts.ready.then(positionHeroCaption);
- }
  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
  var rtl = document.documentElement.dir === 'rtl';
  var form = document.getElementById("contactForm");
