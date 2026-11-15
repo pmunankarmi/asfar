@@ -13,7 +13,7 @@
  }
  window.addEventListener('load', resolveLegacyAnchor);
  window.addEventListener('hashchange', resolveLegacyAnchor);
- // Center each caption and the persistent actions as one group.
+ // Center the caption text vertically and place the actions directly below.
  var hero = document.querySelector('.mt-hero');
  var heroContent = hero && hero.querySelector('.mt-hero__in');
  var actions = heroContent && heroContent.querySelector('.mt-hero__cta--fixed');
@@ -22,9 +22,8 @@
   var filmCaption = heroContent.querySelector('.mt-hero__morphcap');
   function centerCaption(caption, state) {
    if (!caption || !caption.offsetHeight) return;
-   var gap = actions.offsetHeight ? Math.max(28, Math.min(44, window.innerHeight * 0.05)) : 0;
-   var groupHeight = caption.offsetHeight + gap + actions.offsetHeight;
-   var captionTop = (heroContent.clientHeight - groupHeight) / 2;
+   var gap = actions.offsetHeight ? Math.max(20, Math.min(32, heroContent.clientHeight * 0.04)) : 0;
+   var captionTop = (heroContent.clientHeight - caption.offsetHeight) / 2;
    hero.style.setProperty('--hero-' + state + '-caption-top', captionTop + 'px');
    hero.style.setProperty('--hero-' + state + '-actions-top', (captionTop + caption.offsetHeight + gap) + 'px');
   }

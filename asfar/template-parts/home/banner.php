@@ -88,7 +88,6 @@ $mobile_video_url = $has_landscape_animation ? get_theme_file_uri( 'assets/video
 			<?php if ( ! empty( $animation['enabled'] ) && $marks ) : ?>
 				<div class="mt-hero__morphcap">
 					<p class="mt-hero__morph-lead"><?php echo asfar_lines( $animation['heading'] ); ?></p>
-					<div class="mt-hero__cta" aria-hidden="true"></div>
 				</div>
 			<?php endif; ?>
 		</div>
