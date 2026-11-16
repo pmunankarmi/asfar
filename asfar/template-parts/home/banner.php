@@ -71,7 +71,7 @@ $mobile_video_url = $has_landscape_animation ? get_theme_file_uri( 'assets/video
 				<?php if ( 1 === get_row_index() ) : ?>
 				<?php $film_url = asfar_attachment_url( get_sub_field( 'video' ) ); ?>
 				<?php if ( $film_url && get_sub_field( 'video_label' ) ) : ?>
-					<a class="mt-btn mt-btn--gold" href="<?php echo esc_url( $film_url ); ?>" data-video="<?php echo esc_url( $film_url ); ?>" aria-haspopup="dialog"><?php echo esc_html( get_sub_field( 'video_label' ) ); ?></a>
+					<a class="mt-btn mt-btn--line-light" href="<?php echo esc_url( $film_url ); ?>" data-video="<?php echo esc_url( $film_url ); ?>" aria-haspopup="dialog"><?php echo esc_html( get_sub_field( 'video_label' ) ); ?></a>
 				<?php endif; ?>
 				<?php
 				if ( $profile_url ) {
