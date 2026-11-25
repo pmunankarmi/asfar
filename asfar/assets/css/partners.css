@@ -1,0 +1,36 @@
+/* Load after deck.css so legacy cached positional styles cannot stack logos. */
+#partners .mt-dk-rise{opacity:1;visibility:visible;transform:none}
+#partners .mt-dk-partners__grid{min-width:0}
+/* Partner slots support linked logos and any number of admin entries. */
+#partners .mt-dk-partners__card.mt-dk-partners__flexible{display:block;aspect-ratio:auto;padding:30px;min-width:0}
+.mt-partner-grid .mt-partner-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px}
+.mt-partner-slide{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;height:120px;min-width:0}
+.mt-partner-slide a{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
+#partners .mt-dk-partners__flexible .mt-partner-slide img{position:static!important;inset:auto!important;display:block;opacity:1;visibility:visible;transform:none;width:100%!important;height:100%!important;max-width:180px;max-height:110px;object-fit:contain}
+.mt-partner-swiper{overflow:hidden;min-width:0;position:relative;z-index:1;touch-action:pan-y}
+.mt-partner-swiper .mt-partner-track{display:flex;box-sizing:content-box;transition-property:transform}
+.mt-partner-swiper .mt-partner-slide{flex-shrink:0}
+.mt-partner-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:20px;position:relative;z-index:1}
+[dir="rtl"] .mt-partner-controls button{transform:scaleX(-1)}
+@media(max-width:1023px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:639px){.mt-partner-grid .mt-partner-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}#partners .mt-dk-partners__card.mt-dk-partners__flexible{padding:22px}.mt-partner-slide{height:95px}}
+
+/* Keep the heading and logos together on one continuous card. */
+#partners .mt-dk-partners__box {
+ background: var(--dk-cream);
+ border-radius: 10px;
+ padding: clamp(22px, 2.4vw, 40px);
+ align-items: center;
+ gap: 24px;
+}
+#partners .mt-dk-partners__box > .mt-dk-label {
+ margin: 0;
+}
+#partners .mt-dk-partners__card.mt-dk-partners__flexible {
+ background: transparent;
+ padding: 0;
+}
+.mt-dk-partners {
+ background: var(--dk-card);
+ padding-bottom: clamp(32px, 4vw, 64px);
+}

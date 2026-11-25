@@ -60,9 +60,12 @@ function asfar_import_value( $value ) {
 function asfar_seed_field( $name, $value, $context, $key ) {
  $exists = is_numeric( $context ) ? metadata_exists( 'post', $context, $name ) : false !== get_option( $context . '_' . $name, false );
  if ( $exists ) { return; }
- update_field( $key, asfar_import_value( $value ), $context );
+ if ( is_numeric( $context ) ) { update_post_meta( $context, $name, asfar_import_value( $value ) ); } else { update_option( $context . '_' . $name, asfar_import_value( $value ), false ); }
 }
 function asfar_seed() {
+ return asfar_with_content_lock( 'asfar_seed_content' );
+}
+function asfar_seed_content() {
  asfar_verify_media_package();
  if ( ! function_exists( 'acf_add_options_page' ) || ! function_exists( 'pll_save_post_translations' ) ) { throw new RuntimeException( 'Activate ACF Pro and Polylang first.' ); }
  $langs = pll_languages_list( array( 'fields' => 'slug' ) );
@@ -76,7 +79,7 @@ function asfar_seed() {
    $map[ $slug ] = $id;
    update_post_meta( $id, '_asfar_layout', $slug );
    update_post_meta( $id, '_asfar_language', $page['lang'] );
-   if ( in_array( $slug, array( 'index', 'index-ar' ), true ) ) { update_post_meta( $id, '_wp_page_template', 'template-home.php' ); }
+   if ( in_array( $slug, array( 'index', 'index-ar' ), true ) ) { update_post_meta( $id, '_wp_page_template', 'templates/template-home.php' ); }
    pll_set_post_language( $id, $page['lang'] );
    update_option( 'asfar_page_map', $map, false );
   }
@@ -99,6 +102,8 @@ function asfar_seed() {
     wp_update_post( array( 'ID' => $id, 'post_title' => $article[ $lang ]['title'], 'post_date' => gmdate( 'Y-m-d H:i:s', $date ), 'post_date_gmt' => gmdate( 'Y-m-d H:i:s', $date ) ) );
     set_post_thumbnail( $id, asfar_import_asset( $article['img'] ) );
     asfar_seed_field( 'display_date', $article[ $lang ]['date'], $id, 'field_asfar_display_date' );
+    $paragraphs = array_map( function ( $text ) { return array( 'text' => $text ); }, $article[ $lang ]['paras'] ?? array() );
+    asfar_seed_field( 'paragraphs', $paragraphs, $id, 'field_asfar_article_paragraphs' );
     if ( empty( $article[ $lang ]['paras'] ) ) {
      asfar_seed_field( 'external_url', 'https://thefinanceworld.com/the-evolving-role-of-the-cfo-from-financial-steward-to-strategic-leader/', $id, 'field_asfar_external_url' );
     }
@@ -117,11 +122,40 @@ function asfar_seed() {
  }
  if ( false === get_option( 'asfar_logo_initialized', false ) ) {
   asfar_sync_logo( get_theme_mod( 'custom_logo' ) ?: asfar_import_asset( 'assets/img/asfar-logo-ondark.svg' ) );
-  update_field( 'field_asfar_dark_logo', asfar_import_asset( 'assets/img/asfar-logo-dark.svg' ), 'asfar_shared' );
+  update_field( 'field_asfar_settings_dark_logo', asfar_import_asset( 'assets/img/asfar-logo-dark.svg' ), 'asfar_shared' );
   update_option( 'asfar_logo_initialized', 1, false );
  }
  update_option( 'asfar_seed_complete', 1, false );
+ asfar_migrate();
 }
+
+/** Fill imported article paragraphs once when the news detail fields are added. */
+function asfar_backfill_article_paragraphs() {
+ if ( get_option( 'asfar_article_paragraphs_revision' ) || ! function_exists( 'update_field' ) || ! function_exists( 'pll_get_post_language' ) ) { return; }
+ return asfar_with_content_lock( function () {
+  if ( get_option( 'asfar_article_paragraphs_revision' ) ) { return; }
+  $data = json_decode( file_get_contents( __DIR__ . '/seed.json' ), true );
+  $map = get_option( 'asfar_page_map', array() );
+  foreach ( $data['news'] as $article ) {
+   foreach ( array( 'en', 'ar' ) as $language ) {
+    $slug = 'news-' . $article['slug'] . ( 'ar' === $language ? '-ar' : '' );
+    $id = absint( $map[ $slug ] ?? 0 );
+    if ( ! $id || ! get_post( $id ) || 'post' !== get_post_type( $id ) || $language !== pll_get_post_language( $id ) ) { continue; }
+    $paragraphs = array_map( function ( $text ) { return array( 'text' => $text ); }, $article[ $language ]['paras'] ?? array() );
+    if ( $paragraphs && ! get_post_meta( $id, 'paragraphs', true ) && ! get_post_meta( $id, 'body_content', true ) && ! get_post_field( 'post_content', $id ) ) {
+     update_field( 'field_asfar_article_paragraphs', $paragraphs, $id );
+    }
+   }
+  }
+  update_option( 'asfar_article_paragraphs_revision', '1', false );
+ } );
+}
+add_action( 'admin_init', function () {
+ if ( current_user_can( 'manage_options' ) ) {
+  try { asfar_backfill_article_paragraphs(); }
+  catch ( Throwable $error ) { add_action( 'admin_notices', function () use ( $error ) { echo '<div class="notice notice-error"><p>ASFAR article content update: ' . esc_html( $error->getMessage() ) . '</p></div>'; } ); }
+ }
+}, 25 );
 add_action( 'admin_post_asfar_seed', function () {
  if ( ! current_user_can( 'manage_options' ) ) { wp_die( 'Forbidden', '', array( 'response' => 403 ) ); }
  check_admin_referer( 'asfar_seed' );
