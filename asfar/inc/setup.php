@@ -102,6 +102,8 @@ function asfar_seed_content() {
     wp_update_post( array( 'ID' => $id, 'post_title' => $article[ $lang ]['title'], 'post_date' => gmdate( 'Y-m-d H:i:s', $date ), 'post_date_gmt' => gmdate( 'Y-m-d H:i:s', $date ) ) );
     set_post_thumbnail( $id, asfar_import_asset( $article['img'] ) );
     asfar_seed_field( 'display_date', $article[ $lang ]['date'], $id, 'field_asfar_display_date' );
+    $paragraphs = array_map( function ( $text ) { return array( 'text' => $text ); }, $article[ $lang ]['paras'] ?? array() );
+    asfar_seed_field( 'paragraphs', $paragraphs, $id, 'field_asfar_article_paragraphs' );
     if ( empty( $article[ $lang ]['paras'] ) ) {
      asfar_seed_field( 'external_url', 'https://thefinanceworld.com/the-evolving-role-of-the-cfo-from-financial-steward-to-strategic-leader/', $id, 'field_asfar_external_url' );
     }
@@ -126,6 +128,34 @@ function asfar_seed_content() {
  update_option( 'asfar_seed_complete', 1, false );
  asfar_migrate();
 }
+
+/** Fill imported article paragraphs once when the news detail fields are added. */
+function asfar_backfill_article_paragraphs() {
+ if ( get_option( 'asfar_article_paragraphs_revision' ) || ! function_exists( 'update_field' ) || ! function_exists( 'pll_get_post_language' ) ) { return; }
+ return asfar_with_content_lock( function () {
+  if ( get_option( 'asfar_article_paragraphs_revision' ) ) { return; }
+  $data = json_decode( file_get_contents( __DIR__ . '/seed.json' ), true );
+  $map = get_option( 'asfar_page_map', array() );
+  foreach ( $data['news'] as $article ) {
+   foreach ( array( 'en', 'ar' ) as $language ) {
+    $slug = 'news-' . $article['slug'] . ( 'ar' === $language ? '-ar' : '' );
+    $id = absint( $map[ $slug ] ?? 0 );
+    if ( ! $id || ! get_post( $id ) || 'post' !== get_post_type( $id ) || $language !== pll_get_post_language( $id ) ) { continue; }
+    $paragraphs = array_map( function ( $text ) { return array( 'text' => $text ); }, $article[ $language ]['paras'] ?? array() );
+    if ( $paragraphs && ! get_post_meta( $id, 'paragraphs', true ) && ! get_post_meta( $id, 'body_content', true ) && ! get_post_field( 'post_content', $id ) ) {
+     update_field( 'field_asfar_article_paragraphs', $paragraphs, $id );
+    }
+   }
+  }
+  update_option( 'asfar_article_paragraphs_revision', '1', false );
+ } );
+}
+add_action( 'admin_init', function () {
+ if ( current_user_can( 'manage_options' ) ) {
+  try { asfar_backfill_article_paragraphs(); }
+  catch ( Throwable $error ) { add_action( 'admin_notices', function () use ( $error ) { echo '<div class="notice notice-error"><p>ASFAR article content update: ' . esc_html( $error->getMessage() ) . '</p></div>'; } ); }
+ }
+}, 25 );
 add_action( 'admin_post_asfar_seed', function () {
  if ( ! current_user_can( 'manage_options' ) ) { wp_die( 'Forbidden', '', array( 'response' => 403 ) ); }
  check_admin_referer( 'asfar_seed' );

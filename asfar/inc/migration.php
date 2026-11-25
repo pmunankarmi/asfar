@@ -275,8 +275,8 @@ function asfar_run_migration() {
 			if ( empty( $pages[ $slug ] ) ) { continue; }
 			$id = $pages[ $slug ];
 			asfar_migrate_field( 'article', 'display_date', $article[ $language ]['date'], $id );
+			asfar_migrate_field( 'article', 'paragraphs', array_map( function ( $text ) { return array( 'text' => $text ); }, $article[ $language ]['paras'] ?? array() ), $id );
 			asfar_migrate_field( 'article', 'external_url', get_post_meta( $id, 'external_url', true ), $id );
-			asfar_migrate_field( 'article', 'paragraphs', array_map( function ( $text ) { return array( 'text' => $text ); }, $article[ $language ]['paras'] ), $id );
 		}
 	}
 	$labels = array( 'site_name' => array( 273, 1 ), 'home_label' => array( 275, 3 ), 'primary_label' => array( 279, 7 ), 'open_menu' => array( 291, 19 ), 'close_menu' => array( 292, 20 ), 'menu_label' => array( 293, 21 ), 'contact_button' => array( 314, 42 ), 'name_label' => array( 317, 45 ), 'name_placeholder' => array( 318, 46 ), 'email_label' => array( 319, 47 ), 'email_placeholder' => array( 320, 48 ), 'message_label' => array( 321, 49 ), 'message_placeholder' => array( 322, 50 ), 'send_label' => array( 323, 51 ), 'ownership_label' => array( 325, 53 ), 'copyright' => array( 326, 54 ), 'back_top' => array( 328, 56 ) );

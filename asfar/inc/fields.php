@@ -256,6 +256,7 @@ add_action( 'acf/init', function () {
 		asfar_text( 'display_date', 'Display Date' ),
 		asfar_text( 'category_label', 'Category Label' ),
 		asfar_field( 'body_content', 'Article Content', 'wysiwyg', array( 'tabs' => 'all', 'toolbar' => 'full', 'media_upload' => 1 ) ),
+		asfar_repeater( 'paragraphs', 'Article Paragraphs', array( asfar_text( 'text', 'Paragraph', true ) ), 'Add paragraph' ),
 		asfar_field( 'external_url', 'External Article URL', 'url' ),
 	), array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'post' ) ) ) );
 	if ( function_exists( 'acf_add_options_page' ) ) {
